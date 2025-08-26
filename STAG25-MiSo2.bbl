@@ -1,0 +1,50 @@
+\newcommand{\etalchar}[1]{$^{#1}$}
+\begin{thebibliography}{\uppercase{AMHH{\etalchar{*}}24}}
+
+\bibitem[AMHH{\etalchar{*}}18]{RTR4}
+\textsc{Akenine-M\"{o}ller T., Haines E., Hoffman N., Pesce A., Iwanicki M.,
+  Hillaire S.}:
+\newblock \emph{Real-Time Rendering 4th Edition}.
+\newblock A.K. Peters/CRC Press, Boca Raton, FL, USA, 2018.
+
+\bibitem[AMHH{\etalchar{*}}24]{Akenine2024}
+\textsc{Akenine-Möller T., Haines E., Hoffman N., Pesce A., Iwanicki M.,
+  Hillaire S.}:
+\newblock Real-time rendering - ray tracing resources page, 2024.
+\newblock URL: \url{https://www.realtimerendering.com/intersections.html}.
+
+\bibitem[CYN{\etalchar{*}}24]{Chen2024}
+\textsc{Chen X., Yu C., Ni X., Chu M., Wang B., Chen B.}:
+\newblock A time-dependent inclusion-based method for continuous collision
+  detection between parametric surfaces.
+\newblock \emph{ACM SIGGRAPH Computer Graphics 43}, 6 (2024).
+
+\bibitem[JRG13]{johnen2013}
+\textsc{Johnen A., Remacle J.-F., Geuzaine C.}:
+\newblock Geometrical validity of curvilinear finite elements.
+\newblock \emph{Journal of Computational Physics 233} (2013), 359--372.
+
+\bibitem[LKBM20]{Lengagne:2020}
+\textsc{Lengagne S., Kalawoun R., Bouchon F., Mezouar Y.}:
+\newblock Reducing pessimism in interval analysis using b-splines properties:
+  Application to robotics.
+\newblock \emph{Reliable Computing 27} (2020), 63--87.
+
+\bibitem[Sny92]{snyder92}
+\textsc{Snyder J.}:
+\newblock Interval analysis for computer graphics.
+\newblock \emph{ACM SIGGRAPH} (1992), 121--130.
+
+\bibitem[Sta95]{stahl_interval_1995}
+\textsc{Stahl V.}:
+\newblock \emph{Interval {Methods} for {Bounding} the {Range} of {Polynomials}
+  and {Solving} {Systems} of {Nonlinear} {Equations}}.
+\newblock PhD thesis, Sept. 1995.
+
+\bibitem[WFS{\etalchar{*}}21]{Wang2021}
+\textsc{Wang B., Ferguson Z., Schneider T., Jiang X., Attene M., Panozzo D.}:
+\newblock A large-scale benchmark and an inclusion-based algorithm for
+  continuous collision detection.
+\newblock \emph{ACM Trans. Graph. 40}, 5 (2021), 1--16.
+
+\end{thebibliography}

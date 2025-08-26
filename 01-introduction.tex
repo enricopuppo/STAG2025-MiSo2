@@ -1,0 +1,36 @@
+% !TEX root = STAG25-MiSo2.tex
+
+\section{Introduction}
+\label{sec:introduction}
+
+THIS IS FROM SIGGRAPH PAPER.
+
+Non-linear constraint solving is fundamental to graphics and scientific computing, with applications ranging from collision detection and minimal distance computation to element inversion and Boolean operations. A vast literature addresses this topic (Section \ref{sec:related}). For example, \cite{RTR4,Akenine2024} summarize methods for static collision detection between proxies, referencing over 100 algorithms tailored to different primitive pairs and accuracy/efficiency trade-offs.
+Similar per-primitive-pair specialization is required for minimal distance queries and, likewise, each finite element (FE) type and order necessitates custom code for positive Jacobian checks.
+This complexity doubles when considering time-dependent scenarios.
+
+While real-time applications often restrict primitives to boxes due to limited computational resources, high-fidelity simulations may require conservative, high-accuracy predicates \cite{snyder92}.
+Testing the correctness and ensuring the efficient, accurate implementation of these algorithms is a major challenge [Wang et al. 2021]. The difficulty of generalizing theoretical improvements across different cases hinders progress in this pervasive and crucial family of algorithms, essential to modern computing.
+
+In contrast to algorithm specialization, \citet{snyder92} proposed a general framework, based on interval analysis, for conservative solutions to high-order constrained optimization. This framework offers two algorithms: \solve, which finds all solutions to a non-linear constraint system, and \minimize, which finds the constrained global minimum of a function. For \solve, the conservative algorithm returns a region guaranteed to contain all solutions (if any), potentially including points near the feasible domain. For \minimize, it returns a value less than or equal to the true minimum and within a bounded distance of it. In both cases, this conservativeness accounts for numerical rounding errors.
+
+Although often considered slower than methods like Newton's minimization, recent work \cite{Wang2021,Chen2024} 
+ demonstrates the effectiveness and relative efficiency of this conservative approach, particularly when seeking guaranteed solutions. 
+
+Snyder's approach uses Natural Interval Extensions (NIE) to compute \emph{inclusion functions} (\cref{sub:inclusion}) that bound function ranges over domains, by composition of interval operators (\cref{app:interval}). Although general, NIE's convergence to the true range via domain decomposition can be slow. 
+For the common case of polynomials, tighter bounds are achievable via their Bézier representation \cite{Lengagne:2020,stahl_interval_1995,johnen2013}. 
+However, Bézier representation can be computationally expensive for polynomials with many terms. 
+
+We employ a hybrid approach, blending Bézier inclusion functions and NIE. Decomposing polynomial expressions into simpler forms (fewer variables or lower degree) allows us to construct a spectrum of inclusion functions that ranges from fully NIE-based (expanded expressions) to fully Bézier-based (collapsed expressions).
+Hybrid solutions can dramatically improve efficiency. For example, our hybrid solver for continuous collision detection between high-order polynomial patches is orders of magnitude faster than purely NIE-based and purely Bézier-based solutions (\cref{sec:results}).
+
+We developed MiSo on top of such a hybrid approach. MiSo is a Python-based domain-specific language (DSL) for the specification of \solve\ and \minimize\ problems. MiSo enables the user to quickly explore possible hybrid approaches by changing a few lines of code.
+From a simple specification, the MiSo compiler produces a numerically robust C++ solver for the given problem, automatically generating all the necessary representations of the functions involved, the related transformations required for domain subdivision, and the evaluation of inclusion functions.
+
+Domain decomposition and interval arithmetic are used to guarantee conservative results. Setting a compile-time flag switches to a faster, non-conservative computation mode based on standard floating-point arithmetic.
+A known limitation of subdivision-based methods is that they suffer from a curse of dimensionality; hence, our method may become impractical for problems in many dimensions. However, we show that we are able to achieve competitive performance for a number of fundamental geometric problems, especially those involving high-order geometry.
+
+We demonstrate competitive performance against hand-optimized code for key computer graphics problems, including linear and high-order continuous collision detection, and finite element validity checks.
+
+MiSo is available as an open-source project at \url{https://gitlab.com/fsichetti/miso}.
+

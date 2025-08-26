@@ -1,0 +1,2083 @@
+@misc{nfg,
+    title        = {NFG - Numbers For Geometry},
+    author       = {Attene, M.},
+    url          = {https://github.com/MarcoAttene/NFG},
+    year={2025}
+}
+
+@article{attene_indirect_2020,
+  title        = {Indirect predicates for geometric constructions},
+  volume       = {126},
+  pages        = {102856},
+  journal = {Computer-Aided Design},
+  author       = {Attene, M.},
+  date         = {2020-09}
+}
+
+@inproceedings{meyer2008fpg,
+  title={FPG: A code generator for fast and certified geometric predicates},
+  author={Meyer, A. and Pion, S.},
+  booktitle={Real numbers and computers},
+  pages={47--60},
+  year={2008}
+}
+
+@article{levy2016robustness,
+  title={Robustness and efficiency of geometric programs: The Predicate Construction Kit (PCK)},
+  author={L{\'e}vy, B.},
+  journal={Computer-Aided Design},
+  volume={72},
+  pages={3--12},
+  year={2016},
+  publisher={Elsevier}
+}
+
+@article{Chen2022, author = {Chen, Yunuo and Li, Minchen and Lan, Lei and Su, Hao and Yang, Yin and Jiang, Chenfanfu}, title = {A unified newton barrier method for multibody dynamics}, year = {2022}, issue_date = {July 2022}, publisher = {Association for Computing Machinery}, address = {New York, NY, USA}, volume = {41}, number = {4}, issn = {0730-0301}, url = {https://doi.org/10.1145/3528223.3530076}, doi = {10.1145/3528223.3530076}, abstract = {We present a simulation framework for multibody dynamics via a universal variational integration. Our method naturally supports mixed rigid-deformables and mixed codimensional geometries, while providing guaranteed numerical convergence and accurate resolution of contact, friction, and a wide range of articulation constraints. We unify (1) the treatment of simulation degrees of freedom for rigid and soft bodies by formulating them both in terms of Lagrangian nodal displacements, (2) the handling of general linear equality joint constraints through an efficient change-of-variable strategy, (3) the enforcement of nonlinear articulation constraints based on novel distance potential energies, (4) the resolution of frictional contact between mixed dimensions and bodies with a variational Incremental Potential Contact formulation, and (5) the modeling of generalized restitution through semi-implicit Rayleigh damping. We conduct extensive unit tests and benchmark studies to demonstrate the efficacy of our method.}, journal = {ACM Trans. Graph.}, month = jul, articleno = {66}, numpages = {14}, keywords = {frictional contact, multibody simulation, optimization-based time integration} }
+
+@article{Lan2023, author = {Lan, Lei and Li, Minchen and Jiang, Chenfanfu and Wang, Huamin and Yang, Yin}, title = {Second-order Stencil Descent for Interior-point Hyperelasticity}, year = {2023}, issue_date = {August 2023}, publisher = {Association for Computing Machinery}, address = {New York, NY, USA}, volume = {42}, number = {4}, issn = {0730-0301}, url = {https://doi.org/10.1145/3592104}, doi = {10.1145/3592104}, abstract = {In this paper, we present a GPU algorithm for finite element hyperelastic simulation. We show that the interior-point method, known to be effective for robust collision resolution, can be coupled with non-Newton procedures and be massively sped up on the GPU. Newton's method has been widely chosen for the interior-point family, which fully solves a linear system at each step. After that, the active set associated with collision/contact constraints is updated. Mimicking this routine using a non-Newton optimization (like gradient descent or ADMM) unfortunately does not deliver expected accelerations. This is because the barrier functions employed in an interior-point method need to be updated at every iteration to strictly confine the search to the feasible region. The associated cost (e.g., per-iteration CCD) quickly overweights the benefit brought by the GPU, and a new parallelism modality is needed. Our algorithm is inspired by the domain decomposition method and designed to move interior-point-related computations to local domains as much as possible. We minimize the size of each domain (i.e., a stencil) by restricting it to a single element, so as to fully exploit the capacity of modern GPUs. The stencil-level results are integrated into a global update using a novel hybrid sweep scheme. Our algorithm is locally second-order offering better convergence. It enables simulation acceleration of up to two orders over its CPU counterpart. We demonstrate the scalability, robustness, efficiency, and quality of our algorithm in a variety of simulation scenarios with complex and detailed collision geometries.}, journal = {ACM Trans. Graph.}, month = jul, articleno = {108}, numpages = {16}, keywords = {physics-based simulation, interior point method, barrier function, GPU} }
+
+@ARTICLE{Fang2024,
+  author={Fang, Yu and Li, Minchen and Cao, Yadi and Li, Xuan and Wolper, Joshuah and Yang, Yin and Jiang, Chenfanfu},
+  journal={IEEE Transactions on Visualization and Computer Graphics}, 
+  title={Augmented Incremental Potential Contact for Sticky Interactions}, 
+  year={2024},
+  volume={30},
+  number={8},
+  pages={5596-5608},
+  keywords={Adhesives;Friction;Computational modeling;Deformation;Solids;Force;Deformable models;Physically based animation;optimization time integration},
+  doi={10.1109/TVCG.2023.3295656}}
+
+
+@inproceedings{Li2023GPUClothIPC,
+author = {Li, Xuan and Fang, Yu and Lan, Lei and Wang, Huamin and Yang, Yin and Li, Minchen and Jiang, Chenfanfu},
+title = {Subspace-Preconditioned GPU Projective Dynamics with Contact for Cloth Simulation},
+year = {2023},
+isbn = {9798400703157},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3610548.3618157},
+doi = {10.1145/3610548.3618157},
+abstract = {We propose an efficient cloth simulation method that combines the merits of two drastically different numerical procedures, namely the subspace integration and parallelizable iterative relaxation. We show those two methods can be organically coupled within the framework of projective dynamics (PD), where both low- and high-frequency cloth motions are effectively and efficiently computed. Our method works seamlessly with the state-of-the-art contact handling algorithm, the incremental potential contact (IPC), to offer the non-penetration guarantee of the resulting animation. Our core ingredient centers around the utilization of subspace for the expedited convergence of Jacobi-PD. This involves solving the reduced global system and smartly employing its precomputed factorization. In addition, we incorporate a time-splitting strategy to handle the frictional self-contacts. Specifically, during the PD solve, we employ a quadratic proxy to approximate the contact barrier. The prefactorized subspace system matrix is exploited in a reduced-space LBFGS. The LBFGS method starts with the reduced system matrix of the rest shape as the initial Hessian approximation, incorporating contact information into the reduced system progressively, while the full-space Jacobi iteration captures high-frequency details. Furthermore, we address penetration issues through a penetration correction step. It minimizes an incremental potential without elasticity using Newton-PCG. Our method can be efficiently executed on modern GPUs. Experiments show significant performance improvements over existing GPU solvers for high-resolution cloth simulation.},
+booktitle = {SIGGRAPH Asia 2023 Conference Papers},
+articleno = {1},
+numpages = {12},
+keywords = {domain decomposition, projective dynamics, quasi-Newton methods, subspace},
+location = {Sydney, NSW, Australia},
+series = {SA '23}
+}
+
+@inproceedings{Duo2024,
+author = {Li, Xuan and Li, Minchen and Han, Xuchen and Wang, Huamin and Yang, Yin and Jiang, Chenfanfu},
+title = {A Dynamic Duo of Finite Elements and Material Points},
+year = {2024},
+isbn = {9798400705250},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3641519.3657449},
+doi = {10.1145/3641519.3657449},
+abstract = {This paper presents a novel method to couple Finite Element Methods (FEM), typically employed for modeling Lagrangian solids such as flesh, cloth, hair, and rigid bodies, with Material Point Methods (MPM), which are well-suited for simulating materials undergoing substantial deformation and topology change, including Newtonian/non-Newtonian fluid, granular materials, and fracturing materials. The challenge of coupling these diverse methods arises from their contrasting computational needs: implicit FEM integration is often favored to enjoy stability and large timesteps, while explicit MPM integration benefits from its allowance for efficient GPU optimization and flexibility of applying different plasticity models, which only allows for moderate timesteps. To bridge this gap, a mixed implicit-explicit time integration (IMEX) approach is proposed, utilizing principles from time splitting for partial differential equations and optimization-based time integrators. This method adopts incremental potential contact (IPC) to define a variational frictional contact model between the two materials, serving as the primary coupling mechanism. Our method enables implicit FEM and explicit MPM to coexist with significantly different timestep sizes while preserving two-way coupling. Experimental results demonstrate the potential of our method as a strong foundation for future exploration and enhancement in the field of multi-material simulation.},
+booktitle = {ACM SIGGRAPH 2024 Conference Papers},
+articleno = {97},
+numpages = {11},
+keywords = {asynchronous time integration, finite element method, frictional contact, material point method, optimization time integration, time splitting},
+location = {Denver, CO, USA},
+series = {SIGGRAPH '24}
+}
+
+@article{RigidIPC2021,
+author = {Ferguson, Zachary and Li, Minchen and Schneider, Teseo and Gil-Ureta, Francisca and Langlois, Timothy and Jiang, Chenfanfu and Zorin, Denis and Kaufman, Danny M. and Panozzo, Daniele},
+title = {Intersection-free rigid body dynamics},
+year = {2021},
+issue_date = {August 2021},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {40},
+number = {4},
+issn = {0730-0301},
+url = {https://doi.org/10.1145/3450626.3459802},
+doi = {10.1145/3450626.3459802},
+abstract = {We introduce the first implicit time-stepping algorithm for rigid body dynamics, with contact and friction, that guarantees intersection-free configurations at every time step.Our algorithm explicitly models the curved trajectories traced by rigid bodies in both collision detection and response. For collision detection, we propose a conservative narrow phase collision detection algorithm for curved trajectories, which reduces the problem to a sequence of linear CCD queries with minimal separation. For time integration and contact response, we extend the recently proposed incremental potential contact framework to reduced coordinates and rigid body dynamics.We introduce a benchmark for rigid body simulation and show that our approach, while less efficient than alternatives, can robustly handle a wide array of complex scenes, which cannot be simulated with competing methods, without requiring per-scene parameter tuning.},
+journal = {ACM Trans. Graph.},
+month = jul,
+articleno = {183},
+numpages = {16},
+keywords = {rigid body simulation, continuous collision detection, contact mechanics}
+}
+
+@article{DiffIPC2024,
+author = {Huang, Zizhou and Tozoni, Davi Colli and Gjoka, Arvi and Ferguson, Zachary and Schneider, Teseo and Panozzo, Daniele and Zorin, Denis},
+title = {Differentiable solver for time-dependent deformation problems with contact},
+year = {2024},
+issue_date = {June 2024},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {43},
+number = {3},
+issn = {0730-0301},
+url = {https://doi.org/10.1145/3657648},
+doi = {10.1145/3657648},
+abstract = {We introduce a general differentiable solver for time-dependent deformation problems with contact and friction. Our approach uses a finite element discretization with a high-order time integrator coupled with the recently proposed incremental potential contact method for handling contact and friction forces to solve ODE- and PDE-constrained optimization problems on scenes with complex geometry. It supports static and dynamic problems and differentiation with respect to all physical parameters involved in the physical problem description, which include shape, material parameters, friction parameters, and initial conditions. Our analytically derived adjoint formulation is efficient, with a small overhead (typically less than 10\% for nonlinear problems) over the forward simulation, and shares many similarities with the forward problem, allowing the reuse of large parts of existing forward simulator code.We implement our approach on top of the open-source PolyFEM library and demonstrate the applicability of our solver to shape design, initial condition optimization, and material estimation on both simulated results and physical validations.},
+journal = {ACM Trans. Graph.},
+month = may,
+articleno = {31},
+numpages = {30},
+keywords = {Differentiable simulation, finite element method, elastodynamics, frictional contact}
+}
+
+@article{CIPC2021,
+author = {Li, Minchen and Kaufman, Danny M. and Jiang, Chenfanfu},
+title = {Codimensional incremental potential contact},
+year = {2021},
+issue_date = {August 2021},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {40},
+number = {4},
+issn = {0730-0301},
+url = {https://doi.org/10.1145/3450626.3459767},
+doi = {10.1145/3450626.3459767},
+abstract = {We extend the incremental potential contact (IPC) model [Li et al. 2020a] for contacting elastodynamics to resolve systems composed of codimensional degrees-of-freedoms in arbitrary combination. This enables a unified, interpenetration-free, robust, and stable simulation framework that couples codimension-0,1,2, and 3 geometries seamlessly with frictional contact. Extending the IPC model to thin structures poses new challenges in computing strain, modeling thickness and determining collisions. To address these challenges we propose three corresponding contributions. First, we introduce a C2 constitutive barrier model that directly enforces strain limiting as an energy potential while preserving rest state. This provides energetically-consistent strain limiting models (both isotropic and anisotropic) for cloth that enable strict satisfaction of strain-limit inequalities with direct coupling to both elastodynamics and contact via minimization of the incremental potential. Second, to capture the geometric thickness of codimensional domains we extend the IPC model to directly enforce distance offsets. Our treatment imposes a strict guarantee that mid-surfaces (respectively mid-lines) of shells (respectively rods) will not move closer than applied thickness values, even as these thicknesses become characteristically small. This enables us to account for thickness in the contact behavior of codimensional structures and so robustly capture challenging contacting geometries; a number of which, to our knowledge, have not been simulated before. Third, codimensional models, especially with modeled thickness, mandate strict accuracy requirements that pose a severe challenge to all existing continuous collision detection (CCD) methods. To address these limitations we develop a new, efficient, simple-to-implement additive CCD (ACCD) method that applies conservative advancement [Mirtich 1996; Zhang et al. 2006] to iteratively refine a lower bound for deforming primitives, converging to time of impact. In combination these contributions enable codimensional IPC (C-IPC). We perform extensive benchmark experiments to validate the efficacy of our method in capturing intricate behaviors of thin-structure contact and resulting bulk effects. In our experiments C-IPC obtains feasible, convergent, and so artifact-free solutions for all time steps, across all tested examples - producing robust simulations. We test C-IPC across extreme deformations, large time steps, and exceedingly close contact over all possible pairings of codimensional domains. Finally, with our strain-limit model, we confirm C-IPC guarantees non-intersection and strain-limit satisfaction for all reasonable (and well below - verified down to 0.1\%) strain limits throughout all time steps.},
+journal = {ACM Trans. Graph.},
+month = jul,
+articleno = {170},
+numpages = {24},
+keywords = {strain limiting, mixed-dimensional elastodynamics, contact mechanics, constrained optimization}
+}
+
+@article{MedialIPC2021,
+author = {Lan, Lei and Yang, Yin and Kaufman, Danny and Yao, Junfeng and Li, Minchen and Jiang, Chenfanfu},
+title = {Medial IPC: accelerated incremental potential contact with medial elastics},
+year = {2021},
+issue_date = {August 2021},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {40},
+number = {4},
+issn = {0730-0301},
+url = {https://doi.org/10.1145/3450626.3459753},
+doi = {10.1145/3450626.3459753},
+abstract = {We propose a framework of efficient nonlinear deformable simulation with both fast continuous collision detection and robust collision resolution. We name this new framework Medial IPC as it integrates the merits from medial elastics, for an efficient and versatile reduced simulation, as well as incremental potential contact, for a robust collision and contact resolution. We leverage medial axis transform to construct a kinematic subspace. Instead of resorting to projective dynamics, we use classic hyperelastics to embrace real-world nonlinear materials. A novel reduced continuous collision detection algorithm is presented based on the medial mesh. Thanks to unique geometric properties of medial axis and medial primitives, we derive closed-form formulations for identifying between-primitive collision within the reduced medial space. In the meantime, the implicit barrier energy that generates necessary repulsion forces for collision resolution is also formulated with the medial coordinate. In other words, Medial IPC exploits a universal reduced coordinate for simulation, continuous self-/collision detection, and IPC-based collision resolution. Continuous collision detection also allows more aggressive time stepping. In addition, we carefully implement our system with a heterogeneous CPU-GPU deployment such that massively parallelizable computations are carried out on the GPU while few sequential computations are on the CPU. Such implementation also frees us from generating training poses for selecting Cubature points and pre-computing their weights. We have tested our method on complicated deformable models and collision-rich simulation scenarios. Due to the reduced nature of our system, the computation is faster than fullspace IPC or other fullspace methods using continuous collision detection by at least one order. The simulation remains high-quality as the medial subspace captures intriguing and local deformations with sufficient realism.},
+journal = {ACM Trans. Graph.},
+month = jul,
+articleno = {158},
+numpages = {16},
+keywords = {GPU, continuous collision detection, deformable model, medial axis}
+}
+
+@inproceedings{PIPC2024,
+author = {Shen, Xing and Cai, Runyuan and Bi, Mengxiao and Lv, Tangjie},
+title = {Preconditioned Nonlinear Conjugate Gradient Method for Real-time Interior-point Hyperelasticity},
+year = {2024},
+isbn = {9798400705250},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3641519.3657490},
+doi = {10.1145/3641519.3657490},
+abstract = {The linear conjugate gradient method is widely used in physical simulation, particularly for solving large-scale linear systems derived from Newton’s method. The nonlinear conjugate gradient method generalizes the conjugate gradient method to nonlinear optimization, which is extensively utilized in solving practical large-scale unconstrained optimization problems. However, it is rarely discussed in physical simulation due to the requirement of multiple vector-vector dot products. Fortunately, with the advancement of GPU-parallel acceleration techniques, it is no longer a bottleneck. In this paper, we propose a Jacobi preconditioned nonlinear conjugate gradient method for elastic deformation using interior-point methods. Our method is straightforward, GPU-parallelizable, and exhibits fast convergence and robustness against large time steps. The employment of the barrier function in interior-point methods necessitates continuous collision detection per iteration to obtain a penetration-free step size, which is computationally expensive and challenging to parallelize on GPUs. To address this issue, we introduce a line search strategy that deduces an appropriate step size in a single pass, eliminating the need for additional collision detection. Furthermore, we simplify and accelerate the computations of Jacobi preconditioning and Hessian-vector product for hyperelasticity and barrier function. Our method can accurately simulate objects comprising over 100,000 tetrahedra in complex self-collision scenarios at real-time speeds.},
+booktitle = {ACM SIGGRAPH 2024 Conference Papers},
+articleno = {96},
+numpages = {11},
+keywords = {GPU, Nonlinear conjugate gradient method, Physics-based simulation},
+location = {Denver, CO, USA},
+series = {SIGGRAPH '24}
+}
+
+@article{GIPC2024,
+author = {Huang, Kemeng and Chitalu, Floyd M. and Lin, Huancheng and Komura, Taku},
+title = {GIPC: Fast and Stable Gauss-Newton Optimization of IPC Barrier Energy},
+year = {2024},
+issue_date = {April 2024},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {43},
+number = {2},
+issn = {0730-0301},
+url = {https://doi.org/10.1145/3643028},
+doi = {10.1145/3643028},
+abstract = {Barrier functions are crucial for maintaining an intersection- and inversion-free simulation trajectory but existing methods, which directly use distance can restrict implementation design and performance. We present an approach to rewriting the barrier function for arriving at an efficient and robust approximation of its Hessian. The key idea is to formulate a simplicial geometric measure of contact using mesh boundary elements, from which analytic eigensystems are derived and enhanced with filtering and stiffening terms that ensure robustness with respect to the convergence of a Project-Newton solver. A further advantage of our rewriting of the barrier function is that it naturally caters to the notorious case of nearly parallel edge-edge contacts for which we also present a novel analytic eigensystem. Our approach is thus well suited for standard second-order unconstrained optimization strategies for resolving contacts, minimizing nonlinear nonconvex functions where the Hessian may be indefinite. The efficiency of our eigensystems alone yields a 3\texttimes{} speedup over the standard Incremental Potential Contact (IPC) barrier formulation. We further apply our analytic proxy eigensystems to produce an entirely GPU-based implementation of IPC with significant further acceleration.},
+journal = {ACM Trans. Graph.},
+month = mar,
+articleno = {23},
+numpages = {18},
+keywords = {IPC, Barrier Hessian, eigen analysis, GPU}
+}
+
+@article{BFEMP2022,
+title = {BFEMP: Interpenetration-free MPM–FEM coupling with barrier contact},
+author = {Li, Xuan and Fang, Yu and Li, Minchen and Jiang, Chenfanfu},
+abstractNote = {},
+doi = {10.1016/j.cma.2021.114350},
+journal = {Computer Methods in Applied Mechanics and Engineering},
+number = C,
+volume = 390,
+place = {Netherlands},
+year = {2022},
+month = {2}
+}
+
+@article{IDP2021,
+author = {Fang, Yu and Li, Minchen and Jiang, Chenfanfu and Kaufman, Danny M.},
+title = {Guaranteed globally injective 3D deformation processing},
+year = {2021},
+issue_date = {August 2021},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {40},
+number = {4},
+issn = {0730-0301},
+url = {https://doi.org/10.1145/3450626.3459757},
+doi = {10.1145/3450626.3459757},
+abstract = {We extend recent advances in the numerical time-integration of contacting elastodynamics [Li et al. 2020] to build a new framework, called Injective Deformation Processing (IDP), for the robust solution of a wide range of mesh deformation problems requiring injectivity. IDP solves challenging 3D (and 2D) geometry processing and animation tasks on meshes, via artificial time integration, with guarantees of both non-inversion and non-overlap. To our knowledge IDP is the first framework for 3D deformation processing that can efficiently guarantee globally injective deformation without geometric locking. We demonstrate its application on a diverse set of problems and show its significant improvement over state-of-the-art for globally injective 3D deformation.},
+journal = {ACM Trans. Graph.},
+month = jul,
+articleno = {75},
+numpages = {13},
+keywords = {animation, deformation, distortion optimization, global injectivity, modeling, numerical optimization}
+}
+
+@article{PDIPC2022,
+author = {Lan, Lei and Ma, Guanqun and Yang, Yin and Zheng, Changxi and Li, Minchen and Jiang, Chenfanfu},
+title = {Penetration-free projective dynamics on the GPU},
+year = {2022},
+issue_date = {July 2022},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {41},
+number = {4},
+issn = {0730-0301},
+url = {https://doi.org/10.1145/3528223.3530069},
+doi = {10.1145/3528223.3530069},
+abstract = {We present a GPU algorithm for deformable simulation. Our method offers good computational efficiency and penetration-free guarantee at the same time, which are not common with existing techniques. The main idea is an algorithmic integration of projective dynamics (PD) and incremental potential contact (IPC). PD is a position-based simulation framework, favored for its robust convergence and convenient implementation. We show that PD can be employed to handle the variational optimization with the interior point method e.g., IPC. While conceptually straightforward, this requires a dedicated rework over the collision resolution and the iteration modality to avoid incorrect collision projection with improved numerical convergence. IPC exploits a barrier-based formulation, which yields an infinitely large penalty when the constraint is on the verge of being violated. This mechanism guarantees intersection-free trajectories of deformable bodies during the simulation, as long as they are apart at the rest configuration. On the downside, IPC brings a large amount of nonlinearity to the system, making PD slower to converge. To mitigate this issue, we propose a novel GPU algorithm named A-Jacobi for faster linear solve at the global step of PD. A-Jacobi is based on Jacobi iteration, but it better harvests the computation capacity on modern GPUs by lumping several Jacobi steps into a single iteration. In addition, we also re-design the CCD root finding procedure by using a new minimum-gradient Newton algorithm. Those saved time budgets allow more iterations to accommodate stiff IPC barriers so that the result is both realistic and collision-free. Putting together, our algorithm simulates complicated models of both solids and shells on the GPU at an interactive rate or even in real time.},
+journal = {ACM Trans. Graph.},
+month = jul,
+articleno = {69},
+numpages = {16},
+keywords = {CCD, GPU, barrier function, iterative solver, physics-based simulation}
+}
+
+@article{ABD2022, author = {Lan, Lei and Kaufman, Danny M. and Li, Minchen and Jiang, Chenfanfu and Yang, Yin}, title = {Affine body dynamics: fast, stable and intersection-free simulation of stiff materials}, year = {2022}, issue_date = {July 2022}, publisher = {Association for Computing Machinery}, address = {New York, NY, USA}, volume = {41}, number = {4}, issn = {0730-0301}, url = {https://doi.org/10.1145/3528223.3530064}, doi = {10.1145/3528223.3530064}, abstract = {Simulating stiff materials in applications where deformations are either not significant or else can safely be ignored is a fundamental task across fields. Rigid body modeling has thus long remained a critical tool and is, by far, the most popular simulation strategy currently employed for modeling stiff solids. At the same time, rigid body methods continue to pose a number of well known challenges and trade-offs including intersections, instabilities, inaccuracies, and/or slow performances that grow with contact-problem complexity. In this paper we revisit the stiff body problem and present ABD, a simple and highly effective affine body dynamics framework, which significantly improves state-of-the-art for simulating stiff-body dynamics. We trace the challenges in rigid-body methods to the necessity of linearizing piecewise-rigid trajectories and subsequent constraints. ABD instead relaxes the unnecessary (and unrealistic) constraint that each body's motion be exactly rigid with a stiff orthogonality potential, while preserving the rigid body model's key feature of a small coordinate representation. In doing so ABD replaces piecewise linearization with piecewise linear trajectories. This, in turn, combines the best of both worlds: compact coordinates ensure small, sparse system solves, while piecewise-linear trajectories enable efficient and accurate constraint (contact and joint) evaluations. Beginning with this simple foundation, ABD preserves all guarantees of the underlying IPC model we build it upon, e.g., solution convergence, guaranteed non-intersection, and accurate frictional contact. Over a wide range and scale of simulation problems we demonstrate that ABD brings orders of magnitude performance gains (two- to three-orders on the CPU and an order more when utilizing the GPU, obtaining 10, 000\texttimes{} speedups) over prior IPC-based methods, while maintaining simulation quality and nonintersection of trajectories. At the same time ABD has comparable or faster timings when compared to state-of-the-art rigid body libraries optimized for performance without guarantees, and successfully and efficiently solves challenging simulation problems where both classes of prior rigid body simulation methods fail altogether.}, journal = {ACM Trans. Graph.}, month = jul, articleno = {67}, numpages = {14}, keywords = {rigid body dynamics, reduced model, barrier function, CCD} }
+
+
+@article{attene20,
+  author  = {Attene, M.},
+  title   = {Indirect predicates for Geometric Constructions},
+  volume       = {126},
+  pages        = {102856},
+  journal = {Computer-Aided Design},
+  year    = {2020}
+}
+
+@book{ogden2013non,
+  title={Non-Linear Elastic Deformations},
+  author={Ogden, R.W.},
+  isbn={9780486318714},
+  series={Dover Civil and Mechanical Engineering},
+  url={https://books.google.com/books?id=52XDAgAAQBAJ},
+  year={2013},
+  publisher={Dover Publications}
+}
+
+
+@misc{li2023convergent,
+      title={Convergent Incremental Potential Contact}, 
+      author={Minchen Li and Zachary Ferguson and Teseo Schneider and Timothy Langlois and Denis Zorin and Daniele Panozzo and Chenfanfu Jiang and Danny M. Kaufman},
+      year={2023},
+      eprint={2307.15908},
+      archivePrefix={arXiv},
+      primaryClass={math.NA}
+}
+
+@article{Bargteil2014,
+  title     = {Animation of Deformable Bodies with Quadratic Bézier Finite Elements},
+  volume    = {33},
+  number    = {3},
+  journal   = {ACM Trans. Graph.},
+  publisher = {Association for Computing Machinery (ACM)},
+  author    = {Bargteil,  A. W. and Cohen,  E.},
+  year      = {2014},
+  month     = may,
+  pages     = {1–10}
+}
+
+@inproceedings{benchmark_interval,
+  author    = {Tang, X.
+               and Ferguson, Z.
+               and Schneider, T.
+               and Zorin, D.
+               and Kamil, S.
+               and Panozzo, D.},
+  editor    = {Wyrzykowski, R.
+               and Dongarra, J.
+               and Deelman, E.
+               and Karczewski, K.},
+  title     = {A Cross-Platform Benchmark for Interval Computation Libraries},
+  booktitle = {Parallel Processing and Applied Mathematics},
+  year      = {2023},
+  publisher = {Springer International Publishing},
+  address   = {Cham},
+  pages     = {415--427},
+}
+
+
+@article{bias,
+  author  = {Knuppel, O},
+  title   = {PROFIL/BIAS - A fast interval library},
+  journal = {Computing},
+  volume  = {53},
+  number  = {3},
+  pages   = {277--287},
+  doi     = {https://doi.org/10.1007/BF02307379},
+  year    = {1994}
+}
+
+@article{boost,
+  author  = {Schling, B.},
+  title   = {The Boost C++ Libraries},
+  journal = {XML Press},
+  year    = {2011}
+}
+
+@inproceedings{bronnimann98,
+  author    = {Br\"{o}nnimann, H. and Burnikel, C. and Pion, S.},
+  title     = {Interval Arithmetic Yields Efficient Dynamic Filters for Computational Geometry},
+  booktitle = {Proc. 14th Symp. on Comp. Geom.},
+  year      = {1998},
+  location  = {Minneapolis, Minnesota, USA},
+  pages     = {165--174},
+  numpages  = {10},
+  publisher = {ACM},
+  address   = {New York, NY, USA}
+}
+
+@book{Cottrell2009,
+  title     = {Isogeometric Analysis: Toward Integration of CAD and FEA},
+  publisher = {Wiley},
+  author    = {Cottrell,  J. A. and Hughes,  T. J. R. and Bazilevs,  Y.},
+  year      = {2009}
+}
+
+@article{de_klerk_convergence_2017,
+  title    = {On the convergence rate of grid search for polynomial optimization over the simplex},
+  volume   = {11},
+  abstract = {We consider the approximate minimization of a given polynomial on the standard simplex, obtained by taking the minimum value over all rational grid points with given denominator r ∈ N. It was shown in De Klerk et al. (SIAM J Optim 25(3):1498–1514, 2015) that the accuracy of this approximation depends on r as O(1/r 2) if there exists a rational global minimizer. In this note we show that the rational minimizer condition is not necessary to obtain the O(1/r 2) bound.},
+  language = {en},
+  number   = {3},
+  urldate  = {2023-07-03},
+  journal  = {Optimization Letters},
+  author   = {De Klerk, E. and Laurent, M. and Sun, Z. and Vera, J.C.},
+  month    = mar,
+  year     = {2017},
+  pages    = {597--608},
+}
+
+
+
+@inproceedings{devillers03,
+  author    = {Devillers, O. and Pion, S.},
+  year      = {2003},
+  booktitle = {Proc. 5th Workshop Algorithm Eng. Exper.},
+  pages     = {37--44},
+  title     = {Efficient exact geometric predicates for Delaunay triangulations}
+}
+
+
+@misc{dey_curvilinear_nodate,
+  title    = {Curvilinear mesh generation in {3D}},
+  abstract = {Issues related to curvilinear mesh generation starting from a CAD model are addressed. Curvilinear mesh geometry representation in the context of p-version finite elements and its impact on the validity of curvilinear meshes is discussed. A set of meshing tools is described for generation and modification of curved meshes in three-dimensional space. An iterative algorithm for curved meshing of existing straight-edged meshes is described and example curvilinear meshes of complex geometric models are presented.},
+  language = {en},
+  author   = {Dey, Saikat and O'Bara, Robert M and Shephard, Mark S},
+}
+
+@article{Dey2001,
+  title     = {Towards curvilinear meshing in 3D: the case of quadratic simplices},
+  volume    = {33},
+  number    = {3},
+  journal   = {Computer-Aided Design},
+  publisher = {Elsevier BV},
+  author    = {Dey,  S. and O’Bara,  R.M. and Shephard,  M.S.},
+  year      = {2001},
+  pages     = {199–209}
+}
+
+@article{Fang2021IDP,
+  author    = {Y. Fang and M. Li and C. Jiang and Kaufman, D. M.},
+  title     = {Guaranteed Globally Injective 3D Deformation Processing},
+  journal   = {ACM Trans. Graph. (SIGGRAPH)},
+  year      = {2021},
+  volume    = {40},
+  number    = {4},
+  articleno = {75}
+}
+
+@misc{ferguson_high-order_2022,
+  title     = {High-{Order} {Incremental} {Potential} {Contact} for {Elastodynamic} {Simulation} on {Curved} {Meshes}},
+  author    = {Ferguson, Z. and Jain, P. and Zorin, D. and Schneider, T. and Panozzo, D.},
+  month     = sep,
+  year      = {2022},
+  note      = {arXiv:2205.13727 [cs]},
+  keywords  = {High-order elements, Physical simulation},
+}
+
+@article{filib,
+  author  = {Lerch, M. and Tischler, G. and Gudenberg, J.W.V. and Hofschuster, W. and Kramer, W.},
+  title   = {FILIB++, a Fast Interval Library Supporting Containment Computations},
+  journal = {ACM Trans. Math. Softw},
+  volume  = {32},
+  number  = {2},
+  pages   = {299--324},
+  year    = {2006}
+} 
+
+@inproceedings{Fortune93,
+  author    = {Fortune, Steven and Van Wyk, Christopher J.},
+  title     = {Efficient Exact Arithmetic for Computational Geometry},
+  booktitle = {Proceedings of the Ninth Annual Symposium on Computational Geometry},
+  series    = {SCG '93},
+  year      = {1993},
+  isbn      = {0-89791-582-8},
+  location  = {San Diego, California, USA},
+  pages     = {163--172},
+  numpages  = {10},
+  url       = {http://doi.acm.org/10.1145/160985.161015},
+  doi       = {10.1145/160985.161015},
+  acmid     = {161015},
+  publisher = {ACM},
+  address   = {New York, NY, USA}
+}
+
+@article{Fousse2007,
+  author     = {Fousse, L. and Hanrot, G. and Lef\`{e}vre, V. and P{\'e}lissier, P. and Zimmermann, P.},
+  title      = {MPFR: A Multiple-precision Binary Floating-point Library with Correct Rounding},
+  journal    = {ACM Trans. Math. Softw.},
+  volume     = {33},
+  number     = {2},
+  year       = {2007},
+  articleno  = {13},
+  publisher  = {ACM},
+  address    = {New York, NY, USA}
+}
+
+@article{fTetWild,
+  author     = {Hu, Yixin and Schneider, Teseo and Wang, Bolun and Zorin, Denis and Panozzo, Daniele},
+  title      = {Fast Tetrahedral Meshing in the Wild},
+  year       = {2020},
+  issue_date = {August 2020},
+  publisher  = {Association for Computing Machinery},
+  address    = {New York, NY, USA},
+  volume     = {39},
+  number     = {4},
+  issn       = {0730-0301},
+  url        = {https://doi.org/10.1145/3386569.3392385},
+  doi        = {10.1145/3386569.3392385},
+  abstract   = {We propose a new tetrahedral meshing method, fTetWild, to convert triangle soups into high-quality tetrahedral meshes. Our method builds on the TetWild algorithm, replacing the rational triangle insertion with a new incremental approach to construct and optimize the output mesh, interleaving triangle insertion and mesh optimization. Our approach makes it possible to maintain a valid floating-point tetrahedral mesh at all algorithmic stages, eliminating the need for costly constructions with rational numbers used by TetWild, while maintaining full robustness and similar output quality. This allows us to improve on TetWild in two ways. First, our algorithm is significantly faster, with running time comparable to less robust Delaunay-based tetrahedralization algorithms. Second, our algorithm is guaranteed to produce a valid tetrahedral mesh with floating-point vertex coordinates, while TetWild produces a valid mesh with rational coordinates which is not guaranteed to be valid after floating-point conversion. As a trade-off, our algorithm no longer guarantees that all input triangles are present in the output mesh, but in practice, as confirmed by our tests on the Thingi10k dataset, the algorithm always succeeds in inserting all input triangles.},
+  journal    = {ACM Trans. Graph.},
+  month      = {8},
+  articleno  = {117},
+  numpages   = {18},
+  keywords   = {robust geometry processing, mesh generation, tetrahedral meshing}
+}
+
+@misc{gaol,
+  howpublished = {\url{https://sourceforge.net/projects/gaol/}},
+  title        = { Gaol: NOT Just Another Interval Library},
+  year         = {2005},
+  author       = {Goualard, F.}
+} 
+
+@article{gargallo-peiro_distortion_2015,
+  title    = {Distortion and quality measures for validating and generating high-order tetrahedral meshes},
+  volume   = {31},
+  number   = {3},
+  journal  = {Engineering with Computers},
+  author   = {Gargallo-Peiró, A. and Roca, X. and Peraire, J. and Sarrate, J.},
+  year     = {2015},
+  pages    = {423--437}
+} 
+
+
+@article{gargallo-peiro_high-order_nodate,
+  title    = {High-order mesh generation on {CAD} geometries},
+  abstract = {We present a technique to extend Jacobian-based distortion (quality) measures for planar triangles to high-order isoparametric elements of any interpolation degree on CAD parameterized surfaces. The resulting distortion (quality) measures are expressed in terms of the parametric coordinates of the nodes. These extended distortion (quality) measures can be used to check the quality and validity of a high-order surface mesh. We also apply them to simultaneously smooth and untangle high-order surface meshes by minimizing the extended distortion measure. The minimization is performed in terms of the parametric coordinates of the nodes. Thus, the nodes always lie on the surface. Finally, we include several examples to illustrate the application of the proposed technique.},
+  language = {en},
+  author   = {Gargallo-Peiro, A and Roca, X and Peraire, J and Sarrate, J},
+}
+
+@article{gargallo-peiro_optimization_2015,
+  title      = {Optimization of a regularized distortion measure to generate curved high-order unstructured tetrahedral meshes},
+  volume     = {103},
+  issn       = {00295981},
+  shorttitle = {Optimization of a regularized distortion measure to generate curved high-order unstructured tetrahedral meshes},
+  url        = {https://onlinelibrary.wiley.com/doi/10.1002/nme.4888},
+  doi        = {10.1002/nme.4888},
+  abstract   = {We present a robust method for generating high-order nodal tetrahedral curved meshes. The approach consists of modifying an initial linear mesh by ﬁrst, introducing high-order nodes, second, displacing the boundary nodes to ensure that they are on the computer-aided design surface, and third, smoothing and untangling the mesh obtained after the displacement of the boundary nodes to produce a valid curved highorder mesh. The smoothing algorithm is based on the optimization of a regularized measure of the mesh distortion relative to the original linear mesh. This means that whenever possible, the resulting mesh preserves the geometrical features of the initial linear mesh such as shape, stretching, and size. We present several examples to illustrate the performance of the proposed algorithm. Furthermore, the examples show that the implementation of the optimization problem is robust and capable of handling situations in which the mesh before optimization contains a large number of invalid elements. We consider cases with polynomial approximations up to degree ten, large deformations of the curved boundaries, concave boundaries, and highly stretched boundary layer elements. The meshes obtained are suitable for high-order ﬁnite element analyses. Copyright © 2015 John Wiley \& Sons, Ltd.},
+  language   = {en},
+  number     = {5},
+  urldate    = {2023-05-12},
+  journal    = {International Journal for Numerical Methods in Engineering},
+  author     = {Gargallo-Peiró, A. and Roca, X. and Peraire, J. and Sarrate, J.},
+  month      = aug,
+  year       = {2015},
+  keywords   = {High-order elements, Tetrahedral meshes},
+  pages      = {342--363},
+}
+
+@article{Johnen2013,
+title = {Geometrical validity of curvilinear finite elements},
+journal = {Journal of Computational Physics},
+volume = {233},
+pages = {359-372},
+year = {2013},
+issn = {0021-9991},
+author = {A. Johnen and J.-F. Remacle and C. Geuzaine},
+keywords = {Finite element method, High-order methods, Mesh generation, Bézier functions},
+abstract = {In this paper, we describe a way to compute accurate bounds on Jacobian determinants of curvilinear polynomial finite elements. Our condition enables to guarantee that an element is geometrically valid, i.e., that its Jacobian determinant is strictly positive everywhere in its reference domain. It also provides an efficient way to measure the distortion of curvilinear elements. The key feature of the method is to expand the Jacobian determinant using a polynomial basis, built using Bézier functions, that has both properties of boundedness and positivity. Numerical results show the sharpness of our estimates.}
+}
+
+@inbook{Geuzaine2015,
+  author    = {Geuzaine, C.
+               and Johnen, A.
+               and Lambrechts, J.
+               and Remacle, J. -F.
+               and Toulorge, T.},
+  editor    = {Kroll, Norbert
+               and Hirsch, Charles
+               and Bassi, Francesco
+               and Johnston, Craig
+               and Hillewaert, Koen},
+  title     = {The Generation of Valid Curvilinear Meshes},
+  booktitle = {IDIHOM: Industrialization of High-Order Methods - A Top-Down Approach: Results of a Collaborative Research Project Funded by the European Union, 2010 - 2014},
+  year      = {2015},
+  publisher = {Springer International Publishing},
+  address   = {Cham},
+  pages     = {15--39}
+}
+
+@article{gmsh,
+  author = {Geuzaine, Christophe and Remacle, Jean-François},
+  year   = {2008},
+  month  = {11},
+  pages  = {},
+  title  = {Gmsh: A three-dimensional finite element mesh generator with built-in pre-and post-processing facilities},
+  volume = {79}
+}
+
+@inproceedings{goualard_simd,
+  title     = {Fast and Correct SIMD Algorithms for Interval Arithmetic},
+  author    = {Fr{\'e}d{\'e}ric Goualard},
+  year      = {2008},
+  booktitle = {Procs of PARA'08},
+  address   = {Trondheim, Norway}
+}
+
+@inproceedings{highorderIPC,
+  author    = {Ferguson, Z. and Jain, P. and Zorin, D. and Schneider, T. and Panozzo, D.},
+  title     = {High-Order Incremental Potential Contact for Elastodynamic Simulation on Curved Meshes},
+  year      = {2023},
+  publisher = {Association for Computing Machinery},
+  address   = {New York, NY, USA},
+  booktitle = {ACM SIGGRAPH 2023 Conference Proceedings},
+  articleno = {77},
+  numpages  = {11},
+  location  = {, Los Angeles, CA, USA, },
+  series    = {SIGGRAPH '23}
+}
+
+@article{hu_tetrahedral_2018,
+  title    = {Tetrahedral meshing in the wild},
+  volume   = {37},
+  issn     = {0730-0301, 1557-7368},
+  url      = {https://dl.acm.org/doi/10.1145/3197517.3201353},
+  doi      = {10.1145/3197517.3201353},
+  abstract = {We propose a novel tetrahedral meshing technique that is unconditionally robust, requires no user interaction, and can directly convert a triangle soup into an analysis-ready volumetric mesh. The approach is based on several core principles: (1) initial mesh construction based on a fully robust, yet efficient, filtered exact computation (2) explicit (automatic or user-defined) tolerancing of the mesh relative to the surface input (3) iterative mesh improvement with guarantees, at every step, of the output validity. The quality of the resulting mesh is a direct function of the target mesh size and allowed tolerance: increasing allowed deviation from the initial mesh and decreasing the target edge length both lead to higher mesh quality.
+              Our approach enables "black-box" analysis, i.e. it allows to automatically solve partial differential equations on geometrical models available in the wild, offering a robustness and reliability comparable to, e.g., image processing algorithms, opening the door to automatic, large scale processing of real-world geometric data.},
+  language = {en},
+  number   = {4},
+  urldate  = {2023-04-18},
+  journal  = {ACM Transactions on Graphics},
+  author   = {Hu, Yixin and Zhou, Qingnan and Gao, Xifeng and Jacobson, Alec and Zorin, Denis and Panozzo, Daniele},
+  month    = aug,
+  year     = {2018},
+  keywords = {Volumetric mesh, Tetrahedral meshes, Robustness},
+  pages    = {1--14},
+}
+
+@misc{ipred_lib,
+  howpublished = {\url{https://github.com/MarcoAttene/Indirect\_Predicates}},
+  title        = {Indirect Predicates Library},
+  year         = {2019},
+  author       = {Attene, M.}
+}
+
+@article{jacobson_robust_2013,
+  title    = {Robust inside-outside segmentation using generalized winding numbers},
+  volume   = {32},
+  issn     = {0730-0301, 1557-7368},
+  url      = {https://dl.acm.org/doi/10.1145/2461912.2461916},
+  doi      = {10.1145/2461912.2461916},
+  abstract = {Solid shapes in computer graphics are often represented with boundary descriptions, e.g. triangle meshes, but animation, physicallybased simulation, and geometry processing are more realistic and accurate when explicit volume representations are available. Tetrahedral meshes which exactly contain (interpolate) the input boundary description are desirable but difﬁcult to construct for a large class of input meshes. Character meshes and CAD models are often composed of many connected components with numerous selfintersections, non-manifold pieces, and open boundaries, precluding existing meshing algorithms. We propose an automatic algorithm handling all of these issues, resulting in a compact discretization of the input’s inner volume. We only require reasonably consistent orientation of the input triangle mesh. By generalizing the winding number for arbitrary triangle meshes, we deﬁne a function that is a perfect segmentation for watertight input and is well-behaved otherwise. This function guides a graphcut segmentation of a constrained Delaunay tessellation (CDT), providing a minimal description that meets the boundary exactly and may be fed as input to existing tools to achieve element quality. We highlight our robustness on a number of examples and show applications of solving PDEs, volumetric texturing and elastic simulation.},
+  language = {en},
+  number   = {4},
+  urldate  = {2023-04-18},
+  journal  = {ACM Transactions on Graphics},
+  author   = {Jacobson, Alec and Kavan, Ladislav and Sorkine-Hornung, Olga},
+  month    = jul,
+  year     = {2013},
+  keywords = {Inside-outside},
+  pages    = {1--12},
+}
+
+@article{jiang_bijective_2020,
+  title    = {Bijective projection in a shell},
+  volume   = {39},
+  number   = {6},
+  urldate  = {2023-04-18},
+  journal  = {ACM Transactions on Graphics},
+  author   = {Jiang, Z. and Schneider, T. and Zorin, D. and Panozzo, D.},
+  year     = {2020},
+  pages    = {1--18}
+}
+
+@article{jiang_bijective_2021,
+  title    = {Bijective and coarse high-order tetrahedral meshes},
+  volume   = {40},
+  number   = {4},
+  urldate  = {2023-03-27},
+  journal  = {ACM Trans. Graph.},
+  author   = {Jiang, Z. and Zhang, Z. and Hu, Y. and Schneider, T. and Zorin, D. and Panozzo, D.},
+  year     = {2021},
+  pages    = {1--16}
+}
+
+@article{Jiang2017,
+  title     = {Simplicial complex augmentation framework for bijective maps},
+  volume    = {36},
+  number    = {6},
+  journal   = {ACM Trans. Graph.},
+  publisher = {Association for Computing Machinery (ACM)},
+  author    = {Jiang,  Z. and Schaefer,  S. and Panozzo,  D.},
+  year      = {2017},
+  pages     = {1–9}
+}
+
+@article{Jiang2021,
+  title     = {Bijective and coarse high-order tetrahedral meshes},
+  volume    = {40},
+  number    = {4},
+  journal   = {ACM Trans. Graph.},
+  publisher = {Association for Computing Machinery (ACM)},
+  author    = {Jiang,  Z. and Zhang,  Z. and Hu,  Y. and Schneider,  T. and Zorin,  D. and Panozzo,  D.},
+  year      = {2021},
+  pages     = {1–16}
+}
+
+@article{Johnen_Weill_Remacle_2017,
+  title    = {Robust and efficient validation of the linear hexahedral element},
+  volume   = {203},
+  journal  = {Procedia Engineering},
+  author   = {Johnen, A. and Weill, J.-C. and Remacle, J.-F.},
+  year     = {2017},
+  pages    = {271–283},
+  language = {en}
+}
+
+@article{johnen_geometrical_2014,
+  author     = {Johnen, A. and Remacle, J. -F. and Geuzaine, C.},
+  title      = {Geometrical Validity of High-Order Triangular Finite Elements},
+  year       = {2014},
+  publisher  = {Springer-Verlag},
+  address    = {Berlin, Heidelberg},
+  volume     = {30},
+  number     = {3},
+  journal    = {Eng. with Comput.},
+  pages      = {375–382},
+  numpages   = {8}
+}
+
+@article{khanteimouri_rational_2022,
+  title    = {Rational {Bézier} {Guarding}},
+  volume   = {41},
+  issn     = {0167-7055, 1467-8659},
+  url      = {https://onlinelibrary.wiley.com/doi/10.1111/cgf.14605},
+  doi      = {10.1111/cgf.14605},
+  abstract = {We present a reliable method to generate planar meshes of nonlinear rational triangular elements. The elements are guaranteed to be valid, i.e. defined by injective rational functions. The mesh is guaranteed to conform exactly, without geometric error, to arbitrary rational domain boundary and feature curves. The method generalizes the recent Bézier Guarding technique, which is applicable only to polynomial curves and elements. This generalization enables the accurate handling of practically important cases involving, for instance, circular or elliptic arcs and NURBS curves, which cannot be matched by polynomial elements. Furthermore, although many practical scenarios are concerned with rational functions of quadratic and cubic degree only, our method is fully general and supports arbitrary degree. We demonstrate the method on a variety of test cases.},
+  language = {en},
+  number   = {5},
+  urldate  = {2023-04-04},
+  journal  = {Computer Graphics Forum},
+  author   = {Khanteimouri, P. and Mandad, M. and Campen, M.},
+  month    = aug,
+  year     = {2022},
+  keywords = {High-order elements, 2D domain, Bézier curves},
+  pages    = {89--99},
+}
+
+@article{kulisch,
+  author     = {Kulisch, Ulrich},
+  title      = {Mathematics and Speed for Interval Arithmetic: A Complement to IEEE 1788},
+  year       = {2019},
+  issue_date = {March 2019},
+  publisher  = {Association for Computing Machinery},
+  address    = {New York, NY, USA},
+  volume     = {45},
+  number     = {1},
+  issn       = {0098-3500},
+  url        = {https://doi.org/10.1145/3264448},
+  doi        = {10.1145/3264448},
+  journal    = {ACM Trans. Math. Softw.},
+  month      = {mar},
+  articleno  = {5},
+  numpages   = {22},
+  keywords   = {computer hardware, exact dot product, Super computer}
+}
+
+@inproceedings{lambov,
+  author    = {Lambov, B.},
+  editor    = {Hertling, P.
+               and Hoffmann, C. M.
+               and Luther, W.
+               and Revol, N.},
+  title     = {Interval Arithmetic Using SSE-2},
+  booktitle = {Reliable Implementation of Real Number Algorithms: Theory and Practice},
+  year      = {2008},
+  publisher = {Springer Berlin Heidelberg},
+  address   = {Berlin, Heidelberg},
+  pages     = {102--113}
+}
+
+@article{li2005,
+  title   = {Recent progress in exact geometric computation},
+  journal = {The Journal of Logic and Algebraic Programming},
+  volume  = {64},
+  number  = {1},
+  pages   = {85 - 111},
+  year    = {2005},
+  note    = {Practical development of exact real number computation},
+  issn    = {1567-8326},
+  doi     = {https://doi.org/10.1016/j.jlap.2004.07.006},
+  url     = {http://www.sciencedirect.com/science/article/pii/S1567832604000773},
+  author  = {C. Li and S. Pion and C.K. Yap}
+}
+
+@article{Li2020IPC,
+  author    = {M. Li and Z. Ferguson and T. Schneider and T. Langlois and
+               D. Zorin and D. Panozzo and C. Jiang and Kaufman, D. M.},
+  title     = {Incremental Potential Contact: Intersection- and Inversion-free Large Deformation Dynamics},
+  journal   = {ACM Trans. Graph. (SIGGRAPH)},
+  year      = {2020},
+  volume    = {39},
+  number    = {4},
+  articleno = {49}
+}
+
+@article{Maas2012,
+  title     = {FEBio: Finite Elements for Biomechanics},
+  volume    = {134},
+  number    = {1},
+  journal   = {Jou. of Biomechanical Engineering},
+  publisher = {ASME International},
+  author    = {Maas,  S. A. and Ellis,  B. J. and Ateshian,  G. A. and Weiss,  J. A.},
+  year      = {2012}
+}
+
+@article{mandad_bezier_2020,
+  title      = {Bézier guarding: precise higher-order meshing of curved {2D} domains},
+  volume     = {39},
+  issn       = {0730-0301, 1557-7368},
+  shorttitle = {Bézier guarding},
+  url        = {https://dl.acm.org/doi/10.1145/3386569.3392372},
+  doi        = {10.1145/3386569.3392372},
+  abstract   = {We present a mesh generation algorithm for the curvilinear triangulation of planar domains with piecewise polynomial boundary. The resulting mesh consists of regular, injective higher-order triangular elements and precisely conforms with the domain's curved boundary. No smoothness requirements are imposed on the boundary. Prescribed piecewise polynomial curves in the interior, like material interfaces or feature curves, can be taken into account for precise interpolation by the resulting mesh's edges as well. In its core, the algorithm is based on a novel explicit construction of guaranteed injective Bézier triangles with certain edge curves and edge parametrizations prescribed. Due to the use of only rational arithmetic, the algorithm can optionally be performed using exact number types in practice, so as to provide robustness guarantees.},
+  language   = {en},
+  number     = {4},
+  urldate    = {2023-04-04},
+  journal    = {ACM Transactions on Graphics},
+  author     = {Mandad, Manish and Campen, Marcel},
+  month      = aug,
+  year       = {2020},
+  keywords   = {High-order elements, 2D domain, Bézier curves},
+}
+
+@article{mandad_guaranteed-quality_2021,
+  title    = {Guaranteed-quality higher-order triangular meshing of {2D} domains},
+  volume   = {40},
+  issn     = {0730-0301, 1557-7368},
+  url      = {https://dl.acm.org/doi/10.1145/3450626.3459673},
+  doi      = {10.1145/3450626.3459673},
+  abstract = {We present a guaranteed quality mesh generation algorithm for the curvilinear triangulation of planar domains with piecewise polynomial boundary. The resulting mesh consists of higher-order triangular elements which are not only regular (i.e., with injective geometric map) but respect strict bounds on quality measures like scaled Jacobian and MIPS distortion. This also implies that the curved triangles' inner angles are bounded from above and below. These are key quality criteria, for instance, in the field of finite element analysis. The domain boundary is reproduced exactly, without geometric approximation error. The central idea is to transform the curvilinear meshing problem into a linear meshing problem via a carefully constructed transformation of bounded distortion, enabling us to leverage key results on guaranteed-quality straight-edge triangulation. The transformation is based on a simple yet general construction and observations about convergence properties of curves under subdivision. Our algorithm can handle arbitrary polynomial order, arbitrarily sharp corners, feature and interface curves, and can be executed using rational arithmetic for strict reliability.},
+  language = {en},
+  number   = {4},
+  urldate  = {2023-03-31},
+  journal  = {ACM Transactions on Graphics},
+  author   = {Mandad, Manish and Campen, Marcel},
+  month    = aug,
+  year     = {2021},
+  keywords = {High-order elements, 2D domain, Bézier curves},
+  pages    = {1--14},
+}
+
+@article{Mandad2020,
+  title     = {Efficient piecewise higher-order parametrization of discrete surfaces with local and global injectivity},
+  volume    = {127},
+  journal   = {Computer-Aided Design},
+  publisher = {Elsevier BV},
+  author    = {Mandad,  M. and Campen,  M.},
+  year      = {2020},
+  pages     = {102862}
+}
+
+@article{marschner_hexahedral_2020,
+  title    = {Hexahedral {Mesh} {Repair} via {Sum}‐of‐{Squares} {Relaxation}},
+  volume   = {39},
+  number   = {5},
+  urldate  = {2023-07-26},
+  journal  = {Computer Graphics Forum},
+  author   = {Marschner, Z. and Palmer, D. and Zhang, P. and Solomon, J.},
+  month    = aug,
+  year     = {2020},
+  pages    = {133--147},
+}
+
+@article{Marschner2020,
+  title     = {Hexahedral Mesh Repair via Sum‐of‐Squares Relaxation},
+  volume    = {39},
+  number    = {5},
+  journal   = {Computer Graphics Forum},
+  publisher = {Wiley},
+  author    = {Marschner,  Z. and Palmer,  D. and Zhang,  P. and Solomon,  J.},
+  year      = {2020},
+  month     = aug,
+  pages     = {133–147}
+}
+
+@article{Martin2024,
+  title     = {A systematic comparison between FEBio and PolyFEM for biomechanical systems},
+  volume    = {244},
+  journal   = {Computer Methods and Programs in Biomedicine},
+  publisher = {Elsevier BV},
+  author    = {Martin,  L. and Jain,  P. and Ferguson,  Z. and Gholamalizadeh,  T. and Moshfeghifar,  F. and Erleben,  K. and Panozzo,  D. and Abramowitch,  S. and Schneider,  T.},
+  year      = {2024},
+  pages     = {107938}
+}
+
+@misc{Mathematica,
+  author = {{Wolfram Research, Inc.}},
+  title  = {Mathematica, {V}ersion 13.3},
+  url    = {https://www.wolfram.com/mathematica},
+  note   = {Champaign, IL}, 
+year = 2023
+}
+
+@inproceedings{meyer08,
+  author    = {Meyer, A. and Pion, S.},
+  booktitle = {Real Numbers and Computers},
+  year      = {2008},
+  location  = {Santiago de Compostela, Spain},
+  month     = {06},
+  pages     = {47--60},
+  title     = {{FPG}: A code generator for fast and certified geometric predicates}
+}
+
+@article{Mezger2009,
+  title     = {Interactive physically-based shape editing},
+  volume    = {26},
+  number    = {6},
+  journal   = {Computer Aided Geometric Design},
+  publisher = {Elsevier BV},
+  author    = {Mezger,  J. and Thomaszewski,  B. and Pabst,  S. and Straßer,  W.},
+  year      = {2009},
+  month     = aug,
+  pages     = {680–694}
+}
+
+@article{Mller2015,
+  title     = {Air meshes for robust collision handling},
+  volume    = {34},
+  number    = {4},
+  journal   = {ACM Trans. Graph.},
+  publisher = {Association for Computing Machinery (ACM)},
+  author    = {M\"{u}ller,  M. and Chentanez,  N. and Kim,  T.-Y. and Macklin,  M.},
+  year      = {2015},
+  pages     = {1–9}
+}
+
+@article{PION2011,
+  title   = {A generic lazy evaluation scheme for exact geometric computations},
+  journal = {Science of Computer Programming},
+  volume  = {76},
+  number  = {4},
+  pages   = {307 - 323},
+  year    = {2011},
+  note    = {Special issue on library-centric software design (LCSD 2006)},
+  issn    = {0167-6423},
+  doi     = {https://doi.org/10.1016/j.scico.2010.09.003},
+  url     = {http://www.sciencedirect.com/science/article/pii/S016764231000167X},
+  author  = {Sylvain Pion and Andreas Fabri}
+}
+
+@misc{polyfem,
+  author       = {T. Schneider and J. Dumas and X. Gao and D. Zorin and D. Panozzo},
+  title        = {{PolyFEM}},
+  howpublished = {\url{https://polyfem.github.io/}},
+  year         = {2019}
+}
+
+@article{poya_unified_2016,
+  title    = {A unified approach for a posteriori high-order curved mesh generation using solid mechanics},
+  volume   = {58},
+  number   = {3},
+  urldate  = {2023-09-10},
+  journal  = {Computational Mechanics},
+  author   = {Poya, R. and Sevilla, R. and Gil, A. J.},
+  year     = {2016},
+  pages    = {457--490},
+}
+
+@online{quartet,
+  author = {Bridson, Robert and Doran, Crawford},
+  title  = {Quartet: A tetrahedral mesh generator that does isosurface stuffing with an acute tetrahedral tile},
+  url    = {https://github.com/crawforddoran/quartet}
+}
+
+@article{richard_shewchuk_adaptive_1997,
+  title    = {Adaptive {Precision} {Floating}-{Point} {Arithmetic} and {Fast} {Robust} {Geometric} {Predicates}},
+  volume   = {18},
+  number   = {3},
+  urldate  = {2023-07-26},
+  journal  = {Discrete \& Computational Geometry},
+  author   = {Shewchuk, J. R.},
+  month    = oct,
+  year     = {1997},
+  keywords = {Robustness},
+  pages    = {305--363},
+}
+
+@article{RichardShewchuk1997,
+  title     = {Adaptive Precision Floating-Point Arithmetic and Fast Robust Geometric Predicates},
+  volume    = {18},
+  issn      = {0179-5376},
+  number    = {3},
+  journal   = {Discrete &amp; Computational Geometry},
+  publisher = {Springer Science and Business Media LLC},
+  author    = {Shewchuk,  Jonathan Richard},
+  year      = {1997},
+  month     = oct,
+  pages     = {305–363}
+}
+
+@article{Schneider2018,
+  title     = {Decoupling simulation accuracy from mesh quality},
+  volume    = {37},
+  number    = {6},
+  journal   = {ACM Trans. Graph.},
+  publisher = {Association for Computing Machinery (ACM)},
+  author    = {Schneider,  T. and Hu,  Y. and Dumas,  J. and Gao,  X. and Panozzo,  D. and Zorin,  D.},
+  year      = {2018},
+  pages     = {1–14}
+}
+
+@article{Schneider2022,
+  title     = {A Large-Scale Comparison of Tetrahedral and Hexahedral Elements for Solving Elliptic PDEs with the Finite Element Method},
+  volume    = {41},
+  number    = {3},
+  journal   = {ACM Trans. on Graph.},
+  publisher = {Association for Computing Machinery (ACM)},
+  author    = {Schneider,  T. and Hu,  Y. and Gao,  X. and Dumas,  J. and Zorin,  D. and Panozzo,  D.},
+  year      = {2022},
+  pages     = {1–14}
+}
+
+@article{sherwin_mesh_2002,
+  title      = {Mesh generation in curvilinear domains using high-order elements: {MESH} {GENERATION} {IN} {CURVILINEAR} {DOMAINS}},
+  volume     = {53},
+  number     = {1},
+  urldate    = {2023-09-10},
+  journal    = {International Journal for Numerical Methods in Engineering},
+  author     = {Sherwin, S. J. and Peiró, J.},
+  month      = jan,
+  year       = {2002},
+  pages      = {207--223},
+}
+
+@inproceedings{shewchuk2014higher,
+  title     = {Higher-quality tetrahedral mesh generation for domains with small angles by constrained Delaunay refinement},
+  author    = {Shewchuk, J. R. and Si, Hang},
+  booktitle = {Proceedings of the thirtieth annual symposium on Computational geometry},
+  pages     = {290--299},
+  year      = {2014}
+}
+
+@article{Smith:2015,
+  author     = {Smith, J. and Schaefer, S.},
+  title      = {Bijective Parameterization with Free Boundaries},
+  year       = {2015},
+  publisher  = {Association for Computing Machinery},
+  address    = {New York, NY, USA},
+  volume     = {34},
+  number     = {4},
+  journal    = {ACM Trans. Graph.},
+  articleno  = {70},
+  numpages   = {9},
+  keywords   = {bijective mappings, parameterization, free boundary}
+}
+
+@article{snyder92,
+  author  = {Snyder, J},
+  title   = {Interval Analysis For Computer Graphics},
+  journal = {ACM SIGGRAPH},
+  pages   = {121--130},
+  year    = {1992}
+}
+
+@misc{sun_refined_2014,
+  title     = {A refined error analysis for fixed-degree polynomial optimization over the simplex},
+  publisher = {arXiv},
+  author    = {Sun, Z.},
+  month     = aug,
+  year      = {2014},
+  note      = {arXiv:1312.5873 [math]},
+  keywords  = {Mathematics - Optimization and Control, 90C26, 90C30},
+}
+
+@inproceedings{Suwelack2013,
+  series     = {SCA ’13},
+  title      = {Accurate surface embedding for higher order finite elements},
+  booktitle  = {Proceedings of the 12th ACM SIGGRAPH/Eurographics Symposium on Computer Animation},
+  publisher  = {ACM},
+  author     = {Suwelack,  S. and Lukarski,  D. and Heuveline,  V. and Dillmann,  R. and Speidel,  S.},
+  year       = {2013}
+}
+
+@article{tetgen,
+  author     = {Si, Hang},
+  title      = {TetGen, a Delaunay-Based Quality Tetrahedral Mesh Generator},
+  year       = {2015},
+  issue_date = {January 2015},
+  publisher  = {Association for Computing Machinery},
+  address    = {New York, NY, USA},
+  volume     = {41},
+  number     = {2},
+  issn       = {0098-3500},
+  url        = {https://doi.org/10.1145/2629697},
+  doi        = {10.1145/2629697},
+  abstract   = {TetGen is a C++ program for generating good quality tetrahedral meshes aimed to support numerical methods and scientific computing. The problem of quality tetrahedral mesh generation is challenged by many theoretical and practical issues. TetGen uses Delaunay-based algorithms which have theoretical guarantee of correctness. It can robustly handle arbitrary complex 3D geometries and is fast in practice. The source code of TetGen is freely available.This article presents the essential algorithms and techniques used to develop TetGen. The intended audience are researchers or developers in mesh generation or other related areas. It describes the key software components of TetGen, including an efficient tetrahedral mesh data structure, a set of enhanced local mesh operations (combination of flips and edge removal), and filtered exact geometric predicates. The essential algorithms include incremental Delaunay algorithms for inserting vertices, constrained Delaunay algorithms for inserting constraints (edges and triangles), a new edge recovery algorithm for recovering constraints, and a new constrained Delaunay refinement algorithm for adaptive quality tetrahedral mesh generation. Experimental examples as well as comparisons with other softwares are presented.},
+  journal    = {ACM Trans. Math. Softw.},
+  month      = {2},
+  articleno  = {11},
+  numpages   = {36},
+  keywords   = {mesh quality, mesh improvement, flips, edge removal, constrained Delaunay, boundary recovery, mesh refinement, Tetrahedral mesh generation, Steiner points, Delaunay}
+}
+
+@article{Thingi10K,
+  title   = {Thingi10K: A Dataset of 10,000 3D-Printing Models},
+  author  = {Zhou, Qingnan and Jacobson, Alec},
+  journal = {arXiv preprint arXiv:1605.04797},
+  year    = {2016}
+}
+
+@article{toulorge_2013,
+  title    = {Robust untangling of curvilinear meshes},
+  journal  = {Journal of Computational Physics},
+  volume   = {254},
+  pages    = {8-26},
+  year     = {2013},
+  author   = {T. Toulorge and C. Geuzaine and J.-F. Remacle and J. Lambrechts},
+  keywords = {High-order methods, Finite elements, Mesh generation}
+}
+
+ @phdthesis{turner_high-order_2017,
+  title    = {High-{Order} {Mesh} {Generation} {For} {CFD} {Solvers}},
+  abstract = {The generation of curvilinear, high-order meshes for CFD applications remains a signiﬁcant bottleneck in the progress and application of high-order CFD methods. These methods have superior numerical accuracy over low-order methods due to their use of piecewise polynomial representations of domains and solutions. As such they are viewed as a potential source of higher ﬁdelity simulations with a view of industrial application [81]. The current state of the art in high-order mesh generation does not provide a reliable and eﬃcient approach which would be required in an industrial setting.},
+  language = {en},
+  author   = {Turner, Michael},
+  year     = {2017},
+}
+
+ @article{turner_variational_2016,
+  title    = {A {Variational} {Framework} for {High}-order {Mesh} {Generation}},
+  volume   = {163},
+  issn     = {18777058},
+  url      = {https://linkinghub.elsevier.com/retrieve/pii/S1877705816333781},
+  doi      = {10.1016/j.proeng.2016.11.069},
+  abstract = {The generation of suﬃciently high quality unstructured high-order meshes remains a signiﬁcant obstacle in the adoption of highorder methods. However, there is little consensus on which approach is the most robust, fastest and produces the ‘best’ meshes. We aim to provide a route to investigate this question, by examining popular high-order mesh generation methods in the context of an eﬃcient variational framework for the generation of curvilinear meshes. By considering previous works in a variational form, we are able to compare their characteristics and study their robustness. Alongside a description of the theory and practical implementation details, including an eﬃcient multi-threading parallelisation strategy, we demonstrate the eﬀectiveness of the framework, showing how it can be used for both mesh quality optimisation and untangling of invalid meshes.},
+  language = {en},
+  urldate  = {2023-09-10},
+  journal  = {Procedia Engineering},
+  author   = {Turner, Michael and Peiró, Joaquim and Moxey, David},
+  year     = {2016},
+  pages    = {340--352},
+}
+
+@article{Ushakova2011,
+  title     = {Nondegeneracy tests for hexahedral cells},
+  volume    = {200},
+  number    = {17–20},
+  journal   = {Computer Methods in Applied Mechanics and Engineering},
+  publisher = {Elsevier BV},
+  author    = {Ushakova,  O. V.},
+  year      = {2011},
+  pages     = {1649–1658}
+}
+
+@article{Vavasis_2003,
+  title        = {A Bernstein-Bezier Sufficient Condition for Invertibility of Polynomial Mapping Functions},
+  rights       = {Assumed arXiv.org perpetual, non-exclusive license to distribute this article for submissions made before January 2004},
+  author       = {Vavasis, S.},
+  year         = {2003}
+}
+
+@article{wang_large-scale_2021,
+  title    = {A {Large}-scale {Benchmark} and an {Inclusion}-based {Algorithm} for {Continuous} {Collision} {Detection}},
+  volume   = {40},
+  number   = {5},
+  journal  = {ACM Trans. Graph.},
+  author   = {Wang, B. and Ferguson, Z. and Schneider, T. and Jiang, X. and Attene, M. and Panozzo, D.},
+  year     = {2021},
+  pages    = {1--16}
+}
+
+@article{Wang2021,
+  author     = {Wang, B. and Ferguson, Z. and Schneider, T. and Jiang, X. and Attene, M. and Panozzo, D.},
+  title      = {A Large-scale Benchmark and an Inclusion-based Algorithm for Continuous Collision Detection},
+  year       = {2021},
+  publisher  = {Association for Computing Machinery},
+  address    = {New York, NY, USA},
+  volume     = {40},
+  number     = {5},
+  journal    = {ACM Trans. Graph.},
+  articleno  = {188},
+  pages    = {1--16}
+}
+
+@article{Lengagne:2020,
+author={
+S. Lengagne and R. Kalawoun and F. Bouchon and Y. Mezouar},
+title = {Reducing pessimism in Interval Analysis using B-splines Properties: Application to Robotics}, 
+journal = {Reliable Computing}, 
+year = 2020, 
+volume = 27, 
+pages = {63--87}
+}
+
+@article{JOHNEN2018,
+title = {Efficient computation of the minimum of shape quality measures on curvilinear finite elements},
+journal = {Computer-Aided Design},
+volume = {103},
+pages = {24-33},
+year = {2018},
+author = {A. Johnen and C. Geuzaine and T. Toulorge and J.-F. Remacle}
+}
+
+@article{Kane2000,
+  title = {Variational integrators and the Newmark algorithm for conservative and dissipative mechanical systems},
+  volume = {49},
+  number = {10},
+  journal = {International Journal for Numerical Methods in Engineering},
+  publisher = {Wiley},
+  author = {Kane,  C. and Marsden,  J. E. and Ortiz,  M. and West,  M.},
+  year = {2000},
+  pages = {1295–1325}
+}
+
+@article{Johnen2016,
+  title = {Efficient Computation of the Minimum of Shape Quality Measures on Curvilinear Finite Elements},
+  volume = {163},
+  journal = {Procedia Engineering},
+  publisher = {Elsevier BV},
+  author = {Johnen,  A. and Geuzaine,  C. and Toulorge,  T. and Remacle,  J.-F.},
+  year = {2016},
+  pages = {328–339}
+}
+
+@article{Dobrev2019,
+  title = {The Target-Matrix Optimization Paradigm for High-Order Meshes},
+  volume = {41},
+  number = {1},
+  journal = {SIAM Jou. Sci. Comp.},
+  publisher = {Society for Industrial & Applied Mathematics (SIAM)},
+  author = {Dobrev,  V. and Knupp,  P. and Kolev,  T. and Mittal,  K. and Tomov,  V.},
+  year = {2019},
+  pages = {B50–B68}
+}
+
+@article{Anderson2014,
+  title = {Monotonicity in high‐order curvilinear finite element arbitrary Lagrangian–Eulerian remap},
+  volume = {77},
+  ISSN = {1097-0363},
+  DOI = {10.1002/fld.3965},
+  number = {5},
+  journal = {International Journal for Numerical Methods in Fluids},
+  publisher = {Wiley},
+  author = {Anderson,  R. W. and Dobrev,  V. A. and Kolev,  Tz. V. and Rieben,  R. N.},
+  year = {2014},
+  month = oct,
+  pages = {249–273}
+}
+
+@book{Farin:2001,
+  address   = {San Francisco, CA, USA},
+  author    = {Farin, G.},
+  edition   = {5th},
+  publisher = {Morgan Kaufmann Publishers Inc.},
+  title     = {Curves and Surfaces for CAGD: A Practical Guide},
+  year      = {2001}
+}
+
+@Manual{Granlund12,
+  title = 	 "{GNU MP}: {T}he {GNU} {M}ultiple {P}recision
+ 		  {A}rithmetic {L}ibrary",
+  author = "Granlund, T. and {the GMP development team}",
+  edition = 	 "5.0.5",
+  year = 	 2012,
+  note = "\url{http://gmplib.org/}"
+ }
+
+@misc{Eigen,
+    title        = {Eigen v3},
+    author       = {Ga{\"e}l Guennebaud and Beno{\^i}t Jacob and others},
+    year         = 2010,
+    url          = {http://eigen.tuxfamily.org},
+    howpublished = {\url{http://eigen.tuxfamily.org}}
+}
+
+@misc{IPCToolkit,
+    title        = {{IPC Toolkit}},
+    author       = {Zachary Ferguson and others},
+    year         = 2020,
+    url          = {https://ipc-sim.github.io/ipc-toolkit/},
+    howpublished = {\url{https://ipc-sim.github.io/ipc-toolkit/}}
+}
+
+
+@article{Alappat2020Recursive,
+    title        = {A Recursive Algebraic Coloring Technique for Hardware-Efficient Symmetric Sparse Matrix-Vector Multiplication},
+    author       = {Alappat, Christie and Basermann, Achim and Bishop, Alan R. and Fehske, Holger and Hager, Georg and Schenk, Olaf and Thies, Jonas and Wellein, Gerhard},
+    year         = 2020,
+    month        = jun,
+    journal      = {ACM Transactions on Parallel Computing},
+    publisher    = acm,
+    address      = nyc,
+    volume       = 7,
+    number       = 3,
+    issn         = {2329-4949},
+    issue_date   = {August 2020},
+    articleno    = 19,
+    numpages     = 37
+}
+
+@article{Bollhofer2019Large,
+    title        = {Large-scale Sparse Inverse Covariance Matrix Estimation},
+    author       = {Bollh{\"o}fer, Matthias and Eftekhari, Aryan and Scheidegger, Simon and Schenk, Olaf},
+    year         = 2019,
+    journal      = {SIAM Journal on Scientific Computing},
+    volume       = 41,
+    number       = 1,
+    pages        = {380--401}
+}
+@article{Bollhofer2020State,
+    title        = {State-of-the-Art Sparse Direct Solvers},
+    author       = {Bollh{\"o}fer, Matthias and Schenk, Olaf and Janalik, Radim and Hamm, Steve and Gullapalli, Kiran},
+    year         = 2020,
+    journal      = {Parallel Algorithms in Computational Science and Engineering},
+    publisher    = {Springer International Publishing},
+    address      = {Cham},
+    pages        = {3--33},
+    isbn         = {978-3-030-43736-7},
+    editor       = {Grama, Ananth and Sameh, Ahmed H.}
+}
+
+@article{openmp, author = {Dagum, Leonardo and Menon, Ramesh}, title = {OpenMP: An Industry-Standard API for Shared-Memory Programming}, year = {1998}, issue_date = {January 1998}, publisher = {IEEE Computer Society Press}, address = {Washington, DC, USA}, volume = {5}, number = {1}, issn = {1070-9924}, url = {https://doi.org/10.1109/99.660313}, doi = {10.1109/99.660313}, abstract = {The authors present a new way to achieve scalability in parallel software with OpenMP, their portable alternative to message passing. They discuss its capabilities through specific examples and comparisons with other standard parallel programming models.}, journal = {IEEE Comput. Sci. Eng.}, month = {jan}, pages = {46–55}, numpages = {10} }
+
+@article{Panetta2015,
+  title = {Elastic textures for additive fabrication},
+  volume = {34},
+  ISSN = {1557-7368},
+  url = {http://dx.doi.org/10.1145/2766937},
+  DOI = {10.1145/2766937},
+  number = {4},
+  journal = {ACM Transactions on Graphics},
+  publisher = {Association for Computing Machinery (ACM)},
+  author = {Panetta,  Julian and Zhou,  Qingnan and Malomo,  Luigi and Pietroni,  Nico and Cignoni,  Paolo and Zorin,  Denis},
+  year = {2015},
+  month = jul,
+  pages = {1–12}
+}
+
+@article{Toulorge2013,
+  title = {Robust untangling of curvilinear meshes},
+  volume = {254},
+  ISSN = {0021-9991},
+  url = {http://dx.doi.org/10.1016/j.jcp.2013.07.022},
+  DOI = {10.1016/j.jcp.2013.07.022},
+  journal = {Journal of Computational Physics},
+  publisher = {Elsevier BV},
+  author = {Toulorge,  Thomas and Geuzaine,  Christophe and Remacle,  Jean-Fran\c{c}ois and Lambrechts,  Jonathan},
+  year = {2013},
+  month = dec,
+  pages = {8–26}
+}
+
+@article{Bolun:2021,
+author = {Wang, Bolun and Ferguson, Zachary and Schneider, Teseo and Jiang, Xin and Attene, Marco and Panozzo, Daniele},
+title = {A Large-scale Benchmark and an Inclusion-based Algorithm for Continuous Collision Detection},
+year = {2021},
+issue_date = {October 2021},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {40},
+number = {5},
+issn = {0730-0301},
+url = {https://doi.org/10.1145/3460775},
+doi = {10.1145/3460775},
+abstract = {We introduce a large-scale benchmark for continuous collision detection (CCD) algorithms, composed of queries manually constructed to highlight challenging degenerate cases and automatically generated using existing simulators to cover common cases. We use the benchmark to evaluate the accuracy, correctness, and efficiency of state-of-the-art continuous collision detection algorithms, both with and without minimal separation.We discover that, despite the widespread use of CCD algorithms, existing algorithms are (1) correct but impractically slow; (2) efficient but incorrect, introducing false negatives that will lead to interpenetration; or (3) correct but over conservative, reporting a large number of false positives that might lead to inaccuracies when integrated in a simulator.By combining the seminal interval root finding algorithm introduced by Snyder in 1992 with modern predicate design techniques, we propose a simple and efficient CCD algorithm. This algorithm is competitive with state-of-the-art methods in terms of runtime while conservatively reporting the time of impact and allowing explicit tradeoff between runtime efficiency and number of false positives reported.},
+journal = {ACM Trans. Graph.},
+month = {sep},
+articleno = {188},
+numpages = {16},
+keywords = {Continuous collision detection, computational geometry, physically based animation}
+}
+
+@BOOK{Muchnick1997,
+  title     = "Advanced Compiler Design and Implementation",
+  author    = "Muchnick, Steven S",
+  publisher = "Morgan Kaufmann",
+  month     =  sep,
+  year      =  1997,
+  address   = "Oxford, England"
+}
+
+@article{sympy,
+     title = {SymPy: symbolic computing in Python},
+     author = {Meurer, A. and Smith, C.P. and Paprocki, M. and \v{C}ert\'{i}k, O. and Kirpichev, S. B. and Rocklin, M. and Kumar, A. and Ivanov, S. and Moore, J.K. and Singh, S. and Rathnayake, T. and Vig, S. and Granger, B.E. and Muller, R.P. and Bonazzi, F. and Gupta, H. and Vats, S. and Johansson, F. and Pedregosa, F. and Curry, M.J. and Terrel, A.R. and Rou\v{c}ka, \v{S}. and Saboo, A. and Fernando, I. and Kulal, S. and Cimrman, R. and Scopatz, A.},
+     year = 2017,
+     keywords = {Python, Computer algebra system, Symbolics},
+     abstract = {
+                SymPy is an open source computer algebra system written in pure Python. It is built with a focus on extensibility and ease of use, through both interactive and programmatic applications. These characteristics have led SymPy to become a popular symbolic library for the scientific Python ecosystem. This paper presents the architecture of SymPy, a description of its features, and a discussion of select submodules. The supplementary material provide additional examples and further outline details of the architecture and features of SymPy.
+             },
+     volume = 3,
+     pages = {e103},
+     journal = {PeerJ Computer Science},
+    }
+
+@BOOK{Maple10,
+author = {M.B.~Monagan and K.O.~Geddes and K.~M. Heal
+and G. Labahn and S.M.~Vorkoetter and J. McCarron and P. DeMarco},
+title = {Maple~10 Programming Guide},
+publisher = {Maplesoft}, 
+year = {2005},
+volume = {},
+series = {},
+address = {Waterloo ON, Canada},
+edition = {},
+month = {},
+note = {},
+key = {},
+annote = {In acknowledging any {Maple} work, a statement similar
+to the following should be used. (Changes with respect to the
+exact use of {Maple} are expected.) ``The computations in this paper
+were performed by using Maple${}^\mathrm{TM}$."},
+} 
+
+@book{Nocedal2006Numerical,
+  abstract = {{'Numerical Optimization' presents a comprehensive description of the effective methods in continuous optimization. The book includes chapters on nonlinear interior methods \& derivative-free methods for optimization. It is useful for graduate students, researchers and practitioners.}},
+  added-at = {2019-03-01T00:11:50.000+0100},
+  address = {New York},
+  author = {Nocedal, J. and Wright, S.J.},
+  keywords = {65k10-numerical-analysis-optimization-and-variational-techniques},
+  posted-at = {2012-08-21 16:03:32},
+  priority = {2},
+  publisher = {Springer},
+  series = {Springer Series in Operations Research and Financial Engineering},
+  timestamp = {2019-03-01T00:11:50.000+0100},
+  title = {{Numerical Optimization}},
+  year = 2006
+}
+
+@inproceedings{Hadap:2004, 
+author = {Hadap, S. and Eberle, D. and Volino, P. and Lin, M.C. and Redon, S. and Ericson, C.}, 
+title = {Collision detection and proximity queries}, 
+year = {2004}, 
+publisher = {ACM}, 
+address = {New York, NY, USA}, 
+abstract = {This course will primarily cover widely accepted and proved methodologies in collision detection. In addition more advanced or recent topics such as continuous collision detection, ADFs, and using graphics hardware will be introduced. When appropriate the methods discussed will be tied to familiar applications such as rigid body and cloth simulation, and will be compared. The course is a good overview for those developing applications in physically based modeling, VR, haptics, and robotics.}, 
+booktitle = {ACM SIGGRAPH 2004 Course Notes}, 
+pages = {15–es}, 
+location = {Los Angeles, CA}, 
+series = {SIGGRAPH '04} 
+}
+
+@article{Brochu:2012,
+author = {Brochu, T. and Edwards, E. and Bridson, R.},
+title = {Efficient geometrically exact continuous collision detection},
+year = {2012},
+issue_date = {July 2012},
+publisher = {ACM},
+address = {New York, NY, USA},
+volume = {31},
+number = {4},
+abstract = {Continuous collision detection (CCD) between deforming triangle mesh elements in 3D is a critical tool for many applications. The standard method involving a cubic polynomial solver is vulnerable to rounding error, requiring the use of ad hoc tolerances, and nevertheless is particularly fragile in (near-)planar cases. Even with per-simulation tuning, it may still cause problems by missing collisions or erroneously flagging non-collisions. We present a geometrically exact alternative guaranteed to produce the correct Boolean result (significant collision or not) as if calculated with exact arithmetic, even in degenerate scenarios. Our critical insight is that only the parity of the number of collisions is needed for robust simulation, and this parity can be calculated with simpler non-constructive predicates. In essence we analyze the roots of the nonlinear system of equations defining CCD through careful consideration of the boundary of the parameter domain. The use of new conservative culling and interval filters allows typical simulations to run as fast as with the non-robust version, but without need for tuning or worries about failure cases even in geometrically degenerate scenarios. We demonstrate the effectiveness of geometrically exact detection with a novel adaptive cloth simulation, the first to guarantee to remain intersection-free despite frequent curvature-driven remeshing.},
+journal = {ACM Trans. Graph.},
+month = jul,
+articleno = {96},
+numpages = {7},
+keywords = {physically based animation, computational geometry, collision detection, cloth simulation}
+}
+
+
+@article{tang_fast_2014,
+	title = {Fast and exact continuous collision detection with {Bernstein} sign classification},
+	volume = {33},
+	issn = {0730-0301, 1557-7368},
+	url = {https://dl.acm.org/doi/10.1145/2661229.2661237},
+	doi = {10.1145/2661229.2661237},
+	abstract = {We present fast algorithms to perform accurate CCD queries between triangulated models. Our formulation uses properties of the Bernstein basis and B´ezier curves and reduces the problem to evaluating signs of polynomials. We present a geometrically exact CCD algorithm based on the exact geometric computation paradigm to perform reliable Boolean collision queries. Our algorithm is more than an order of magnitude faster than prior exact algorithms. We evaluate its performance for cloth and FEM simulations on CPUs and GPUs, and highlight the beneﬁts.},
+	language = {en},
+	number = {6},
+	urldate = {2025-01-21},
+	journal = {ACM Transactions on Graphics},
+	author = {Tang, M. and Tong, R. and Wang, Z. and Manocha, D.},
+	year = {2014},
+	pages = {1--8},
+}
+
+
+@article{Wang:2022:FastRootParity,
+    title        = {Fast and Exact Root Parity for Continuous Collision Detection},
+    author       = {B. Wang and . Ferguson and X. Jiang and M. Attene and D. Panozzo and T. Schneider},
+    year         = 2022,
+    journal      = {Computer Graphics Forum (Proceedings of Eurographics)},
+    volume       = 41,
+    number       = 2,
+    numpages     = 9
+}
+
+@article{Marschner:2021,
+author = {Marschner, Z. and Zhang, P. and Palmer, D. and Solomon, J.},
+title = {Sum-of-squares geometry processing},
+year = {2021},
+issue_date = {December 2021},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {40},
+number = {6},
+abstract = {Geometry processing presents a variety of difficult numerical problems, each seeming to require its own tailored solution. This breadth is largely due to the expansive list of geometric primitives, e.g., splines, triangles, and hexahedra, joined with an ever-expanding variety of objectives one might want to achieve with them. With the recent increase in attention toward higher-order surfaces, we can expect a variety of challenges porting existing solutions that work on triangle meshes to work on these more complex geometry types. In this paper, we present a framework for solving many core geometry processing problems on higher-order surfaces. We achieve this goal through sum-of-squares optimization, which transforms nonlinear polynomial optimization problems into sequences of convex problems whose complexity is captured by a single degree parameter. This allows us to solve a suite of problems on higher-order surfaces, such as continuous collision detection and closest point queries on curved patches, with only minor changes between formulations and geometries.},
+journal = {ACM Trans. Graph.},
+month = dec,
+articleno = {253},
+numpages = {13},
+keywords = {sum-of-squares optimization, shape analysis, parametric surfaces, collision detection}
+}
+
+
+@inproceedings{Zhang:2023,
+author = {Zhang, P. and Marschner, Z. and Solomon, J. and Tamstorf, R.},
+title = {Sum-of-Squares Collision Detection for Curved Shapes and Paths},
+year = {2023},
+publisher = {ACM},
+address = {New York, NY, USA},
+abstract = {Sum-of-Squares Programming (SOSP) has recently been introduced to graphics as a unified way to address a large set of difficult problems involving higher order primitives. Unfortunately, a challenging aspect of this approach is the computational cost—especially for problems involving multiple geometries like collision detection. In this paper, we present techniques to reduce the cost of SOSP significantly. We use these improvements to speed up difficult problems like collision detection between B\'{e}zier triangles by as much as 300 \texttimes{}. In addition, motivated by hair bundle simulation, we present SOSP based collision detection on the tapered cubic cylinder. We also present an algebraic formulation of rigid body motion enabling SOSP based collision detection for curved geometries and trajectories simultaneously. While these new formulations are complex, our speedups make them feasible. These advances improve the applicability of SOSP based collision detection and enable the continued progress of higher-order geometry processing.},
+booktitle = {ACM SIGGRAPH 2023 Conference Proceedings},
+articleno = {76},
+numpages = {11},
+keywords = {collision detection, parametric shape analysis, sum-of-squares programming},
+location = {Los Angeles, CA, USA},
+}
+
+@phdthesis{SnyderPhd,
+  author = {Snyder,  J.M.},
+  keywords = {computer graphics,  CAD,  generative modeling,  Computer Science},
+  language = {en},
+  title = {Generative Modeling: An Approach to High Level Shape Design for Computer Graphics and CAD},
+  publisher = {California Institute of Technology},
+  year = {1991},
+  copyright = {No commercial reproduction,  distribution,  display or performance rights in this work are provided.}
+}
+
+@inproceedings{Hormann:2021,
+author = {Hormann, K. and Kania, L. and Yap, C.},
+title = {Novel Range Functions via Taylor Expansions and Recursive Lagrange Interpolation with Application to Real Root Isolation},
+year = {2021},
+publisher = {ACM},
+address = {New York, NY, USA},
+abstract = {Range functions are an important tool for interval computations, and they can be employed for the problem of root isolation. In this paper, we first introduce two new classes of range functions for real functions. They are based on the remainder form by Cornelius and Lohner [7] and provide different improvements for the remainder part of this form. On the one hand, we use centered Taylor expansions to derive a generalization of the classical Taylor form with higher than quadratic convergence. On the other hand, we propose a recursive interpolation procedure, in particular based on quadratic Lagrange interpolation, leading to recursive Lagrange forms with cubic and quartic convergence. We then use these forms for isolating the real roots of square-free polynomials with the algorithm Eval, a relatively recent algorithm that has been shown to be effective and practical. Finally, we compare the performance of our new range functions against the standard Taylor form. Range functions are often compared in isolation; in contrast, our holistic comparison is based on their performance in an application. Specifically, Eval can exploit features of our recursive Lagrange forms which are not found in range functions based on Taylor expansion. Experimentally, this yields at least a twofold speedup in Eval.},
+booktitle = {Proceedings of the 2021 International Symposium on Symbolic and Algebraic Computation},
+pages = {193–200},
+numpages = {8},
+keywords = {eval algorithm, interval arithmetic, lagrange form, range functions, root isolation, taylor form},
+location = {Virtual Event, Russian Federation},
+series = {ISSAC '21}
+}
+
+@inproceedings{Hormann:2023,
+author = {Hormann, K. and Yap, C. and Zhang, Y.S.},
+title = {Range Functions of Any Convergence Order and Their Amortized Complexity Analysis},
+year = {2023},
+publisher = {Springer-Verlag},
+address = {Berlin, Heidelberg},
+abstract = {We address the fundamental problem of computing range functions
+[inline-graphic not available: see fulltext]
+for a real function f:R→R. In our previous work [9], we introduced recursive interpolation range functions based on the Cornelius–Lohner (CL) framework of decomposing f as f=g+R, which requires to compute g(I) “exactly” for an interval I. There are two problems: this approach limits the order of convergence to 6 in practice, and exact computation is impossible to achieve in standard implementation models. We generalize the CL framework by allowing g(I) to be approximated by strong range functions[inline-graphic not available: see fulltext]
+, where ε>0 is a user-specified bound on the error. This new framework allows, for the first time, the design of interval forms for f with any desired order of convergence. To achieve our strong range functions, we generalize Neumaier’s theory of constructing range functions from expressions over a Lipschitz class Ω of primitive functions. We show that the class Ω is very extensive and includes all common hypergeometric functions. Traditional complexity analysis of range functions is based on individual evaluation on an interval. Such analysis cannot differentiate between our novel recursive range functions and classical Taylor-type range functions. Empirically, our recursive functions are superior in the “holistic” context of the root isolation algorithm Eval. We now formalize this holistic approach by defining the amortized complexity of range functions over a subdivision tree. Our theoretical model agrees remarkably well with the empirical results. Among our previous novel range functions, we identified a Lagrange-type range function
+[inline-graphic not available: see fulltext]
+as the overall winner. In this paper, we introduce a Hermite-type range function
+[inline-graphic not available: see fulltext]
+that is even better. We further explore speeding up applications by choosing non-maximal recursion levels.},
+booktitle = {Computer Algebra in Scientific Computing: 25th International Workshop, CASC 2023}, 
+pages = {162–182},
+numpages = {21},
+keywords = {Lagrange form, Taylor form, EVAL algorithm, Interval arithmetic, Root isolation, Range functions},
+location = {Havana, Cuba}
+}
+
+@misc{zhang2024theoryexplicitdesignpath,
+      title={Theory and Explicit Design of a Path Planner for an SE(3) Robot}, 
+      author={Z. Zhang and Y.-J. Chiang and C. Yap},
+      year={2024},
+      eprint={2407.05135},
+      archivePrefix={arXiv},
+      primaryClass={cs.RO},
+      url={https://arxiv.org/abs/2407.05135}, 
+}
+
+@inproceedings{Collins1976,
+  series = {SYMSAC ’76},
+  title = {Polynomial real root isolation using Descarte’s rule of signs},
+  booktitle = {Proceedings of the third ACM symposium on Symbolic and algebraic computation  - SYMSAC ’76},
+  publisher = {ACM Press},
+  author = {Collins,  G.E. and Akritas,  A.G.},
+  year = {1976},
+  pages = {272–275}
+}
+
+@article{Chen2024,
+  title = {A Time-Dependent Inclusion-Based Method for Continuous Collision
+ Detection between Parametric Surfaces},
+  author={X. Chen and C. Yu and X. Ni and M. Chu and B. Wang and B. Chen},
+  journal = {ACM SIGGRAPH Computer Graphics},
+  year    = 2024,
+  volume  = 43,
+  number  = 6,
+}
+
+%% FEDERICO
+@article{powers_new_2001,
+	title = {A new bound for {Polya}’s {Theorem} with applications to polynomials positive on polyhedra},
+	abstract = {Let R[X ] := R[x1; : : : ; xn] and let and n denotes the simplex \{(x1; : : : ; xn){\textbar}xi ≥ 0; i xi = 1\}: PoÃlya’s Theorem says that if f ∈ R[X ] is homogeneous and positive on n, then for su ciently large N all of the coe cients of (x1 + · · · + xn)N f(x1; : : : ; xn) are positive. We give an explicit bound for N and an application to some special representations of polynomials positive on polyhedra. In particular, we give a bound for the degree of a representation of a polynomial positive on a convex polyhedron as a positive linear combination of products of the linear polynomials deÿning the polyhedron. c 2001 Elsevier Science B.V. All rights reserved.},
+	language = {en},
+	journal = {Journal of Pure and Applied Algebra},
+	author = {Powers, Victoria and Reznick, Bruce},
+	year = {2001},
+}
+
+@article{de_klerk_ptas_2006,
+	title = {A {PTAS} for the minimization of polynomials of fixed degree over the simplex},
+	volume = {361},
+	issn = {03043975},
+	url = {https://linkinghub.elsevier.com/retrieve/pii/S0304397506003252},
+	doi = {10.1016/j.tcs.2006.05.011},
+	abstract = {We consider the problem of computing the minimum value pmin taken by a polynomial p(x) of degree d over the standard simplex . This is an NP-hard problem already for degree d = 2. For any integer k 1, by minimizing p(x) over the set of rational points in with denominator k, one obtains a hierarchy of upper bounds p (k) converging to pmin as k −→ ∞. These upper approximations are intimately linked to a hierarchy of lower bounds for pmin constructed via Pólya’s theorem about representations of positive forms on the simplex. Revisiting the proof of Pólya’s theorem allows us to give estimates on the quality of these upper and lower approximations for pmin. Moreover, we show that the bounds p (k) yield a polynomial time approximation scheme for the minimization of polynomials of ﬁxed degree d on the simplex, extending an earlier result of Bomze and De Klerk for degree d = 2.},
+	language = {en},
+	number = {2-3},
+	urldate = {2023-06-21},
+	journal = {Theoretical Computer Science},
+	author = {De Klerk, Etienne and Laurent, Monique and Parrilo, Pablo A.},
+	month = sep,
+	year = {2006},
+	keywords = {Optimization on simplex},
+	pages = {210--225},
+}
+
+@misc{de_klerk_error_2014,
+	title = {An error analysis for polynomial optimization over the simplex based on the multivariate hypergeometric distribution},
+	url = {http://arxiv.org/abs/1407.2108},
+	abstract = {We study the minimization of ﬁxed-degree polynomials over the simplex. This problem is well-known to be NP-hard, as it contains the maximum stable set problem in graph theory as a special case. In this paper, we consider a rational approximation by taking the minimum over the regular grid, which consists of rational points with denominator r (for given r). We show that the associated convergence rate is O(1/r2) for quadratic polynomials. For general polynomials, if there exists a rational global minimizer over the simplex, we show that the convergence rate is also of the order O(1/r2). Our results answer a question posed by De Klerk et al. [9] and improves on previously known O(1/r) bounds in the quadratic case.},
+	language = {en},
+	urldate = {2023-06-23},
+	publisher = {arXiv},
+	author = {De Klerk, Etienne and Laurent, Monique and Sun, Zhao},
+	month = jul,
+	year = {2014},
+	note = {arXiv:1407.2108 [math]},
+	keywords = {Optimization on simplex},
+}
+
+@article{garloff_lower_2003,
+	title = {Lower bound functions for polynomials},
+	volume = {157},
+	abstract = {Relaxation techniques for solving nonlinear systems and global optimisation problems require bounding from below the nonconvexities that occur in the constraints or in the objective function by a ne or convex functions. In this paper we consider such lower bound functions in the case of problems involving multivariate polynomials. They are constructed by using Bernstein expansion. An error bound exhibiting quadratic convergence in the univariate case and some numerical examples are given.},
+	number = {1},
+	journal = {Journal of Computational and Applied Mathematics},
+	author = {Garloff, J. and Jansson, C. and Smith, A.P.},
+	year = {2003},
+	pages = {207--225},
+}
+
+@article{lengagne_reducing_nodate,
+	title = {Reducing pessimism in {Interval} {Analysis} using {Bsplines} {Properties}: {Application} to {Robotics}},
+	abstract = {Interval Analysis is interesting to solve optimization and constraint satisfaction problems. It makes possible to ensure the lack of the solution or the global optimal solution taking into account some uncertainties. However, it suﬀers from an over-estimation of the function called pessimism. In this paper, we propose to take part of the BSplines properties and of the Kronecker product to have a less pessimistic evaluation of mathematical functions. We prove that this method reduces the pessimism, hence the number of iterations when solving optimization or constraint satisfaction problems. We assess the eﬀectiveness of our method on planar robots with 2-to-9 degrees of freedom and to 3D-robots with 4 and 6 degrees of freedom.},
+	language = {en},
+	author = {Lengagne, Sebastien and Kalawoun, Rawan and Bouchon, François and Mezouar, Youcef},
+    year = 2020
+}
+
+@inproceedings{jaulin_interval_2002,
+	address = {Las Vegas, NV, USA},
+	title = {Interval methods for nonlinear identification and robust control},
+	volume = {4},
+	booktitle = {Proceedings of the 41st {IEEE} {Conference} on {Decision} and {Control}, 2002.},
+	publisher = {IEEE},
+	author = {Jaulin, L. and Braems, I. and Walter, E.},
+	year = {2002},
+	pages = {4676--4681},
+}
+
+@article{crespel_contact_nodate,
+	title = {Contact detection between curved fibres: high order makes a difference},
+	language = {en},
+	author = {Crespel, Octave and Hohnadel, Emile and Métivet, Thibaut and Bertails-Descoubes, Florence},
+}
+
+@article{sederberg_comparison_1986,
+	title = {Comparison of three curve intersection algorithms},
+	volume = {18},
+	issn = {00104485},
+	url = {https://linkinghub.elsevier.com/retrieve/pii/S0010448586800136},
+	doi = {10.1016/S0010-4485(86)80013-6},
+	language = {en},
+	number = {1},
+	urldate = {2024-07-09},
+	journal = {Computer-Aided Design},
+	author = {Sederberg, Thomas W and Parry, Scott R},
+	month = jan,
+	year = {1986},
+	pages = {58--63},
+}
+
+@article{wang_defending_2014,
+	title = {Defending continuous collision detection against errors},
+	volume = {33},
+	abstract = {Numerical errors and rounding errors in continuous collision detection (CCD) can easily cause collision detection failures if they are not handled properly. A simple and eﬀective approach is to use error tolerances, as shown in many existing CCD systems. Unfortunately, ﬁnding the optimal tolerance values is a diﬃcult problem for users. Larger tolerance values will introduce false positive artifacts, while smaller tolerance values may cause collisions to be undetected. The biggest issue here is that we do not know whether or when CCD will fail, even though failures are extremely rare. In this paper, we demonstrate a set of simple modiﬁcations to make a basic CCD implementation failure-proof. Using error analysis, we prove the safety of this method and we formulate suggested tolerance values to reduce false positives. The resulting algorithms are safe, automatic, eﬃcient, and easy to implement.},
+	language = {en},
+	number = {4},
+	urldate = {2024-07-09},
+	journal = {ACM Transactions on Graphics},
+	author = {Wang, Huamin},
+	month = jul,
+	year = {2014},
+	pages = {1--10},
+}
+
+ @phdthesis{stahl_interval_1995,
+	title = {Interval {Methods} for {Bounding} the {Range} of {Polynomials} and {Solving} {Systems} of {Nonlinear} {Equations}},
+	author = {Stahl, V.},
+	month = sep,
+	year = {1995},
+}
+
+@misc{cvx,
+  author       = {{CVX Research, Inc.}},
+  title        = {{CVX}: Matlab Software for Disciplined Convex Programming, version 2.0},
+  howpublished = {\url{https://cvxr.com/cvx}},
+  month        = aug,
+  year         = 2012
+}
+@incollection{gb08,
+  author    = {M. Grant and S. Boyd},
+  title     = {Graph implementations for nonsmooth convex programs},
+  booktitle = {Recent Advances in Learning and Control},
+  series    = {Lecture Notes in Control and Information Sciences},
+  editor    = {V. Blondel and S. Boyd and H. Kimura},
+  publisher = {Springer-Verlag Limited},
+  pages     = {95--110},
+  year      = 2008
+}
+
+@article{Li:2024:IHM,
+author = {Y. Li and S. Kamil and K. Crane and A. Jacobson and Y. Gingold},
+title = {I{\ensuremath\heartsuit}Mesh: A DSL for Mesh Processing},
+journal = {ACM Trans. Graph.},
+volume = {43},
+number = {6},
+year = {2024},
+publisher = {ACM},
+address = {New York, NY, USA},
+}
+
+@article{li2021iheartla,
+ author    = {Li, Y. and Kamil, S. and Jacobson, A. and Gingold, Y.},
+ title     = {I{\ensuremath\heartsuit}LA: Compilable Markdown for Linear Algebra},
+ journal   = {ACM Transactions on Graphics (TOG)},
+ volume    = {40},
+ number    = {6},
+ year      = {2021},
+ keywords  = {linear algebra, mathematical input, domain-specific language, compiler, scientific computing}
+}
+
+@article{kjolstad:2016,
+ author = {Kjolstad, F. and Kamil, S. and Ragan-Kelley, J. and Levin, D.I.W. and Sueda, S. and Chen, D. and Vouga, E. and Kaufman, D.M. and Kanwar, G. and Matusik, W. and Amarasinghe, S.},
+ title = {Simit: A Language for Physical Simulation},
+ journal = {ACM Trans. Graph.},
+ issue_date = {May 2016},
+ volume = {35},
+ number = {2},
+ month = may,
+ year = {2016},
+ issn = {0730-0301},
+ pages = {20:1--20:21},
+ articleno = {20},
+ numpages = {21},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {Graph, matrix, simulation, tensor},
+}
+
+@article{kjolstad2017tensor,
+  title={The tensor algebra compiler},
+  author={Kjolstad, F. and Kamil, S. and Chou, S. and Lugato, D. and Amarasinghe, S.},
+  journal={Proceedings of the ACM on Programming Languages},
+  volume={1},
+  number={OOPSLA},
+  pages={1--29},
+  year={2017},
+  publisher={ACM New York, NY, USA}
+}
+
+@article{bernstein-kjolstad:2016,
+ author = {Bernstein, G. Louis and Kjolstad, F.},
+ title = {Why New Programming Languages for Simulation?},
+ journal = {ACM Trans. Graph.},
+ issue_date = {May 2016},
+ volume = {35},
+ number = {2},
+ month = may,
+ year = {2016},
+  pages = {20e:1--20e:3},
+ articleno = {20e},
+ numpages = {3},
+  publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {Physical simulation languages, compilation, performance},
+}
+
+@article{Tang2020,
+  title = {EGGS: Sparsity‐Specific Code Generation},
+  volume = {39},
+  number = {5},
+  journal = {Computer Graphics Forum},
+  publisher = {Wiley},
+  author = {Tang,  X. and Schneider,  T. and Kamil,  S. and Panda,  A. and Li,  J. and Panozzo,  D.},
+  year = {2020},
+  month = aug,
+  pages = {209–219}
+}
+
+@article{Herholz:sscoet:2022,
+title = {Sparsity-Specific Code Optimization using Expression Trees},
+author = {Herholz, P. and Tang, X. and Schneider, T. and Kamil, S. and Panozzo, D. and Sorkine-Hornung, O.},
+journal = {ACM Transactions on Graphics},
+volume = {41},
+number = {5},
+pages = {175:1–19},
+year = {2022},
+publisher = {ACM}
+}
+
+@article{Taichi,
+  title = {Taichi: a language for high-performance computation on spatially sparse data structures},
+  volume = {38},
+  number = {6},
+  journal = {ACM Transactions on Graphics},
+  publisher = {ACM},
+  author = {Hu,  Y. and Li,  T.-M. and Anderson,  L. and Ragan-Kelley,  J. and Durand,  F.},
+  year = {2019},
+  month = nov,
+  pages = {1–16}
+}
+
+@misc{BarattaEtal2023,
+  title     = {{DOLFINx}: the next generation {FEniCS} problem solving environment},
+  author    = {Baratta, I.A. and Dean, J.P. and Dokken, J.S. and Habera, M. and Hale, J.S. and Richardson, C.N. and Rognes, M.E. and Scroggs, M.W. and Sime, N. and Wells, G.N.},
+  doi       = {10.5281/zenodo.10447666},
+  year      = {2023},
+  howpublished = {preprint}
+}
+
+@article{ScroggsEtal2022,
+  title     = {Construction of arbitrary order finite element degree-of-freedom maps on polygonal and polyhedral cell meshes},
+  author    = {Scroggs, M.W. and Dokken, J.S. and Richardson, C.N. and Wells, G.N.},
+  journal   = {ACM Transactions on Mathematical Software},
+  year      = {2022},
+  volume    = {48},
+  number    = {2},
+  pages     = {{18:1--18:23}},
+}
+
+@article{AlnaesEtal2014,
+  title     = {Unified Form Language: A domain-specific language for weak formulations of partial differential equations},
+  author    = {Alnaes, M.S. and Logg, A. and {\O}lgaard, K. B. and Rognes, M. E. and Wells, G.N.},
+  journal   = {{ACM} Transactions on Mathematical Software},
+  year      = {2014},
+  volume    = {40},
+  doi       = {10.1145/2566630},
+}
+
+@misc{RLIBM24,
+title = "The RLIBM Project",
+author = "Aanjaneya, M. and Lim, J.P. and Nagarakatte, S.",
+year = 2024,
+url = "https://github.com/rutgers-apl/The-RLIBM-Project"
+}
+
+@misc{Akenine2024,
+title = "Real-Time Rendering - Ray Tracing Resources Page",
+author = "T. Akenine-Möller and
+E. Haines and N. Hoffman and
+A. Pesce and
+M. Iwanicki and
+S. Hillaire",
+year = 2024,
+url = "https://www.realtimerendering.com/intersections.html"
+}
+
+@book{Akenine2018,
+title = "Real-Time Rendering",
+author = "T. Akenine-Möller and
+E. Haines and N. Hoffman and
+A. Pesce and
+M. Iwanicki and
+S. Hillaire",
+year = 2018,
+publisher = "CRC Press"
+}
+
+@inproceedings{snyder1993interval,
+author = {Snyder, J. and Woodbury, A.R. and Fleischer, K. and Currin, B. and Barr, A.H.},
+title = {Interval Methods for Multi-Point Collisions between Time-Dependent Curved Surfaces},
+booktitle = {ACM SIGGRAPH},
+year = {1993},
+month = {August},
+abstract = {We present an efficient and robust algorithm for finding points of collision between time-dependent parametric and implicit surfaces. The algorithm detects simultaneous collisions at multiple points of contact. When the regions of contact form curves or surfaces, it returns a finite set of points uniformly distributed over each contact region. Collisions can be computed for a very general class of surfaces: those for which inclusion functions can be constructed. Included in this set are the familiar kinds of surfaces and time behaviors encountered in computer graphics. We use a new interval approach for constrained minimization to detect collisions, and a tangency condition to reduce the dimensionality of the search space. These approaches make interval methods practical for multi-point collisions between complex surfaces. An interval Newton method based on the solution of the interval linear equation is used to speed convergence to the collision time and location. This method is more efficient than the Krawczyk–Moore iteration used previously in computer graphics.},
+publisher = {ACM}
+}
+
+@article{Lim:2022,
+author = {Lim, J.P. and Nagarakatte, S.},
+title = {One polynomial approximation to produce correctly rounded results of an elementary function for multiple representations and rounding modes},
+year = {2022},
+issue_date = {January 2022},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {6},
+number = {POPL},
+abstract = {Mainstream math libraries for floating point (FP) do not produce correctly rounded results for all inputs. In contrast, CR-LIBM and RLIBM provide correctly rounded implementations for a specific FP representation with one rounding mode. Using such libraries for a representation with a new rounding mode or with different precision will result in wrong results due to double rounding. This paper proposes a novel method to generate a single polynomial approximation that produces correctly rounded results for all inputs for multiple rounding modes and multiple precision configurations. To generate a correctly rounded library for n-bits, our key idea is to generate a polynomial approximation for a representation with n+2-bits using the round-to-odd mode. We prove that the resulting polynomial approximation will produce correctly rounded results for all five rounding modes in the standard and for multiple representations with k-bits such that |E| +1 < k ≤ n, where |E| is the number of exponent bits in the representation. Similar to our prior work in the RLIBM project, we approximate the correctly rounded result when we generate the library with n+2-bits using the round-to-odd mode. We also generate polynomial approximations by structuring it as a linear programming problem but propose enhancements to polynomial generation to handle the round-to-odd mode. Our prototype is the first 32-bit float library that produces correctly rounded results with all rounding modes in the IEEE standard for all inputs with a single polynomial approximation. It also produces correctly rounded results for any FP configuration ranging from 10-bits to 32-bits while also being faster than mainstream libraries.},
+journal = {Proc. ACM Program. Lang.},
+month = jan,
+articleno = {3},
+numpages = {28},
+keywords = {round-to-odd, floating point, correctly rounded math libraries}
+}
+
+@inproceedings{Aanjaneya:2022,
+author = {Aanjaneya, M. and Lim, J.P. and Nagarakatte, S.},
+title = {Progressive polynomial approximations for fast correctly rounded math libraries},
+year = {2022},
+publisher = {ACM},
+address = {New York, NY, USA},
+abstract = {This paper presents a novel method for generating a single polynomial approximation that produces correctly rounded results for all inputs of an elementary function for multiple representations. The generated polynomial approximation has the nice property that the first few lower degree terms produce correctly rounded results for specific representations of smaller bitwidths, which we call progressive performance. To generate such progressive polynomial approximations, we approximate the correctly rounded result and formulate the computation of correctly rounded polynomial approximations as a linear program similar to our prior work on the RLIBM project. To enable the use of resulting polynomial approximations in mainstream libraries, we want to avoid piecewise polynomials with large lookup tables. We observe that the problem of computing polynomial approximations for elementary functions is a linear programming problem in low dimensions, i.e., with a small number of unknowns. We design a fast randomized algorithm for computing polynomial approximations with progressive performance. Our method produces correct and fast polynomials that require a small amount of storage. A few polynomial approximations from our prototype have already been incorporated into LLVM’s math library.},
+booktitle = {Proceedings of the 43rd ACM SIGPLAN International Conference on Programming Language Design and Implementation},
+pages = {552–565},
+numpages = {14},
+keywords = {round-to-odd, correctly rounded libraries, RLIBM},
+location = {San Diego, CA, USA},
+series = {PLDI 2022}
+}
+
+@book{RTR4,
+ author = {T. Akenine-M\"{o}ller and E. Haines and N. Hoffman and A. Pesce and M. Iwanicki and S. Hillaire},
+ title = {Real-Time Rendering 4th Edition},
+ year = {2018},
+ publisher = {A.K. Peters/CRC Press},
+ address = {Boca Raton, FL, USA},
+ }
+
+
+@article{hansen_interval_1983,
+	title = {An interval {Newton} method},
+	volume = {12},
+	abstract = {We introduce an interval Newton method for bounding solutions of systems of nonlinear equations. It entails. three subalgorithms. The first is a Gauss-Seidel-type step. The second is a real (noninterval) Newton iteration. The third solves the linearized equations by elimination. We explain why each subalgorithm is desirable and how they fit together to provide solutions in as little as one-third or one-quarter the time required by Krawczyk’s method [7] in our implementations.},
+	language = {en},
+	number = {2-3},
+	urldate = {2025-01-21},
+	journal = {Applied Mathematics and Computation},
+	author = {Hansen, E.R. and Greenberg, R.I.},
+	month = may,
+	year = {1983},
+	pages = {89--98},
+}
+
+
+@article{Ferguson:2021:RigidIPC,
+    title     = {Intersection-free Rigid Body Dynamics},
+    author    = {Z. Ferguson and M. Li and T. Schneider and F. Gil-Ureta and T. Langlois and C. Jiang and D. Zorin and D.M. Kaufman and D. Panozzo},
+    year      = 2021,
+    journal   = {ACM Transactions on Graphics (SIGGRAPH)},
+    volume    = 40,
+    number    = 4,
+    articleno = 183
+}
+
+@article{CODIM-IPC,
+author = {Li, M. and Kaufman, D.M. and Jiang, C.},
+title = {Codimensional incremental potential contact},
+year = {2021},
+issue_date = {August 2021},
+publisher = {ACM},
+address = {New York, NY, USA},
+volume = {40},
+number = {4},
+abstract = {We extend the incremental potential contact (IPC) model [Li et al. 2020a] for contacting elastodynamics to resolve systems composed of codimensional degrees-of-freedoms in arbitrary combination. This enables a unified, interpenetration-free, robust, and stable simulation framework that couples codimension-0,1,2, and 3 geometries seamlessly with frictional contact. Extending the IPC model to thin structures poses new challenges in computing strain, modeling thickness and determining collisions. To address these challenges we propose three corresponding contributions. First, we introduce a C2 constitutive barrier model that directly enforces strain limiting as an energy potential while preserving rest state. This provides energetically-consistent strain limiting models (both isotropic and anisotropic) for cloth that enable strict satisfaction of strain-limit inequalities with direct coupling to both elastodynamics and contact via minimization of the incremental potential. Second, to capture the geometric thickness of codimensional domains we extend the IPC model to directly enforce distance offsets. Our treatment imposes a strict guarantee that mid-surfaces (respectively mid-lines) of shells (respectively rods) will not move closer than applied thickness values, even as these thicknesses become characteristically small. This enables us to account for thickness in the contact behavior of codimensional structures and so robustly capture challenging contacting geometries; a number of which, to our knowledge, have not been simulated before. Third, codimensional models, especially with modeled thickness, mandate strict accuracy requirements that pose a severe challenge to all existing continuous collision detection (CCD) methods. To address these limitations we develop a new, efficient, simple-to-implement additive CCD (ACCD) method that applies conservative advancement [Mirtich 1996; Zhang et al. 2006] to iteratively refine a lower bound for deforming primitives, converging to time of impact. In combination these contributions enable codimensional IPC (C-IPC). We perform extensive benchmark experiments to validate the efficacy of our method in capturing intricate behaviors of thin-structure contact and resulting bulk effects. In our experiments C-IPC obtains feasible, convergent, and so artifact-free solutions for all time steps, across all tested examples - producing robust simulations. We test C-IPC across extreme deformations, large time steps, and exceedingly close contact over all possible pairings of codimensional domains. Finally, with our strain-limit model, we confirm C-IPC guarantees non-intersection and strain-limit satisfaction for all reasonable (and well below - verified down to 0.1\%) strain limits throughout all time steps.},
+journal = {ACM Trans. Graph.},
+month = jul,
+articleno = {170},
+numpages = {24},
+keywords = {strain limiting, mixed-dimensional elastodynamics, contact mechanics, constrained optimization}
+}
+
+@article{KANG2019,
+title = {Fast and robust computation of the Hausdorff distance between triangle mesh and quad mesh for near-zero cases},
+journal = {Computers \& Graphics},
+volume = {81},
+pages = {61-72},
+year = {2019},
+author = {Y. Kang and S.-H. Yoon and M.-H. Kyung and M.-S. Kim},
+keywords = {Hausdorff distance, Shape matching, Quad mesh},
+abstract = {We introduce an algorithm for computing the two-sided Hausdorff distance between a triangle mesh and a quad mesh, guaranteed to be within the given error bound, which can be machine precision-level small. The algorithm expands upon a recent breakthrough that only calculates the one-sided Hausdorff distance from the triangle mesh to the quad mesh using what is called “matching” and “upper bounding” of candidate pieces. We complete the algorithm by accomplishing the computation of the one-sided Hausdorff distance in the opposite direction: from the quad mesh to the triangle mesh. We split each quad into two triangular pieces to simplify the breakdown of matching cases and provide additional matching methods for new cases. By fusing the two one-sided computation algorithms, one can compute the two-sided Hausdorff distance that, for instance, can properly evaluate a quad mesh approximation of a triangle mesh. Experimental results show that our algorithm can handle near-zero Hausdorff distance, which has always been known to be a much difficult task, in an interactive time. Moreover, the improvement in efficiency of the two-sided Hausdorff distance computation over the successive execution of the two one-sided computations is addressed.}
+}
+
+@ARTICLE{Guezlec2001,
+  author={Guezlec, A.},
+  journal={IEEE Transactions on Visualization and Computer Graphics}, 
+  title={"Meshsweeper": dynamic point-to-polygonal mesh distance and applications}, 
+  year={2001},
+  volume={7},
+  number={1},
+  pages={47-61},
+  keywords={Shape;Spatial resolution;Heuristic algorithms;Computer graphics;Data structures;Approximation algorithms;Computational modeling;Deformable models;Euclidean distance;Application software},
+ }
+
+@ARTICLE{Jones:2006,
+  author={Jones, M.W. and Baerentzen, J.A. and Sramek, M.},
+  journal={IEEE Transactions on Visualization and Computer Graphics}, 
+  title={3D distance fields: a survey of techniques and applications}, 
+  year={2006},
+  volume={12},
+  number={4},
+  pages={581-599},
+  keywords={Computer graphics;Image processing;Computer vision;Physics;Production;Application software;Runtime;Data visualization;Skeleton;Level set;Distance field;volume;voxel;fast marching method;level-set method;medial axis;cut locus;skeletonization;voxelization;volume data;visualization;distance transform.},
+}
+
+@ARTICLE{Baerentzen:2005,
+  author={Baerentzen, J.A. and Aanaes, H.},
+  journal={IEEE Transactions on Visualization and Computer Graphics}, 
+  title={Signed distance computation using the angle weighted pseudonormal}, 
+  year={2005},
+  volume={11},
+  number={3},
+  pages={243-253},
+  keywords={Geometry;Robustness;Index Terms- Mesh;signed distance field;normal;pseudonormal;polyhedron.},
+}
+
+@INPROCEEDINGS{robotics-interval,
+author = {Merlet, J.P.},
+year = {2007},
+month = {11},
+pages = {147-156},
+title = {Interval Analysis and Robotics},
+volume = {66},
+isbn = {978-3-642-14742-5},
+journal = {Robotics Research},
+doi = {10.1007/978-3-642-14743-2_13}
+}
+
+@ARTICLE{Carretero:2005,
+  author={Carretero, J.A. and Nahon, M.A.},
+  journal={IEEE Transactions on Systems, Man, and Cybernetics, Part B (Cybernetics)}, 
+  title={Solving minimum distance problems with convex or concave bodies using combinatorial global optimization algorithms}, 
+  year={2005},
+  volume={35},
+  number={6},
+  pages={1144-1155},
+  keywords={Interference;Path planning;Robots;Simulated annealing;Genetic algorithms;Computational geometry;Trajectory;Mechanical engineering;Face detection;Computational modeling;Combinatorial optimization;distance determination;genetic algorithms applications;path planning;simulated annealing applications},
+}
+
+@article{BARTON2010,
+title = {Precise Hausdorff distance computation between polygonal meshes},
+journal = {Computer Aided Geometric Design},
+volume = {27},
+number = {8},
+pages = {580-591},
+year = {2010},
+note = {Advances in Applied Geometry},
+url = {https://www.sciencedirect.com/science/article/pii/S016783961000049X},
+author = {M. Bartoň and I. Hanniel and G. Elber and M.-S. Kim},
+keywords = {Hausdorff distance, Polygonal mesh, Geometric algorithm, Bisector surface, Medial axis, Low envelope},
+abstract = {We present an exact algorithm for computing the precise Hausdorff distance between two general polyhedra represented as triangular meshes. The locus of candidate points, events where the Hausdorff distance may occur, is fully classified. These events include simple cases where foot points of vertices are examined as well as more complicated cases where extreme distance evaluation is needed on the intersection curve of one mesh with the medial axis of the other mesh. No explicit reconstruction of the medial axis is conducted and only bisectors of pairs of primitives (i.e. vertex, edge, or face) are analytically constructed and intersected with the other mesh, yielding a set of conic segments. For each conic segment, the distance functions to all primitives are constructed and the maximum value of their low envelope function may correspond to a candidate point for the Hausdorff distance. The algorithm is fully implemented and several experimental results are also presented.}
+}
+
+@article{Zheng:2022UB,
+author = {Zheng, Y. and Sun, H. and Liu, X. and Bao, H. and Huang, J.},
+title = {Economic Upper Bound Estimation in Hausdorff Distance Computation for Triangle Meshes},
+journal = {Computer Graphics Forum},
+volume = {41},
+number = {1},
+pages = {46-56},
+keywords = {computational geometry, modeling},
+abstract = {Abstract The Hausdorff distance is one of the most fundamental metrics for comparing 3D shapes. To compute the Hausdorff distance efficiently from a triangular mesh to another triangular mesh , one needs to cull the unnecessary triangles on quickly. These triangles have no chance to improve the Hausdorff distance estimation, that is the parts with local upper bound smaller than the global lower bound. The local upper bound estimation should be tight, use fast distance computation, and involve a small number of triangles in during the reduction phase for efficiency. In this paper, we propose to use point-triangle distance, and only involve at most four triangles in in the reduction phase. Comparing with the state-of-the-art proposed by Tang et al. in 2009, which uses more costly triangle-triangle distance and may involve a large number of triangles in reduction phase, our local upper bound estimation is faster, and with only a small impact on the tightness of the bound on error estimation. Such a more economic strategy boosts the overall performance significantly. Experiments on the Thingi10K dataset show that our method can achieve several (even over 20) times speedup on average. On a few models with different placements and resolutions, we show that close placement and large difference in resolution bring big challenges to Hausdorff distance computation, and explain why our method can achieve more significant speedup on challenging cases.},
+year = {2022}
+}
+
+@article{Cignoni:1998METRO,
+author = {Cignoni, P. and Rocchini, C. and Scopigno, R.},
+title = {Metro: Measuring Error on Simplified Surfaces},
+journal = {Computer Graphics Forum},
+volume = {17},
+number = {2},
+pages = {167-174},
+keywords = {surface simplification, surface comparison, approximation error, scan conversion},
+abstract = {This paper presents a new tool, Metro, designed to compensate for a deficiency in many simplification methods proposed in literature. Metro allows one to compare the difference between a pair of surfaces (e.g. a triangulated mesh and its simplified representation) by adopting a surface sampling approach. It has been designed as a highly general tool, and it does no assumption on the particular approach used to build the simplified representation. It returns both numerical results (meshes areas and volumes, maximum and mean error, etc.) and visual results, by coloring the input surface according to the approximation error.},
+year = {1998}
+}
+
+@article{Alt:2008,
+author = {Alt, H. and Scharf, L.},
+title = {Computing the Hhausdorff Distance between Curved Objects},
+journal = {International Journal of Computational Geometry \& Applications},
+volume = {18},
+number = {04},
+pages = {307-320},
+year = {2008},
+    abstract = { The Hausdorff distance between two sets of curves is a measure for the similarity of these objects and therefore an interesting feature in shape recognition. If the curves are algebraic computing the Hausdorff distance involves computing the intersection points of the Voronoi edges of the one set with the curves in the other. Since computing the Voronoi diagram of curves is quite difficult we characterize those points algebraically and compute them using the computer algebra system SYNAPS. This paper describes in detail which points have to be considered, by what algebraic equations they are characterized, and how they actually are computed. }
+}
+
+@article{SON2021,
+title = {Precise Hausdorff distance computation for freeform surfaces based on computations with osculating toroidal patches},
+journal = {Computer Aided Geometric Design},
+volume = {86},
+pages = {101967},
+year = {2021},
+author = {S.-H. Son and M.-S. Kim and G. Elber},
+keywords = {Hausdorff distance, Freeform surfaces, Bounding Volume Hierarchy (BVH), Osculating toroidal patches, Precise computation, Cross-boundary problem},
+abstract = {We present an efficient algorithm for computing the precise Hausdorff Distance (HD) between two freeform surfaces. The algorithm is based on a hybrid Bounding Volume Hierarchy (BVH), where osculating toroidal patches (stored in the leaf nodes) provide geometric properties essential for the HD computation in high precision. Intrinsic features from the osculating geometry resolve computational issues in handling the cross-boundary problem for composite surfaces, which leads to the acceleration of HD algorithm with a solution (within machine precision) to the exact HD. The HD computation for general freeform surfaces is discussed, where we focus on the computational issues in handling the local geometry across surface boundaries or around surface corners that appear as the result of gluing multiple patches together in the modeling of generic composite surfaces. We also discuss how to switch from an approximation stage to the final step of computing the precise HD using numerical improvements and confirming the correctness of the HD computation result. The main advantage of our algorithm is in the high precision of HD computation result. As the best cases of the proposed torus-based approach, we also consider the acceleration of HD computation for freeform surfaces of revolution and linear extrusion, where we can support real-time computation even for deformable surfaces. The acceleration is mainly due to a fast biarc approximation to the planar profile curves of the simple surfaces, each generated by rotating or translating a planar curve. We demonstrate the effectiveness of the proposed approach using experimental results.}
+}
+
+@article{KIM2013,
+title = {Efficient Hausdorff Distance computation for freeform geometric models in close proximity},
+journal = {Computer-Aided Design},
+volume = {45},
+number = {2},
+pages = {270-276},
+year = {2013},
+note = {Solid and Physical Modeling 2012},
+author = {Y.-J. Kim and Y.-T. Oh and S.-H. Yoon and M.-S. Kim and G. Elber},
+keywords = {Hausdorff Distance, NURBS surface, Coons patch, Bounding volume hierarchy (BVH), Hierarchical data structure, Geometric algorithm},
+abstract = {We present an interactive-speed algorithm for computing the Hausdorff Distance (HD) between two freeform geometric models represented with NURBS surfaces. The algorithm is based on an effective technique for matching a surface patch from one model to the corresponding nearby surface patch on the other model. To facilitate the matching procedure, we employ a bounding volume hierarchy (BVH) for freeform NURBS surfaces, which provides a hierarchy of Coons patches and bilinear surfaces approximating the NURBS surfaces (Kim et al., 2011 [1]). Comparing the local HD upper bound against a global HD lower bound, we can eliminate the majority of redundant surface patches from further consideration. The resulting algorithm and the associated data structures are considerably simpler than the previous BVH-based HD algorithms. As a result, we can compute the HD of two freeform geometric models efficiently and robustly even when the two models are in close proximity. We demonstrate the effectiveness of our approach using several experimental results.}
+}
