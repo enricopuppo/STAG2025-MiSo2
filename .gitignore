@@ -32,6 +32,7 @@ STAG25-MiSo2.pdf
 *.blg
 *-blx.aux
 *-blx.bib
+*.lbl
 *.run.xml
 
 ## Build tool auxiliary files:
