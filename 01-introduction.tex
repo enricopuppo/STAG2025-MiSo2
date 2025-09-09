@@ -2,8 +2,29 @@
 
 \section{Introduction}
 \label{sec:introduction}
+Robust geometric computation is a critical component of many applications, such as collision detection, minimum distance computation, element inversion, and Boolean operations \cite{something}. Although floating-point arithmetic is fast, it can easily generate inaccurate results that may lead to unpredictable, often catastrophic outcomes, especially in simulations \cite{something}. In contrast, exact computation, using methods like rational arithmetic or arbitrary precision floating-point arithmetic, is extremely slow and often impractical.
+Moreover, rational arithmetic is limited to algebraic operations. 
 
-THIS IS FROM SIGGRAPH PAPER.
+Interval arithmetic bridges this gap by providing a viable alternative. 
+It offers a balance between performance and accuracy, giving conservative estimates of exact computations at a moderate speed penalty compared to standard floating-point arithmetic. In this model, all real values are represented as intervals bounded by floating-point numbers. Expressions on these intervals are computed in a way that guarantees the resulting interval will contain the true mathematical result.
+While the width of an interval can grow during computation, it is crucial to minimize this growth to maintain precision. This is achieved through \emph{correctly rounded} operations, where each elementary operation returns the tightest possible floating-point interval that contains the exact result.
+More fundamentally, correct rounding guarantees replicability, meaning that the same computation provides the same result on different architectures. 
+
+While a few libraries for interval arithmetic exist, which support only algebraic operators, the implementation of transcendental operators may be quite challenging, and very few authors have tried to address them. 
+See Section \ref{sec:related} for a discussion. 
+
+We contribute to this line of research as follows:
+\begin{enumerate}
+\item We extend the NFG library \cite{libreria-Marco} -- which provides the most efficient implementation of interval arithmetic to date, but is limited to algebraic operations -- with transcendental operations, based on the CORE-MATH floating-point correctly rounded implementation \cite{core-math}.
+In Section \ref{sec:operators}, we discuss the challenges involved in extending transcendental operators to intervals while guaranteeing correct rounding. 
+\item We integrate our library with the recent Domain Specific Language MiSo \cite{MiSo} that supports the fast prototyping of non-linear constraint solving and optimization. 
+Extension of the language with transcendental functions largely broadens its spectrum of applicability. 
+\item We demonstrate the effectiveness and efficiency of our library by implementing continuous collision detection between geometric primitives undergoing roto-translational motion. \EP{and other problems, if any.} We also compare our library against the XXXX library \cite{something}, achieving a faster performance.
+\end{enumerate}
+
+
+
+THE REST IS FROM SIGGRAPH PAPER - PROBABLY OBSOLETE, MAYBE SOMETHING USEFUL FOR THE RELATED
 
 Non-linear constraint solving is fundamental to graphics and scientific computing, with applications ranging from collision detection and minimal distance computation to element inversion and Boolean operations. A vast literature addresses this topic (Section \ref{sec:related}). For example, \cite{RTR4,Akenine2024} summarize methods for static collision detection between proxies, referencing over 100 algorithms tailored to different primitive pairs and accuracy/efficiency trade-offs.
 Similar per-primitive-pair specialization is required for minimal distance queries and, likewise, each finite element (FE) type and order necessitates custom code for positive Jacobian checks.
