@@ -34,10 +34,10 @@
 % \DigitalHeritagePaper
 % \PaperL2P          % for events EG only asks for License to Publish
 
-% --- for EuroVis 
+% --- for EuroVis
 % for full papers use \SpecialIssuePaper
-% \STAREurovis   % for EuroVis additional material 
-% \EuroVisPoster % for EuroVis additional material 
+% \STAREurovis   % for EuroVis additional material
+% \EuroVisPoster % for EuroVis additional material
 % \EuroVisShort  % for EuroVis additional material
 % \MedicalPrize  % uncomment for Medical Prize (Dirk Bartz) contribution, since 2021 part of EuroVis
 
@@ -52,15 +52,15 @@
 % !! unless you REALLY know what you are doing
 % ------------------------------------------------------------------------
 \usepackage[T1]{fontenc}
-\usepackage{dfadobe}  
+\usepackage{dfadobe}
 
-%\usepackage{cite}  % comment out for biblatex with backend=biber 
+%\usepackage{cite}  % comment out for biblatex with backend=biber
 % ---------------------------
 %\biberVersion
 \BibtexOrBiblatex
-%\usepackage[backend=biber,bibstyle=EG,citestyle=alphabetic,backref=true]{biblatex} 
+%\usepackage[backend=biber,bibstyle=EG,citestyle=alphabetic,backref=true]{biblatex}
 %\addbibresource{egbibsample.bib}
-% ---------------------------  
+% ---------------------------
 \electronicVersion
 \PrintedOrElectronic
 
@@ -69,7 +69,7 @@
 \ifpdf \usepackage[pdftex]{graphicx} \pdfcompresslevel=9
 \else \usepackage[dvips]{graphicx} \fi
 
-\usepackage{egweblnk} 
+\usepackage{egweblnk}
 % end of prologue
 
 % ====== OUR DEFS ==========
@@ -84,7 +84,7 @@
 \author[Anonymous]
 {\parbox{\textwidth}{\centering Anonymous authors}}
 %{\parbox{\textwidth}{\centering D.\,W. Fellner\thanks{Chairman Eurographics Publications Board}$^{1,2}$\orcid{0000-0001-7756-0901}
- %       and S. Behnke$^{2}$\orcid{0000-0001-5923-423X} 
+ %       and S. Behnke$^{2}$\orcid{0000-0001-5923-423X}
 %        S. Spencer$^2$\thanks{Chairman Siggraph Publications Board}
 %        }
 %       \\
@@ -160,20 +160,20 @@ We present a new C++ library for interval arithmetic that supports both algebrai
 \ccsdesc[100]{Hardware~PCB design and layout}
 
 
-\printccsdesc   
-\end{abstract}  
+\printccsdesc
+\end{abstract}
 %-------------------------------------------------------------------------
 
 \input{01-introduction}
 %\input{02-related}
-%\input{03-method}
+\input{03-method}
 %\input{04-results}
 %\input{05-conclusion}
 
 %-------------------------------------------------------------------------
 % bibtex
-\bibliographystyle{eg-alpha-doi}  
-\bibliography{biblio}        
+\bibliographystyle{eg-alpha-doi}
+\bibliography{biblio}
 
 
 \end{document}
