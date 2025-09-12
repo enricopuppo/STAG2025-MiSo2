@@ -1,7 +1,7 @@
 \section{Background and state of the art}
 \label{sec:related}
 
-Interval arithmetic \cite{hickey2001} provides a set of operations on real intervals $\intervals$ such that if $x\in a=[\lowend{a},\upend{a}] \in \intervals$ and $y\in b=[\lowend{b},\upend{b}] \in \intervals$,
+Interval arithmetic \cite{hickey2001} provides a set of operations on real intervals $\intervals$ such that if $x\in a=[\intlo{a},\inthi{a}] \in \intervals$ and $y\in b=[\intlo{b},\inthi{b}] \in \intervals$,
 then $x \star y  \in a \star b$, where $\star$ in the right-hand side is the interval version of operation $\star$ on reals.
 We are interested in intervals whose lower and upper bounds can be represented by FP numbers. 
 
