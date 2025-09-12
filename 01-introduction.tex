@@ -17,11 +17,13 @@ operations are just \emph{recommended} to be correctly rounded, but there is no 
 %The CORE-MATH project \cite{core-math} provides correctly rounded implementations for all the most common transcendental operations. 
 
 Consequently, nowadays no libraries exist that guarantee the creation of as-tight-as-possible intervals when the expressions involve this kind of operations.
-Since such a kind of expressions are useful in diverse graphics applications (e.g. nonlinear element inversion, collision detection, boolean operations), in this paper we describe the design principles of our TIGHT library for interval arithmetic which always produces as-tight-as-possible intervals, is faster than any existing library, and supports transcendental functions.
-
+% TOLTA FRASE SEGUENTE, RIPETE LE PRIMA DELL'INTRO
+%Since such a kind of expressions are useful in diverse graphics applications (e.g., non-linear element inversion, collision detection, Boolean operations), i
+In this paper, we describe the design principles of our TIGHT library for interval arithmetic, which always produces as-tight-as-possible intervals, is faster than any existing library, and supports transcendental functions.
+%
 Our original contributions include:
 \begin{enumerate}
-\item We extend the NFG library \cite{libreria-Marco} -- which provides the most efficient implementation of interval arithmetic to date, but is limited to algebraic operations -- with transcendental operations, based on the CORE-MATH floating-point correctly rounded implementation \cite{core-math}.
+\item We extend the NFG library \cite{lnfg} -- which provides the most efficient implementation of interval arithmetic to date, but is limited to algebraic operations -- with transcendental operations, based on the CORE-MATH floating-point correctly rounded implementation \cite{Sibidanov2022}.
 In Section \ref{sec:operators}, we discuss the challenges involved in extending transcendental operators to intervals while guaranteeing correct rounding. 
 \item We integrate our library with the recent Domain Specific Language MiSo \cite{MiSo} that supports the fast prototyping of non-linear constraint solving and optimization. 
 Extension of the language with transcendental functions largely broadens its spectrum of applicability. 
