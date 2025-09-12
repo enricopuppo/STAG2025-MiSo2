@@ -16,15 +16,16 @@ The IEEE 754 standard prescribes correctly rounded results only for the algebrai
 operations are just \emph{recommended} to be correctly rounded, but there is no guarantee, depending on their implementation.
 %The CORE-MATH project \cite{core-math} provides correctly rounded implementations for all the most common transcendental operations. 
 Consequently, nowadays no libraries exist that guarantee the creation of as-tight-as-possible intervals when the expressions involve this kind of operations.
+See Section \ref{sec:related} for further discussion.
+
 % TOLTA FRASE SEGUENTE, RIPETE LE PRIMA DELL'INTRO
 %Since such a kind of expressions are useful in diverse graphics applications (e.g., non-linear element inversion, collision detection, Boolean operations), i
-
 In this paper, we describe the design principles of our TIGHT library for interval arithmetic, which always produces as-tight-as-possible intervals, is faster than any existing library, and supports transcendental functions.
 %
 Our original contributions include:
 \begin{enumerate}
 \item We extend the NFG library \cite{nfg} -- which provides the most efficient implementation of interval arithmetic to date, but is limited to algebraic operations -- with transcendental operations, based on the CORE-MATH floating-point correctly rounded implementation \cite{Sibidanov2022}.
-In Section \ref{sec:operators}, we discuss the challenges involved in extending transcendental operators to intervals while guaranteeing correct rounding. 
+In Section \ref{sec:functions}, we discuss the challenges involved in extending transcendental operators to intervals while guaranteeing correct rounding. 
 \item We integrate our library with the recent Domain Specific Language MiSo \cite{Sichetti2025} that supports the fast prototyping of non-linear constraint solving and optimization. 
 Extension of the language with transcendental functions largely broadens its spectrum of applicability. 
 \item We demonstrate the effectiveness and efficiency of our library by implementing continuous collision detection between geometric primitives undergoing roto-translational motion. \EP{and other problems, if any.} We also compare our library against the XXXX library \cite{something}, achieving a faster performance.
