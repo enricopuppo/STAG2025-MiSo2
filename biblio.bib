@@ -17,6 +17,7 @@ pages = {111--118},
 year = {2006}
 }
 
+
 @book{cgal,
   title = {{CGAL} User and Reference Manual},
   author = {The {CGAL} Project},
@@ -70,7 +71,7 @@ location = {Gdansk, Poland}
     title        = {NFG - Numbers For Geometry},
     author       = {Attene, M.},
     url          = {https://github.com/MarcoAttene/NFG},
-    year={2025}
+    year         = {2025}
 }
 
 @article{attene_indirect_2020,
@@ -1615,59 +1616,6 @@ location = {Havana, Cuba}
   number  = 6,
 }
 
-%% FEDERICO
-@article{powers_new_2001,
-	title = {A new bound for {Polya}’s {Theorem} with applications to polynomials positive on polyhedra},
-	abstract = {Let R[X ] := R[x1; : : : ; xn] and let and n denotes the simplex \{(x1; : : : ; xn){\textbar}xi ≥ 0; i xi = 1\}: PoÃlya’s Theorem says that if f ∈ R[X ] is homogeneous and positive on n, then for su ciently large N all of the coe cients of (x1 + · · · + xn)N f(x1; : : : ; xn) are positive. We give an explicit bound for N and an application to some special representations of polynomials positive on polyhedra. In particular, we give a bound for the degree of a representation of a polynomial positive on a convex polyhedron as a positive linear combination of products of the linear polynomials deÿning the polyhedron. c 2001 Elsevier Science B.V. All rights reserved.},
-	language = {en},
-	journal = {Journal of Pure and Applied Algebra},
-	author = {Powers, Victoria and Reznick, Bruce},
-	year = {2001},
-}
-
-@article{de_klerk_ptas_2006,
-	title = {A {PTAS} for the minimization of polynomials of fixed degree over the simplex},
-	volume = {361},
-	issn = {03043975},
-	url = {https://linkinghub.elsevier.com/retrieve/pii/S0304397506003252},
-	doi = {10.1016/j.tcs.2006.05.011},
-	abstract = {We consider the problem of computing the minimum value pmin taken by a polynomial p(x) of degree d over the standard simplex . This is an NP-hard problem already for degree d = 2. For any integer k 1, by minimizing p(x) over the set of rational points in with denominator k, one obtains a hierarchy of upper bounds p (k) converging to pmin as k −→ ∞. These upper approximations are intimately linked to a hierarchy of lower bounds for pmin constructed via Pólya’s theorem about representations of positive forms on the simplex. Revisiting the proof of Pólya’s theorem allows us to give estimates on the quality of these upper and lower approximations for pmin. Moreover, we show that the bounds p (k) yield a polynomial time approximation scheme for the minimization of polynomials of ﬁxed degree d on the simplex, extending an earlier result of Bomze and De Klerk for degree d = 2.},
-	language = {en},
-	number = {2-3},
-	urldate = {2023-06-21},
-	journal = {Theoretical Computer Science},
-	author = {De Klerk, Etienne and Laurent, Monique and Parrilo, Pablo A.},
-	month = sep,
-	year = {2006},
-	keywords = {Optimization on simplex},
-	pages = {210--225},
-}
-
-@misc{de_klerk_error_2014,
-	title = {An error analysis for polynomial optimization over the simplex based on the multivariate hypergeometric distribution},
-	url = {http://arxiv.org/abs/1407.2108},
-	abstract = {We study the minimization of ﬁxed-degree polynomials over the simplex. This problem is well-known to be NP-hard, as it contains the maximum stable set problem in graph theory as a special case. In this paper, we consider a rational approximation by taking the minimum over the regular grid, which consists of rational points with denominator r (for given r). We show that the associated convergence rate is O(1/r2) for quadratic polynomials. For general polynomials, if there exists a rational global minimizer over the simplex, we show that the convergence rate is also of the order O(1/r2). Our results answer a question posed by De Klerk et al. [9] and improves on previously known O(1/r) bounds in the quadratic case.},
-	language = {en},
-	urldate = {2023-06-23},
-	publisher = {arXiv},
-	author = {De Klerk, Etienne and Laurent, Monique and Sun, Zhao},
-	month = jul,
-	year = {2014},
-	note = {arXiv:1407.2108 [math]},
-	keywords = {Optimization on simplex},
-}
-
-@article{garloff_lower_2003,
-	title = {Lower bound functions for polynomials},
-	volume = {157},
-	abstract = {Relaxation techniques for solving nonlinear systems and global optimisation problems require bounding from below the nonconvexities that occur in the constraints or in the objective function by a ne or convex functions. In this paper we consider such lower bound functions in the case of problems involving multivariate polynomials. They are constructed by using Bernstein expansion. An error bound exhibiting quadratic convergence in the univariate case and some numerical examples are given.},
-	number = {1},
-	journal = {Journal of Computational and Applied Mathematics},
-	author = {Garloff, J. and Jansson, C. and Smith, A.P.},
-	year = {2003},
-	pages = {207--225},
-}
-
 @article{lengagne_reducing_nodate,
 	title = {Reducing pessimism in {Interval} {Analysis} using {Bsplines} {Properties}: {Application} to {Robotics}},
 	abstract = {Interval Analysis is interesting to solve optimization and constraint satisfaction problems. It makes possible to ensure the lack of the solution or the global optimal solution taking into account some uncertainties. However, it suﬀers from an over-estimation of the function called pessimism. In this paper, we propose to take part of the BSplines properties and of the Kronecker product to have a less pessimistic evaluation of mathematical functions. We prove that this method reduces the pessimism, hence the number of iterations when solving optimization or constraint satisfaction problems. We assess the eﬀectiveness of our method on planar robots with 2-to-9 degrees of freedom and to 3D-robots with 4 and 6 degrees of freedom.},
@@ -2136,7 +2084,7 @@ year = {2013},
 note = {Solid and Physical Modeling 2012},
 author = {Y.-J. Kim and Y.-T. Oh and S.-H. Yoon and M.-S. Kim and G. Elber},
 keywords = {Hausdorff Distance, NURBS surface, Coons patch, Bounding volume hierarchy (BVH), Hierarchical data structure, Geometric algorithm},
-abstract = {We present an interactive-speed algorithm for computing the Hausdorff Distance (HD) between two freeform geometric models represented with NURBS surfaces. The algorithm is based on an effective technique for matching a surface patch from one model to the corresponding nearby surface patch on the other model. To facilitate the matching procedure, we employ a bounding volume hierarchy (BVH) for freeform NURBS surfaces, which provides a hierarchy of Coons patches and bilinear surfaces approximating the NURBS surfaces (Kim et al., 2011 [1]). Comparing the local HD upper bound against a global HD lower bound, we can eliminate the majority of redundant surface patches from further consideration. The resulting algorithm and the associated data structures are considerably simpler than the previous BVH-based HD algorithms. As a result, we can compute the HD of two freeform geometric models efficiently and robustly even when the two models are in close proximity. We demonstrate the effectiveness of our approach using several experimental results.}
+abstract = {We present an interactive-speed algorithm for computing the Hausdorff Distance (HD) between two freeform geometric models represented with NURBS surfaces. The algorithm is based on an effective technique for matching a surface patch from one model to the corresponding nearby surface patch on the other model. To facilitate the matching procedure, we employ a bounding volume hierarchy (BVH) for freeform NURBS surfaces, which provides a hierarchy of Coons patches and bilinear surfaces approximating the NURBS surfaces (Kim et al., 2011 [1]). Comparing the local HD upper bound against a global HD lower bound, we can eliminate the majority of redundant surface patches from further consideration. The resulting algorithm and the associated data structures are considerably simpler than the previous BVH-based HD algorithms. As a result, we can compute the HD of two freeform geometric models efficiently and robustly even when the two models are in close proximity. We demonstrate the effectiveness of our approach using several experimental results.}
 }
 
 
