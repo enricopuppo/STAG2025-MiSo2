@@ -5,7 +5,7 @@
 
 Interval arithmetic \cite{hickey2001} provides a set of operations on real intervals $\intervals$ such that if $x\in a=[\intlo{a},\inthi{a}] \in \intervals$ and $y\in b=[\intlo{b},\inthi{b}] \in \intervals$,
 then $x \star y  \in a \star b$, where $\star$ in the right-hand side is the interval version of operation $\star$ on reals.
-We are interested in intervals whose lower and upper bounds can be represented by FP numbers. 
+We are interested in intervals whose lower and upper bounds can be represented by FP numbers.
 
 From now on, the set of representable FP numbers is denoted by $\mathbb{F}$. When $a$ and $b$ are in $\mathbb{F}$, the result $r = a \star b$ may be not in $\mathbb{F}$, and hence not representable. In that case $i=[fp^{-}(r),fp^{+}(r)]$, where $fp^{-}(r) = max(f : f \in \mathbb{F}, f \leq r)$ and $fp^{+}(r) = min(f : f \in \mathbb{F})$, is the tightest representable interval containing $r$.
 IEEE 754 requires that when $\star$ is an algebraic operation (or the square root) an implementation of $\star$ must round the theoretically exact result $r$ to either $fp^{-}(r)$ or $fp^{+}(r)$, depending on the current \emph{rounding mode}.
@@ -13,7 +13,7 @@ In most modern architectures the rounding mode is controlled by a particular reg
 Since setting the rounding mode is typically slower than executing arithmetic operations, a more efficient approach is (1) set the rounding mode to $towards +\infty$, (2) execute $(-a) \star b$ and switch the sign of the result to determine the interval's lower bound, (3) execute $a \star b$ to determine the interval's upper bound. Furthermore, if no other parts of the program require a different rounding, step (1) can be executed only once at the beginning.
 This approach is used by existing interval arithmetic libraries such as Boost \cite{bronnimann2006} and CGAL \cite{cgal}.
 
-Another possibility is to deconstruct the binary representation of the result $r$ to directly modify the mantissa, exponent and sign, and produce a reasonably small interval around $r$. This approach is used by Filib and Filib++ \cite{filib}.
+Another possibility is to deconstruct the binary representation of the result $r$ to directly modify the mantissa, exponent and sign, and produce a reasonably small interval around $r$. This approach is used by Filib and Filib++ \cite{filib} \FS{Filib++ has multiple modes, is this true for all modes? should we be more specific?}.
 Alternatively, the error propagation can be analyzed to derive a bound $\epsilon$ on the rounding so that the interval $i=[r-\epsilon,r+\epsilon]$ is guaranteed to contain $r$. This is how libraries such as BIAS \cite{bias} or GAOL \cite{gaol} work.
 
 The aforementioned existing libraries were comprehensively compared by Tang and colleagues \cite{tang2022} who evaluated diverse aspects, including their correctness, efficiency and precision (in terms of interval tightness). Their conclusion is that only filib and filib++ are always correct when transcendental functions are involved, although the intervals they produce might be larger than necessary. In contrast, Boost and BIAS may produce intervals that do not contain the exact result. Also, Tang's evaluation could verify that libraries that use the rounding mode produce tighter intervals.
