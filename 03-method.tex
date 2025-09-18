@@ -1,8 +1,9 @@
 % !TEX root = STAG25-MiSo2.tex
 
 \section{Implementing elementary functions}
+\label{sec:functions}
 In order to implement robust, conservative and tight interval extensions of elementary functions, we rely on existing \emph{correctly rounded} implementations of functions.
-The CORE-MATH Project \cite{} provides a collection of fast, correctly rounded implementations of most commonly used mathematical functions.
+The CORE-MATH Project \cite{Sibidanov2022} provides a collection of fast, correctly rounded implementations of most commonly used mathematical functions.
 For ease of use, we created a minimal C++ library of double-precision CORE-MATH implementations that is publicly available at \url{}.
 
 The functions that we implemented are:
@@ -13,7 +14,7 @@ The functions that we implemented are:
 \subsection{Interval extension}
 Assuming the availability of a correctly rounded function $f$, we want to obtain a correctly rounded inclusion function for $f$, that is, an interval-valued function $\inclusion{f}$ such that the endpoints of the resulting interval are correctly rounded outward.
 
-TIGHT's interval class wraps the NFG interval library \cite{}, which guarantees that the result of every operation contains the true result, thanks to conservative outward rounding. Specifically, the library is initialized by setting the FPU rounding mode to upward, and the lower end of the interval is represented internally with opposite sign, which results in downward rounding without changing the rounding mode.
+TIGHT's interval class wraps the NFG interval library \cite{nfg}, which guarantees that the result of every operation contains the true result, thanks to conservative outward rounding. Specifically, the library is initialized by setting the FPU rounding mode to upward, and the lower end of the interval is represented internally with opposite sign, which results in downward rounding without changing the rounding mode.
 
 An issue that must be considered is how to deal with input intervals containing points outside the domain of $f$. We discuss this in Section \ref{}, and until them, we limit our discussion to identifying such ill-posed inputs.
 
