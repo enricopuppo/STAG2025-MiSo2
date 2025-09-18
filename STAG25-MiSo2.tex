@@ -119,11 +119,11 @@
 \maketitle
 %-------------------------------------------------------------------------
 \begin{abstract}
-Interval arithmetic is a practical method for robust computation, bridging the gap between fast, but inexact, floating-point arithmetic and slow, exact arithmetic (such as rational or arbitrary-precision). In this system, numbers are represented as intervals bounded by floating-point numbers. Operations are performed conservatively, guaranteeing that the resulting interval contains the exact mathematical result.
-
+Interval arithmetic is a practical method for robust computation, bridging the gap between fast, but inexact, floating-point arithmetic and slow, exact arithmetic, such as rational or arbitrary-precision. In this system, numbers are represented as intervals bounded by floating-point numbers, and operations are performed conservatively, guaranteeing that the resulting interval contains the exact mathematical result.
+%
 %We present a new C++ library for interval arithmetic that supports both algebraic and transcendental functions. A key feature of this library is its use of correctly rounded operations, ensuring the resulting interval is the smallest floating-point interval that contains the true result.
-We extend a fast C++ library for interval arithmetic by adding support for several transcendental functions. A key feature of our library is that its operations are correctly rounded, ensuring the resulting interval is the smallest floating-point interval that contains the true result.
-We demonstrate the library’s effectiveness by applying it to complex non-polynomial problems, including continuous collision detection for geometric primitives undergoing roto-translational motion.
+We extend a fast C++ library for interval arithmetic by adding support for several transcendental functions. A key feature of our library is that all operations are correctly rounded, ensuring the resulting interval is the smallest floating-point interval that contains the true result.
+We demonstrate the library’s effectiveness by applying it to complex non-polynomial problems, including surface-surface intersection and continuous collision detection for geometric primitives undergoing roto-translational motion.
 
 \EP{CCS Concepts da sistemare!!!}
 %-------------------------------------------------------------------------
