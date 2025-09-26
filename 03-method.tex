@@ -14,28 +14,33 @@ The functions that we implemented are:
 \subsection{Interval extension}
 Assuming the availability of a correctly rounded function $f$, we want to obtain a correctly rounded inclusion function for $f$, that is, an interval-valued function $\inclusion{f}$ such that the endpoints of the resulting interval are correctly rounded outward.
 
-TIGHT's interval class wraps the NFG interval library \cite{nfg}, which guarantees that the result of every operation contains the true result, thanks to conservative outward rounding. Specifically, the library is initialized by setting the FPU rounding mode to upward, and the lower end of the interval is represented internally with opposite sign, which results in downward rounding without changing the rounding mode.
+TIGHT's interval class wraps the NFG interval library \cite{nfg}, which guarantees that the result of every operation contains the true result, thanks to conservative outward rounding. Specifically, the library is initialized by setting the FPU rounding mode towards positive infinity, and the lower end of the interval is represented internally with opposite sign, which results in downward rounding without changing the rounding mode.
 
 An issue that must be considered is how to deal with input intervals containing points outside the domain of $f$. We discuss this in Section \ref{}, and until them, we limit our discussion to identifying such ill-posed inputs.
 
 The challenge of extending a function to intervals with correct rounding is twofold.
-First, one needs to know the expressions for the endpoints of the resulting interval; this is done by enumerating the possible cases for a given function.
+First, we need an expression for the range of the function; this is obtained by enumerating the possible cases for a given function.
 Then, these expressions must be instantiated on the input datum and rounded correctly - downward for the lower bound and upward for the upper one.
 
 \subsubsection{Odd and monotonic functions}
-When $f$ is monotonically increasing on $[\intlo{x}, \inthi{x}]$, the image of the interval can be easily computed as $\inclusion{f}([\intlo{x}, \inthi{x}]) = [f(\intlo{x}), f(\inthi{x})]$; if it is monotonically decreasing, the two endpoints are swapped. In both cases, assuming exact arithmetic, the result is exact.
-If $f$ is not monotonic on $[\intlo{x}, \inthi{x}]$, we need to know where $f$ attains its extrema on the interval. As we will see for some non-monotonic functions, even deciding that $[\intlo{x}, \inthi{x}]$ is in a monotonic region of the domain is tricky in inexact arithmetic.
+When $f$ is monotonically increasing on $[\intlo{x}, \inthi{x}]$, the range of the function on an interval is easily obtained as $\inclusion{f}([\intlo{x}, \inthi{x}]) = [f(\intlo{x}), f(\inthi{x})]$; if it is monotonically decreasing, the two endpoints are swapped.
+If $f$ is not monotonic on $[\intlo{x}, \inthi{x}]$, we need to know where $f$ attains its extrema on the interval. As we will see for some functions, even deciding that $[\intlo{x}, \inthi{x}]$ lies in a part of the domain where $f$ is monotonic is tricky in floating point arithmetic.
 
-Once one knows how to compute the range of the function in exact arithmetic, correct rounding amounts to rounding the left endpoint down, and the right endpoint up. Given that we are operating in round-upward mode, the latter is free. To round down we could change the rounding mode and reset it after the operation.
-However, changing roundind modes flushes the CPU pipeline, thus it is an expensive operation that we avoid.
-When $f$ is odd, the result of $f(x)$ rounded down is easily computed in upward rounding mode as $-f(-x)$, since negation is an exact operation. Several elementary functions are odd, so this property is helpful for our purposes.
+Once we know how to compute the range of the function in exact arithmetic, correct rounding amounts to rounding the left endpoint down, and the right endpoint up. Given that we are operating in round-upward mode, the latter is free.
+To round down we could change the rounding mode and reset it after the operation, but changing roundind modes flushes the CPU pipeline, thus it is an expensive operation that fortunately can be avoided in several cases.
+For example, when $f$ is odd, the result of $f(x)$ rounded down is easily computed in upward rounding mode as $-f(-x)$, since negation is an exact operation. Several elementary functions are odd, so this property is helpful for our purposes.
 
-\subsubsection{List of functions}
-For a monotonically increasing and odd function $f$, computing $\inclusion{f}$ with upward rounding is as easy as $\inclusion{f}([\intlo{x}, \inthi{x}]) = [-f(-\intlo{x}), f(\inthi{x})]$. Fortunately, many of the functions of interest to us satisfy both these properties:
-\FS{TODO}
+For a monotonically increasing and odd function $f$ for which we have access to a correctly rounded implementation, the correctly rounded $\inclusion{f}$ is $\inclusion{f}([\intlo{x}, \inthi{x}]) = [-f(-\intlo{x}), f(\inthi{x})]$. Fortunately, many of the functions of interest to us satisfy both these properties:
+\begin{itemize}
+	\item arcsine and arctangent
+	\item hyperbolic sine and tangent
+	\item hyperbolic arcsine and arctangent
+	\item cube root
+	\item error function
+\end{itemize}
 
 \subsubsection{Inverse trigonometric, exponential and logarithmic functions}
-When we drop the oddity assumption, we face the problem of how to round down the result of a call to the correctly-rounded library function without changing the rounding mode, since doing so incurs a performance penalty.
+When we drop the oddity assumption, we face the problem of how to round down the result of a call to the correctly-rounded library function without changing the rounding mode, since doing so might degrade performance.
 An easy way to deal with this is to compute the result with upward rounding, then correcting this by taking the immediately preceding FP value.
 However, if the exact result of the function is representable as a floating point number, correct rounding imposes that the exact result will be returned; in these special cases, if use the immediately smaller FP value, we get an error of 1 ULP.
 To address this, we would like to only perform this operation if the upward rounding happened. Unfortunately, while the IEEE754 standard does provide a way to check this via status flags, CORE-MATH currently does not guarantee that status flags are set correctly.
