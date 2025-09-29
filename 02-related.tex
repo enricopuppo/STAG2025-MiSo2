@@ -23,6 +23,21 @@ With the exception of rather old architectures, most existing CPUs provide SIMD 
 \subsection{Correct rounding}
 \emph{Correct rounding} refers to the property that an implementation
 of a mathematical function $f$ has if, for any $x$ that is representable and contained in the domain of $f$, it returns the same results one would get by rounding the exact result $f(x)$ to the target representation.
-While this property may seem obvious in theory, this is not what happens in real life: implementations of mathematical functions often consists of several steps, and the composition of two CR functions is not CR in general.
 The IEEE754 standard for floating point arithmetic requires a compliant implementation of a function to round correctly for all inputs \cite{ieee}. Indeed, required operations such as summation, subtraction, multiplication, division, and square roots produce the same, correctly rounded results on any IEEE754-compliant machine.
 However, this is not true for \emph{recommended} functions like $\sin$ or $\log$: because they are not mandatory, mathematical libraries are allowed to implement fast, non-CR routines that are not IEEE754-conforming, but the language implementation as a whole will be conforming as long as the mandatory operations are CR.
+
+Producing efficient CR implementations of functions is a difficult task that has been actively researched for many years.
+The classical method involves performing a fast approximation of the function with a known error bound, followed by a correctness check, and a slower but higher-accuracy approximation if the check fails.
+Interestingly, implementing CR double-precision functions is more difficult than single-precision, because one can check correct rounding exhaustively on 32-bit floats, which is infeasible in the 64-bit case.
+For double precision, correctness must either be proved formally or tested on known hard to round cases.
+
+The most notable libraries for CR mathematical functions are CRlibm \cite{crlibm} and RLibm \cite{rlibm}.
+CRlibm implements several transcendental functions of one double-precision argument, correctly rounded in the four rounding modes. However, instead of following the rounding mode set on the FPU by the user, it provides separate functions for each rounding mode, and it assumes that the FPU is set to round-to-even (whereas interval arithmetic uses directed rounding).
+%, and also assumes that the FPU uses double precision internally, whereas double-extended precision is the default on some platforms.
+To the best of our knowledge, the project is no longer actively maintained.
+RLibm is a more recent project that proposes a new approach to correct rounding by polynomial approximants, but it is currently limited to single-precision inputs.
+
+The CORE-MATH Project \cite{coremath} is an ongoing effort to build a complete collection of correctly rounded C implementations of mathematical functions to foster integration into existing mathematical libraries. CORE-MATH is actively developed and provides efficient CR routines for univariate and bivariate functions with double-precision arguments.
+
+TIGHT uses CORE-MATH functions in its interval extensions for all those functions that are not CR in the C++ standard library.
+Because CORE-MATH is not a library proper, we also provide a publicly available C++ wrapper to facilitate its use in projects such as TIGHT: \url{url://omitted.for.anonimity}.
