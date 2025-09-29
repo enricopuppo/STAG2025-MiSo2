@@ -1,2 +1,60 @@
 \section{Results and comparison}
-\input{timetable}
+
+\subsection{Benchmark comparison}
+
+\subsection{Comparison with Filib++ within MiSo}
+In order to assess our library's effectiveness in practical scenarios, we integrate it in the software MiSo \cite{miso} which makes intensive use of interval arithmetic.
+MiSo is a Python tool to generate interval-based C++ solvers with correctness guarantees, and already uses NFG for its fast interval arithmetic, albeit with no support for non-algebraic operations.
+Since MiSo's architecture allows for easily switching the numeric backend, we were able to perform a side-by-side comparison of our library and Filib++ for several problems, while extending the software's support to transcendental operators.
+
+\subsubsection{CCD along non-algebraic trajectories}
+We consider the classical problem of continuous collision detection (CCD): given two primitives in space with some prescribed trajectory, we seek the first time in $[0,1]$ for which the primitives first come into contact, and call it $t^*$.
+In practice, finding the exact value of $t^*$ may be infeasible and often unneceessary. With interval methods we instead seek an interval $T^*$ that is guaranteed to contain $t^*$ and is smaller than a user-specified precision $\delta>0$.
+Then the lower bound of $T^*$ tells us a moment in time until which we can safely move the objects without collisions, and the upper bound gives a moment when collision has surely happened already.
+This type of test is essential in the simulation field to guarantee that physical objects do not interpenetrate.
+The difficulty of the query depends on the type of primitives, the type of trajectory, and the precision required.
+
+Within MiSo, this is formulated as a \textsc{Minimize} problem, that is, a constrained global optimization.
+In this case the optimization variables are $\{\mathbf{u}, \mathbf{v}, t\}$, where $\mathbf{u}=(u_0, u_1)$ and $\mathbf{v}=(v_0, v_1)$ are the parametric coordinates of the two primitives, and $t$ is time;
+the constraints are the domain constraints $(u_0,u_1,v_0,v_1,t)\in[0,1]^5, u_0+u_1\leq1, v_0+v_1\leq1$ (which are all implicit in MiSo), and the collision constraint $d(x,y)<\epsilon$ with a small but positive $\epsilon$ (we only consider pairs of points for which collision happens);
+the objective function is $t$ (we want to find the collision that happens earliest).
+
+In our test, we consider two moving linear (i.e. flat) triangles, where one is linearly deforming (i.e. each vertex follows a linear trajectory independent of the others), while the other vertex is undergoing a rigid roto-translation.
+
+\FS{\dots}
+
+\subsubsection{Intersection of two parametric tori}
+Computing the intersection of parametric surfaces, also known as surface-surface intersection (SSI), is an important operation in CAD.
+In our example, we want to describe the intersection locus of two tori expressed parametrically. This problem involves heavy use of trigonometric functions which, as outlined in Section \ref{}, are more expensive to compute in TIGHT than in Filib++.
+However, as we shall see, TIGHT's faster handling of basic arithmetic and its smaller intervals result in faster solution times overall.
+
+SSI can be formulated in MiSo as a \textsc{Solve} problem, that is, the problem of covering the set of all solutions of a constraint system within a certain tolerance.
+Being a conservative method, the algorithm returns a region that is larger than the true solution, but is guaranteed to contain every point of it.
+
+Similarly to the previous example, the optimization variables are $\{\mathbf{u}, \mathbf{v}\}$, where $\mathbf{u}=(u_0, u_1)$ and $\mathbf{v}=(v_0, v_1)$ are the parametric coordinates of the two tori;
+the constraints are the domain constraints $(u_0,u_1,v_0,v_1)\in[0,1]^4$ (implicit in MiSo), and the intersection constraint $d(x,y)<\epsilon$.
+This formulation gives solutions in \emph{parameter} space rather than physical space. To be precise, this formulation solves a more general version of the problem: since the parameter space is 4-dimensional, the solution is a collection of 4D boxes that describe pairs of contacting regions, up to the specified tolerance.
+
+\FS{\dots}
+
+\subsection{Comparing interval width}
+Not producing the tightest possible interval can have unpredictable results for seemingly easy problems. We provide two very simple examples where returning a slightly larger interval results in the program being unable to compute the result.
+
+Suppose we have a function $f(x,y)$ defined on the plane that is inversely proportional to the distance of point $(x,y)$ to a circle centered in the origin with radius 5.
+Thus, we are evaluating $f(x,y) = 1/(\sqrt{x^2 + y^2}-5)$.
+This type of function resembles contact potentials used in IPC physical simulations.
+We want to evaluate $f$ with interval arithmetic at point $P(3+10^{-15},4+10^{-15})$, so that $P$ lies outside the sphere. Remember that, because we are using interval arithmetic, we need not fear that adding a small value leads to cancellation for very small $\epsilon$: in those cases we simply get an interval that contains the true value.
+We compute this function in three ways:
+\begin{itemize}
+	\item with TIGHT intervals, and using the function \texttt{hypot} to compute the Euclidean distance of $P$ from the origin (which is absent in Filib++);
+	\item with TIGHT intervals, using only operators supported by Filib++ (all algebraic in this case);
+	\item with Filib++ intervals, using the same mode as the rest of the paper.
+\end{itemize}
+In the first two cases, the denominator is correctly computed as positive with TIGHT and the operation returns a real interval (albeit larger in the second case, due to multiple operations being involved).
+When using Filib++, the square root produces an interval with lower bound equal to the radius, resulting in a division by zero.
+
+\FS{other example \dots}
+
+These are simple examples, but for more complex expressions the propagation of error can be even more dramatic. While correct rounding does not completely eliminate the issue, it reduces propagation to a minimum and makes it predictable.
+
+%\input{timetable}
