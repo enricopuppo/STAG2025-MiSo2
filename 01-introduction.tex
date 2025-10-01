@@ -2,25 +2,29 @@
 
 \section{Introduction}
 \label{sec:introduction}
-Robust geometric computation is a critical component of many applications, such as collision detection, minimum distance computation, element inversion, and Boolean operations \cite{something}. Although floating-point arithmetic is fast, it can easily generate inaccurate results that may lead to unpredictable, often catastrophic outcomes, especially in simulations \cite{something}. In contrast, exact computation, using methods like rational arithmetic or arbitrary precision floating-point arithmetic, is extremely slow and often impractical.
-Moreover, such methods are exact only for algebraic operations. 
+Robust geometric computation is a critical component of many applications in graphics, such as collision detection, minimum distance computation, element inversion, and Boolean operations \cite{something}. Although floating-point arithmetic is fast, it can easily generate inaccurate results that may lead to unpredictable, often catastrophic outcomes \cite{something}. In contrast, exact computation, using methods like rational arithmetic or arbitrary precision floating-point arithmetic, is extremely slow and often impractical.
+Moreover, such methods are exact only for algebraic operations.
+%aggiunto "in graphics", tolto "especially in simulations"
 
-Interval arithmetic bridges this gap by providing a viable alternative. 
+Interval arithmetic bridges this gap by providing a viable alternative.
 It offers a balance between performance and accuracy, giving conservative estimates of exact computations at a moderate speed penalty compared to standard floating-point arithmetic. In this model, all real values are represented as intervals bounded by floating-point numbers. Expressions on these intervals are computed in a way that guarantees the resulting interval will contain the true mathematical result.
-While the width of an interval can grow during computation, it is crucial to minimize this growth to maintain precision. This is achieved through \emph{correctly rounded} operations, where each elementary operation returns the tightest possible floating-point interval that contains the exact result.
-%More fundamentally, if elementary computations are not correctly rounded, the same expression %evaluated with the same sequence of operations
-% may give different results on different architectures, or even on the same architecture once the underlying mathematical library is changed. 
 
-The IEEE 754 standard prescribes correctly rounded results only for the algebraic operations and the square root; all other 
-%transcendental
-operations are just \emph{recommended} to be correctly rounded, but there is no guarantee, depending on their implementation.
-%The CORE-MATH project \cite{core-math} provides correctly rounded implementations for all the most common transcendental operations. 
-Consequently, nowadays no libraries exist that guarantee the creation of as-tight-as-possible intervals when the expressions involve this kind of operations.
+As the width of an interval grows during computation, it is crucial to minimize this propagation of uncertainty to maintain precision. This is achieved through \emph{correctly rounded} (CR) operations, where each elementary operation returns the tightest possible floating-point interval that contains the exact result.
+Apart from CR operations yielding improved precision, correct rounding can ensure \emph{bit-by-bit reproducibility}: because the result to be returned is well-defined, an expression evaluated with correct rounding will return the same result on any machine, and with any correctly-rounded implementations.
+Without this property, brittle code is subject to unexpected bugs that are hard to replicate, and results that are not consistent over time due to improvements to the underlying mathematical libraries.
+
+%
+%The IEEE 754 standard for floating point arithmetic prescribes CR results only for the algebraic operations and the square root; all other operations are just \emph{recommended} to be correctly rounded, but there is no guarantee, depending on their implementation.
+
+The 2019 revision of the IEEE 754 standard for floating point arithmetic requires a compliant implementation of a function to round correctly for all inputs \cite{ieee754}. Indeed, required operations such as summation, subtraction, multiplication, division, and square roots produce the same, correctly rounded results on any IEEE 754-compliant machine.
+However, this is not true for \emph{recommended} functions like $\sin$ or $\log$: because they are not mandatory, mathematical libraries are allowed to implement fast, non-CR routines that are not IEEE 754-conforming, but the language implementation as a whole will be conforming as long as the mandatory operations are CR.
+As a result, most operations in existing mathematical libraries are not correctly rounded.
+We are not aware of any existing libraries that guarantee the creation of as-tight-as-possible intervals when the expressions involve this kind of operations.
 See Section \ref{sec:related} for further discussion.
 
 % TOLTA FRASE SEGUENTE, RIPETE LE PRIMA DELL'INTRO
 %Since such a kind of expressions are useful in diverse graphics applications (e.g., non-linear element inversion, collision detection, Boolean operations), i
-In this paper, we describe the design principles of our TIGHT library for interval arithmetic, which always produces as-tight-as-possible intervals, is faster than any existing library, and supports transcendental functions.
+In this paper, we describe the design principles of our TIGHT library for correctly rounded interval arithmetic, which always produces as-tight-as-possible intervals, is faster than any existing library, and supports transcendental functions.
 %
 Our original contributions include:
 \begin{enumerate}
@@ -28,7 +32,7 @@ Our original contributions include:
 In Section \ref{sec:functions}, we discuss the challenges involved in extending transcendental operators to intervals while guaranteeing correct rounding. 
 \item We integrate our library with the recent Domain Specific Language MiSo \cite{Sichetti2025} that supports the fast prototyping of non-linear constraint solving and optimization. 
 Extension of the language with transcendental functions largely broadens its spectrum of applicability. 
-\item We demonstrate the effectiveness and efficiency of our library by implementing surface-surface intersection between non-algebraic surfaces, and continuous collision detection between geometric primitives undergoing roto-translational motion.  We also compare our library against the Filib library \cite{filib}, achieving a faster performance.
+\item We demonstrate the effectiveness and efficiency of our library by implementing surface-surface intersection between non-algebraic surfaces, and continuous collision detection between geometric primitives undergoing roto-translational motion.  We also compare our library against the popular Filib++ library \cite{filibpp}, achieving a faster performance.
 \end{enumerate}
 
 

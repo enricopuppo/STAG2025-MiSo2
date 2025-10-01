@@ -1,11 +1,24 @@
 \section{Results and comparison}
+We evaluate our library in several scenarios and compare it with the Filib++ library.
+
+All experiments were timed single-threaded on a cluster equipped with Intel Xeon Gold 6430 CPUs and 64GB of RAM.
+The compiler used is GCC version 13.3.0 on Ubuntu.
 
 \subsection{Benchmark comparison}
+We start by comparing the execution times and average interval width of single functions in TIGHT and Filib++.
+To compute the width, for each operation we select one or two singleton input intervals that lie inside the function domain, and compute the number of floating point values between the lower and upper ends of the computed interval (plus one); a width of 1 ULP (or 0, in the case of an exactly representable output) corresponds to a correctly rounded result.
+To get timings, we call each function one million times; to prevent the compiler from optimizing calls, and to evaluate the timing on non-singleton intervals, we perturb the input interval at each iteration by enlarging it by an ULP on both sides, and sum the upper and lower bound of each result to a dummy accumulator.
+Note that some operations are omitted for Filib++ as they are not supported by the library.
+
+\input{timetable}
 
 \subsection{Comparison with Filib++ within MiSo}
-In order to assess our library's effectiveness in practical scenarios, we integrate it in the software MiSo \cite{miso} which makes intensive use of interval arithmetic.
+To assess the practical effectiveness of our library, we integrate it in the software MiSo \cite{miso} which makes intensive use of interval arithmetic.
 MiSo is a Python tool to generate interval-based C++ solvers with correctness guarantees, and already uses NFG for its fast interval arithmetic, albeit with no support for non-algebraic operations.
 Since MiSo's architecture allows for easily switching the numeric backend, we were able to perform a side-by-side comparison of our library and Filib++ for several problems, while extending the software's support to transcendental operators.
+
+These problems involve heavy use of trigonometric functions which, as outlined in Section \ref{}, are more expensive to compute in TIGHT than in Filib++.
+However, as we shall see, TIGHT's faster handling of basic arithmetic and its smaller intervals result in faster solution times overall.
 
 \subsubsection{CCD along non-algebraic trajectories}
 We consider the classical problem of continuous collision detection (CCD): given two primitives in space with some prescribed trajectory, we seek the first time in $[0,1]$ for which the primitives first come into contact, and call it $t^*$.
@@ -21,12 +34,17 @@ the objective function is $t$ (we want to find the collision that happens earlie
 
 In our test, we consider two moving linear (i.e. flat) triangles, where one is linearly deforming (i.e. each vertex follows a linear trajectory independent of the others), while the other vertex is undergoing a rigid roto-translation.
 
-\FS{\dots}
+The query implemented with TIGHT takes $2.5$s, versus the $13.2$s of Filib++, for a speedup of approximately $5\times$.
 
 \subsubsection{Intersection of two parametric tori}
+\begin{figure}
+	\includegraphics[width=0.4\linewidth]{fig/512x512.png}
+	\centering
+	\caption{Test problem: surface-surface intersection (SSI) of two parametric tori of inner radius $0.3$ and outer radius $1$, each shifted by $\pm1.1$ along the $x$ axis.}
+	\label{fig:tori}
+\end{figure}
 Computing the intersection of parametric surfaces, also known as surface-surface intersection (SSI), is an important operation in CAD.
-In our example, we want to describe the intersection locus of two tori expressed parametrically. This problem involves heavy use of trigonometric functions which, as outlined in Section \ref{}, are more expensive to compute in TIGHT than in Filib++.
-However, as we shall see, TIGHT's faster handling of basic arithmetic and its smaller intervals result in faster solution times overall.
+In our example, we want to describe the intersection locus of two tori expressed parametrically.
 
 SSI can be formulated in MiSo as a \textsc{Solve} problem, that is, the problem of covering the set of all solutions of a constraint system within a certain tolerance.
 Being a conservative method, the algorithm returns a region that is larger than the true solution, but is guaranteed to contain every point of it.
@@ -35,11 +53,17 @@ Similarly to the previous example, the optimization variables are $\{\mathbf{u},
 the constraints are the domain constraints $(u_0,u_1,v_0,v_1)\in[0,1]^4$ (implicit in MiSo), and the intersection constraint $d(x,y)<\epsilon$.
 This formulation gives solutions in \emph{parameter} space rather than physical space. To be precise, this formulation solves a more general version of the problem: since the parameter space is 4-dimensional, the solution is a collection of 4D boxes that describe pairs of contacting regions, up to the specified tolerance.
 
-\FS{\dots}
+In both cases, the solver performs 11105 iterations and found a solution composed of 6976 4D boxes. However, the result took $136$ms to compute with TIGHT and $2186$ms with Filib++, a speedup of about $16\times$.
 
-\subsection{Comparing interval width}
-Not producing the tightest possible interval can have unpredictable results for seemingly easy problems. We provide two very simple examples where returning a slightly larger interval results in the program being unable to compute the result.
+\subsection{Pathological cases}
+Not producing tight enough intervals can have unpredictable results for seemingly easy problems. We provide two very simple examples where returning a slightly larger interval results in the program being unable to compute the result.
 
+\begin{figure}
+	\includegraphics[width=0.4\linewidth]{fig/512x512.png}
+	\centering
+	\caption{An example where tighter intervals of CR functions prevent errors: when the inputs to the problem are a few ULPs away from producing pathological situations, CR minimizes error and is often able to avoid failure. Moreover, its results are machine-independent; a non-CR implementation may complete successfully on one machine but fail on another.}
+	\label{fig:tori}
+\end{figure}
 Suppose we have a function $f(x,y)$ defined on the plane that is inversely proportional to the distance of point $(x,y)$ to a circle centered in the origin with radius 5.
 Thus, we are evaluating $f(x,y) = 1/(\sqrt{x^2 + y^2}-5)$.
 This type of function resembles contact potentials used in IPC physical simulations.
@@ -55,6 +79,6 @@ When using Filib++, the square root produces an interval with lower bound equal 
 
 \FS{other example \dots}
 
-These are simple examples, but for more complex expressions the propagation of error can be even more dramatic. While correct rounding does not completely eliminate the issue, it reduces propagation to a minimum and makes it predictable.
+These are simple examples, but for more complex expressions the propagation of error can be even more dramatic. While correct rounding does not completely eliminate the issue, it reduces propagation to a minimum and makes it predictable, since each operation can introduce at most 1 ULP of error on each side.
 
 %\input{timetable}
