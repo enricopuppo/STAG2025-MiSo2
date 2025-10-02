@@ -38,7 +38,7 @@ However, as we shall see, TIGHT's result in faster solution times overall, thank
 \begin{figure}
 	\centering
 	\includegraphics[width=0.8\linewidth]{fig/spiral.png}
-	\caption{Test problem: \FS{caption}}
+	\caption{Test problem: CCD of a triangle moving rigidly along a screw trajectory, and another deforming triangle. The triangle on top rotates and moves along an axis until the two primitives come into contact.}
 	\label{fig:tori}
 \end{figure}
 We consider the classical problem of continuous collision detection (CCD): given two primitives in space with some prescribed trajectory, we seek the first time in $[0,1]$ for which the primitives first come into contact, and call it $t^*$.
@@ -82,7 +82,7 @@ In both cases, the solver performs 11105 iterations and found a solution compose
 Not producing tight enough intervals can have unpredictable results for seemingly easy problems. We provide a very simple example where returning a slightly larger interval results in the program being unable to compute the result.
 
 \begin{figure}
-	\includegraphics[width=0.4\linewidth]{fig/512x512.png}
+	\includegraphics[width=0.8\linewidth]{fig/example.png}
 	\centering
 	\caption{An example where tighter intervals of CR functions prevent errors: when the inputs to the problem are a few ULPs away from producing pathological situations, CR minimizes error and is often able to avoid failure. Moreover, its results are machine-independent; a non-CR implementation may complete successfully on one machine but fail on another.}
 	\label{fig:tori}
