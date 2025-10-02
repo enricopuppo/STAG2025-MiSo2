@@ -1,4 +1,5 @@
 \section{Results and comparison}
+\label{sec:results}
 We evaluate our library in several scenarios. Furthermore, because Filib/Filib++ is the only library which is always correct when transcendental functions are involved \cite{tang2022}, we compare TIGHT with this representative of the state of the art.
 
 All experiments were timed single-threaded on a cluster equipped with Intel Xeon Gold 6430 CPUs and 64GB of RAM.
@@ -32,14 +33,14 @@ In this case the optimization variables are $\{\mathbf{u}, \mathbf{v}, t\}$, whe
 the constraints are the domain constraints $(u_0,u_1,v_0,v_1,t)\in[0,1]^5, u_0+u_1\leq1, v_0+v_1\leq1$ (which are all implicit in MiSo), and the collision constraint $d(x,y)<\epsilon$ with a small but positive $\epsilon$ (we only consider pairs of points for which collision happens);
 the objective function is $t$ (we want to find the collision that happens earliest).
 
-In our test, we consider two moving linear (i.e. flat) triangles, where one is linearly deforming (i.e. each vertex follows a linear trajectory independent of the others), while the other vertex is undergoing a rigid roto-translation.
+In our test, we consider two moving linear (i.e. flat) triangles, where one is linearly deforming (i.e. each vertex follows a linear trajectory independent of the others), while the other vertex is undergoing a rigid roto-translation, following a spiral motion.
 
-The query implemented with TIGHT takes $2.5$s, versus the $13.2$s of Filib++, for a speedup of approximately $5\times$.
+We test the same problem with different sets of parameters, changing the speed of the rotation and the position of the other triangle. The queries implemented with TIGHT take $27$ms, $133$ms and $2.5$s respectively, versus the $127$ms, $756$ms and $13.2$s of Filib++, for a speedup of approximately $5\times$.
 
 \subsubsection{Intersection of two parametric tori}
 \begin{figure}
-	\includegraphics[width=0.4\linewidth]{fig/512x512.png}
 	\centering
+	\includegraphics[width=0.8\linewidth]{fig/torusInt.png}
 	\caption{Test problem: surface-surface intersection (SSI) of two parametric tori of inner radius $0.3$ and outer radius $1$, each shifted by $\pm1.1$ along the $x$ axis.}
 	\label{fig:tori}
 \end{figure}
