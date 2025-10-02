@@ -2,9 +2,11 @@
 
 \section{Implementing elementary functions}
 \label{sec:functions}
-In order to implement conservative and tight interval extensions of elementary functions, we exploit the corresponding \emph{correctly rounded} implementations within the CORE-MATH Project.
-For ease of use, we created a minimal C++ library collecting double-precision CORE-MATH implementations and made it publicly available at \url{url://omitted.for.anonimity}.
+TIGHT's interval class wraps the NFG interval library \cite{nfg}, which efficiently supports CR interval computation, limited to the arithmetic operations, the square, and the square root, i.e., those floating-point operations for which the IEEE 754 standard prescribes correct rounding. 
+We extend the scope of the library to also support transcendental functions, exploiting the results of the CORE-MATH Project \cite{Sibidanov2022}, which provides CR floating-point implementation of the most common transcendental functions.
+%For ease of use, we created a minimal C++ library collecting double-precision CORE-MATH implementations and made it publicly available at \url{url://omitted.for.anonimity}.
 
+Our major contribution consists of implementing CR \emph{interval} functions also for those transcendental functions, and providing a whole support to both polynomial and transcendental interval computation within a unified context. 
 The functions currently supported by TIGHT intervals are:
 \begin{itemize}
 	\item basic arithmetic: $x+y$, $x-y$, $xy$, $x/y$, $-x$, $|x|$, $\max(x,y)$, $\min(x,y)$;
@@ -21,7 +23,7 @@ The functions currently supported by TIGHT intervals are:
 \subsection{Interval extension}
 Assuming the availability of a correctly rounded function $f$, we want to obtain a correctly rounded inclusion function for $f$, that is, an interval-valued function $\inclusion{f}$ such that the endpoints of the resulting interval are correctly rounded outward.
 
-TIGHT's interval class wraps the NFG interval library \cite{nfg}, which guarantees that the result of every operation contains the true result, thanks to conservative outward rounding. Specifically, the library is initialized by setting the rounding mode towards positive infinity, and the lower end of the interval is represented internally with opposite sign, which results in downward rounding without changing the rounding mode.
+%TIGHT's interval class wraps the NFG interval library \cite{nfg}, which guarantees that the result of every operation contains the true result, thanks to conservative outward rounding. Specifically, the library is initialized by setting the rounding mode towards positive infinity, and the lower end of the interval is represented internally with opposite sign, which results in downward rounding without changing the rounding mode.
 
 If an input contains NaNs, infinity, or points that are outside the domain of $f$, we return a NaN interval.
 Other libraries opt to provide some extended definition of operators to handle such inputs; we postpone this to future work.
@@ -31,32 +33,36 @@ The challenge of extending a function to intervals with correct rounding is twof
 First, we need an expression for the range of the function; this is obtained by enumerating the possible cases for a given function.
 Then, these expressions must be instantiated on the input datum and rounded correctly - downward for the lower bound and upward for the upper one.
 
+%\EP{Ometterei frase seguente perché ripetuta in Sec.2 e più in basso.}
+%The NFG interval library is initialized by setting the rounding mode towards positive infinity, and the lower end of the interval is represented internally with opposite sign, which results in downward rounding without changing the rounding mode. 
+%While this always works for arithmetic operations, we also exploit the same approach for transcendental functions that are odd, while we need more elaborate (and expensive) techniques for other functions.
+
 \subsubsection{Computing extensions}
 When $f$ is monotonically increasing on $[\intlo{x}, \inthi{x}]$, the range of the function on an interval is easily obtained as $\inclusion{f}([\intlo{x}, \inthi{x}]) = [f(\intlo{x}), f(\inthi{x})]$; if it is monotonically decreasing, the two endpoints are swapped.
-If $f$ is not monotonic on $[\intlo{x}, \inthi{x}]$, we need to know where $f$ attains its extrema on the interval. As we will see for some functions, even deciding that $[\intlo{x}, \inthi{x}]$ lies in a part of the domain where $f$ is monotonic is tricky in floating point arithmetic.
+If $f$ is not monotonic on $[\intlo{x}, \inthi{x}]$, we need to know where $f$ attains its extrema on the interval. As we will see for some functions, even deciding that $[\intlo{x}, \inthi{x}]$ lies in a part of the domain where $f$ is monotonic is tricky in floating-point arithmetic.
 
-Once we know how to compute the range of the function in exact arithmetic, correct rounding amounts to rounding the left endpoint down, and the right endpoint up. Given that we are operating in round-upward mode, the latter is free.
+Once we know how to compute the range of the function in exact arithmetic, correct rounding amounts to rounding the left endpoint down and the right endpoint up. Given that we are operating in round-upward mode, the latter is free.
 To round down we can always change the rounding mode and reset it after the operation. However, changing rounding modes flushes the CPU pipeline, thus it is a relatively expensive operation.
 Fortunately, it can be avoided in most cases:
 \begin{enumerate}
 	\item If $f$ is odd, the result of $f(x)$ rounded down can be computed in upward rounding mode as $-f(-x)$, since negation is always exact (it only changes the sign bit). This is the same technique used by NFG for arithmetic operations.
-	\item For non-odd functions, if we know the values of $x$ for which $f(x)$ is representable, we can check \emph{a priori} if (upward) rounding happens, and if it does, we take the next smallest floating point value.
-	\item Only for the remaining functions we change the rounding mode to downwards rounding, and reset it to upwards after computing the lower bound.
+	\item For non-odd functions, if we know the values of $x$ for which $f(x)$ is representable in floating-point, we can check \emph{a priori} if (upward) rounding happens, and if it does, we take the next smallest floating-point value.
+	\item Only for the remaining functions, we do change the rounding mode to downwards rounding, and reset it to upwards after computing the lower bound.
 \end{enumerate}
 %Fortunately, most functions can be handled with the first two techniques.
 
 \subsubsection{Computing $\arcsin(x)$, $\arctan(x)$, $\arcsin(x)/\pi$, $\arctan(x)/\pi$, $\sinh(x)$, $\tanh(x)$, $\arcsinh(x)$, $\arctanh(x)$, $\sqrt[3]{x}$, and $\erf(x)$}
 %trivial
 All these functions are odd and monotonic.
-For an odd, monotonically increasing function $f$ for which we have access to a correctly rounded implementation, the correctly rounded $\inclusion{f}$ is $\inclusion{f}([\intlo{x}, \inthi{x}]) = [-f(-\intlo{x}), f(\inthi{x})]$.
+For an odd, monotonically increasing function $f$ for which we have access to a CR implementation, the correctly rounded $\inclusion{f}$ is $\inclusion{f}([\intlo{x}, \inthi{x}]) = [-f(-\intlo{x}), f(\inthi{x})]$.
 
 \subsubsection{Computing $\tan(x)$ and $\tan(\pi x)$}
 %easy but discontinuous
 Because the tangent is an odd function, rounding down is not a problem.
 The only difficulty in this case is that $x$ may be an interval that crosses one of the vertical asymptotes of the function, so additional checks are needed.
-Our logic is as follows:
+Our logic works as follows:
 \begin{enumerate}
-	\item if $x$ has width larger than a period, then it must contain a singularity and we stop;
+	\item if $x$ has a width larger than a period, then it must contain a singularity and we stop;
 	\item otherwise, we compute the function at the endpoints, and because the two points differ by less than a period, $x$ can only contain a singularity if $\tan(\intlo{x}) > \tan(\inthi{x})$, in which case we stop;
 	\item if the previous tests passed, we return the intervals with the endpoints we already computed.
 \end{enumerate}
@@ -64,13 +70,15 @@ The same technique applies to the scaled version.
 
 \subsubsection{Computing $\arccos(x)$, $\arccos(x)/\pi$, $\arccosh(x)$, $\arccosh(x)/\pi$, $e^x$, $e^x-1$, $2^x$, $2^x-1$, $10^x$, $10^x-1$, $\log(x)$, $\log(1+x)$, $\log_2(x)$, $\log_2(1+x)$, $\log_{10}(x)$, $\log_{10}(1+x)$ and $1/\sqrt(x)$}
 %easy with representable values
+\label{sub:exactR}
 For these functions we can devise a fast test that checks whether the image of $x$ is exactly representable.
 Denote $R\subset\mathrm{Dom}f$ the set of FP values such that every element of $f(R)$ is a FP number.
 The lower and upper bound are both computed with upward correct rounding; if $x\in R$, the lower bound is left unchanged, otherwise it is changed to the next smallest representable value.
 
 To get the next smallest representable value, we could use the \texttt{nextafter} function offered by the standard library, which operates directly on the bit representation of the number. However, because we are using upward rounding across our program, it is slightly faster to compute the floating point number immediately before $y$ as $-(\epsilon-y)$ where $\epsilon$ is the smallest positive representable number.
 
-\FS{I was enumerating all functions with their sets of representable values. Is it necessary?}
+The list of all representable values for each of the functions listed above is documented in the source code of the library and omitted here for brevity.
+%\FS{I was enumerating all functions with their sets of representable values. Is it necessary?}
 %For each function in this set, this is the list of representable values:
 %\begin{itemize}
 	%\item $e^x$, $e^x-1$, $\log(1+x)$: for all $x\neq 0$, the image of a rational $x$ is irrational, and in particular not FP; so only 0 is in $R$.
@@ -81,22 +89,26 @@ To get the next smallest representable value, we could use the \texttt{nextafter
 %\end{itemize}
 
 \subsubsection{Computing $\cosh(x)$ and $\sqrt{x^2+y^2}$}
-The hyperbolic cosine is the only single-argument U-shaped function in our set. To compute it, we take the absolute value of $x$ (defined as the interval of all possible values of $|y|$ for all $y\in x$) and see if it contains 0. If it does, the lower bound is 1, and otherwise it is $\cosh(\intlo(|x|))$ rounded down as in the previous section (unconditionally, since 0 is the only number in $R$). The upper bound is simply $\cosh(\inthi(|x|))$.
+The hyperbolic cosine is the only single-argument U-shaped function in our set (except $x^2$, which is supported by NFG already). 
+To compute it, we take the absolute value of $x$ (defined as the interval of all possible values of $|y|$ for all $y\in x$) and see if it contains 0. 
+If it does, the lower bound is 1; otherwise it is $\cosh(\intlo(|x|))$ rounded down as in the previous section (unconditionally, since 0 is the only number in $R$). The upper bound is simply $\cosh(\inthi(|x|))$.
 
 The Pythagorean sum (also known as \texttt{hypot}) is similar to $\cosh(x)$, but in two variables. It returns the distance of the closest and farthest point in the 2D box from the origin, rounded down and up respectively.
 We compute $|x|$ and $|y|$ and test if any of them contains zero; in such case, the minimum distance is simply $\max(\intlo(|x|), \intlo(|y|))$, where at least one of these numbers is zero.
 Otherwise, since we have no fast and reliable way of knowing whether the distance is a representable number, we resort to changing the rounding mode to compute the lower bound.
 The upper bound is easily computed in any case with a call to the CORE-MATH function.
+\EP{Aggiustare i simboli sbagliati (macro).}
 
 \subsubsection{Computing $\sin(x)$, $\cos(x)$, $\sin(\pi x)$ and $\cos(\pi x)$}
 Perhaps surprisingly, sines and cosines are the hardest functions to implement.
 
 Let us discuss rounding issues first. $\sin(x)$ and $\sin(\pi x)$ are odd and rounding down is trivial.
-We know that the only value of $x$ for which $\cos(x)$ is a FP number is $0$, so we can round down as in the other functions. For $\cos(\pi x)$, the set $R$ consists of rational numbers with denominator 2, so we check if $2x$ is integer (multiplication by 2 is exact) and round down as before.
+We know that the only value of $x$ for which $\cos(x)$ is a FP number is $0$, so we can round down as in Section \ref{sub:exactR}. 
+For $\cos(\pi x)$, the set $R$ consists of rational numbers with denominator 2, so we check if $2x$ is integer (multiplication by 2 is exact) and round down as before.
 
 First, we check if $x$ is larger than a period of $f$, in which case we know it must contain at least two consecutive extrema, and we can return $[-1,1]$.
-Next we want to know the sign of $f'$ at the two endpoints of $x$.
-If the signs are equal, then $x$ contains either 0 or 2 critical points; specifically, it contains 2 if its width is at least $\pi$ (and again we return $[-1,1]$), otherwise it contains none.
+Otherwise, we need to know the sign of $f'$ at the two endpoints of $x$.
+If the signs are equal, then $x$ contains either 0 or 2 critical points; specifically, it contains 2 critical points if its width is at least $\pi$ (and again we return $[-1,1]$), otherwise it contains none.
 If the signs are different, then $x$ contains a single critical point (it cannot contain 3 or more since we know its width to be less than a full period).
 This leaves us with four cases to consider:
 \begin{itemize}
@@ -105,29 +117,32 @@ This leaves us with four cases to consider:
 	\item $x$ contains a minimum, so we return $[-1, \max(f(\intlo(x)), f(\inthi(x)))]$;
 	\item $x$ contains a maximum, so we return $[\max(f(\intlo(x))_-, f(\inthi(x))_-), 1]$.
 \end{itemize}
+\EP{Aggiustare i simboli sbagliati (macro).}
 The cases where $x$ has an endpoint at an extremum do not require special handling.
 This leaves us with the issue of how to efficiently compute the sign of $f'$ at the endpoints of $x$.
 
-For $\sin(\pi x)$ and $\cos(\pi x)$, the derivative changes sign at integer multiples of $1/2$, so we can check the value of $\ceil{2\intlo{x}}\mod 4$ (resp. for $\inthi{x}$); depending on whether we are computing the sine or cosine, two of the possible values correspond to a positive derivative and the other two to a negative one.
+For $\sin(\pi x)$ and $\cos(\pi x)$, the derivative changes sign at integer multiples of $1/2$, so we can check the value of $\ceil{2\intlo{x}}\mathrm{mod}\ 4$ (and likewise for $\inthi{x}$, respectively); depending on whether we are computing the sine or cosine, two of the possible values correspond to a positive derivative and the other two to a negative one.
 To correctly get this result, we compute the ceiling operator by converting the endpoints, multiplied by 2, to 64-bit integers; overflows are not a problem, since past the value of $2^{54}$ the distance between adjacent double-precision FP numbers is at least as large as a full period of the function, so non-singleton intervals will return $[-1,1]$ anyway and can be handled as a special case.
 
-For the regular $\sin$ and $\cos$ we do cannot apply the same strategy. One would like to know the consecutive integer multiples of $\pi/2$ that contain a floating point value, but since $\pi$ is irrational we would need a correctly rounded function to compute $x/\pi$, or at least $\pi x$. While such methods have been researched in previous work \cite{crpi}, they are not part of CORE-MATH and were beyond the scope of this work, though implementing these methods in TIGHT in the future is a possibility.
+For the regular $\sin$ and $\cos$, we cannot apply the same strategy. One would like to know the consecutive integer multiples of $\pi/2$ that contain a floating point value, but since $\pi$ is irrational we would need a correctly rounded function to compute $x/\pi$, or at least $\pi x$. 
+While such methods have been researched in previous work \cite{Brisebarre:2005}, they are not part of CORE-MATH and are beyond the scope of this work.
+%, though implementing these methods in TIGHT in the future is a possibility.
 Instead, we compare $\intlo{x}$ and $\inthi{x}$ with precomputed, correctly rounded multiples of $\pi/2$ in the range $[-2\pi, 2\pi]$, and if an endpoint is beyond this limit, we call the correctly rounded function corresponding to the derivative of $\cos$ or $\sin$, which is more expensive but gives correct results.
 For this reason, TIGHT's current implementation of $\sin$ and $\cos$ is relatively cheap if $x$ lies in $[-2\pi, 2\pi]$ and somewhat slower otherwise.
 
 \subsubsection{Computing $\erfc(x)$}
-For $\erfc$ we are not aware of an easy way to check if the image of a number is representable. The function is monotonically decreasing, so we implement it with a single change in rounding mode.
+For $\erfc$, we are not aware of an easy way to check if the image of a number is representable. The function is monotonically decreasing, so we implement it with a single change in rounding mode.
 
 \subsubsection{Computing $x^y$ and $\arctantwo(x,y)$}
 We provide two versions of the power function: one where $x$ and $y$ are both intervals, but $x$ is not allowed to have negative values, and one where $x$ can be any interval but $y$ is an unsigned integer.
 
-For the integer power function, we have a special case for $y=2$ that calls NFG's fast square function. In other cases, we test the parity of the exponent and perform similar procedures to the other even/odd functions discussed in this section.
+For the integer power function, we have a special case for $y=2$ that calls NFG's fast square function. In other cases, we test the parity of the exponent and perform similar procedures to the other even/odd functions discussed previously.
 
 For the general power function, we distinguish nine cases based on the position of the 2D box $(x,y)$ on the $x\geq0$ half-plane: whether $x$ is above, below or contains 1, and whether $y$ is above, below or contains 0.
-For 8 out of 9 cases, we only require two calls to CORE-MATH's power function to compute the result, and in the worst case ($(x,y)$ contains $(1,0)$) we need four.
+For eight out of nine cases, we only require two calls to CORE-MATH's power function to compute the result; in the worst case, i.e., when $(x,y)$ contains $(1,0)$, we need four.
 
-The two-argument arctangent (i.e. the range of angles between the positive horizontal semi-axis and the line formed by connecting the origin with points in $(x,y)$; the values are in $(-\pi,\pi]$) requires a similar division in 9 cases, only this time $x$ can be negative and so we check whether each intervals is above, below or contain 0.
-Again, we do this to limit the number of calls to the mathematical library, and in 8 out of 9 cases we perform two calls. The ninth case where $(x,y)$ contains $(0,0)$ is degenerate and we return NaN.
-However, one of the 8 non-degenerate case that is very problematic, namely when $x$ is in the negative half-space and $y$ contains 0. In this case, the range of angles contains the points of angle $\pi$, and the function is discontinuous. Mathematically, one should return the whole range $[-\pi,\pi]$, but the meaningful result would be the disjoint union $[-\pi, a]\cup[b, \pi]$ for some values $a,b$.
+The two-argument arctangent, i.e. the range of angles between the positive horizontal semi-axis and the line formed by connecting the origin with points in $(x,y)$; the values are in $(-\pi,\pi]$, requires a similar division in nine cases, only this time $x$ can be negative and so we check whether each intervals is above, below or contain 0.
+Again, we do this to limit the number of calls to the mathematical library, and in eight out of nine cases, we perform two calls. The ninth case, where $(x,y)$ contains $(0,0)$, is degenerate, and we return NaN.
+However, one of the non-degenerate cases is very problematic, namely when $x$ is in the negative half-space and $y$ contains 0. In this case, the range of angles contains the points of angle $\pi$, and the function is discontinuous. Mathematically, one should return the whole range $[-\pi,\pi]$, but the meaningful result would be the disjoint union $[-\pi, a]\cup[b, \pi]$ for some values $a,b$.
 To give meaningful results, we opt for a different solution: TIGHT's $\arctantwo$ function returns both an interval and a boolean flag that signals the pathological case, and when the flag is on, we instead return the \emph{complement} of the range of angles of $(x,y)$, i.e. the ones that are not spanned by points in the box, with consequently inverted rounding. In the previous notation, we return $[a,b]$ with $a$ rounded up and $b$ rounded down. A caller that expects points in this range should then check the flag and decide how to use this result.
-\FS{Maybe we should provide this under a different function name and return the whole range in the basic case, for rigor}
+%\FS{Maybe we should provide this under a different function name and return the whole range in the basic case, for rigor}
