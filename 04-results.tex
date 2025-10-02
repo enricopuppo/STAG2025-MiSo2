@@ -22,6 +22,12 @@ These problems involve heavy use of trigonometric functions which, as outlined i
 However, as we shall see, TIGHT's faster handling of basic arithmetic and its smaller intervals result in faster solution times overall.
 
 \subsubsection{CCD along non-algebraic trajectories}
+\begin{figure}
+	\centering
+	\includegraphics[width=0.8\linewidth]{fig/spiral.png}
+	\caption{Test problem: \FS{caption}}
+	\label{fig:tori}
+\end{figure}
 We consider the classical problem of continuous collision detection (CCD): given two primitives in space with some prescribed trajectory, we seek the first time in $[0,1]$ for which the primitives first come into contact, and call it $t^*$.
 In practice, finding the exact value of $t^*$ may be infeasible and often unneceessary. With interval methods we instead seek an interval $T^*$ that is guaranteed to contain $t^*$ and is smaller than a user-specified precision $\delta>0$.
 Then the lower bound of $T^*$ tells us a moment in time until which we can safely move the objects without collisions, and the upper bound gives a moment when collision has surely happened already.
@@ -79,8 +85,6 @@ We compute this function in three ways:
 \end{itemize}
 In the first two cases, the denominator is correctly computed as positive with TIGHT and the operation returns a real interval (albeit larger in the second case, due to multiple operations being involved).
 When using Filib++, the square root produces an interval with lower bound equal to the radius, resulting in a division by zero.
-
-\FS{other example \dots}
 
 These are simple examples, but for more complex expressions the propagation of error can be even more dramatic. While correct rounding does not completely eliminate the issue, it reduces propagation to a minimum and makes it predictable, since each operation can introduce at most 1 ULP of error on each side.
 
