@@ -2,9 +2,8 @@
 
 \section{Implementing elementary functions}
 \label{sec:functions}
-In order to implement conservative and tight interval extensions of elementary functions, we rely on existing \emph{correctly rounded} implementations of functions.
-The CORE-MATH Project \cite{Sibidanov2022} provides a collection of fast, correctly rounded implementations of most commonly used mathematical functions.
-For ease of use, we created a minimal C++ library of double-precision CORE-MATH implementations that is publicly available at \url{}.
+In order to implement conservative and tight interval extensions of elementary functions, we exploit the corresponding \emph{correctly rounded} implementations within the CORE-MATH Project.
+For ease of use, we created a minimal C++ library collecting double-precision CORE-MATH implementations and made it publicly available at \url{url://omitted.for.anonimity}.
 
 The functions currently supported by TIGHT intervals are:
 \begin{itemize}
@@ -22,9 +21,9 @@ The functions currently supported by TIGHT intervals are:
 \subsection{Interval extension}
 Assuming the availability of a correctly rounded function $f$, we want to obtain a correctly rounded inclusion function for $f$, that is, an interval-valued function $\inclusion{f}$ such that the endpoints of the resulting interval are correctly rounded outward.
 
-TIGHT's interval class wraps the NFG interval library \cite{nfg}, which guarantees that the result of every operation contains the true result, thanks to conservative outward rounding. Specifically, the library is initialized by setting the FPU rounding mode towards positive infinity, and the lower end of the interval is represented internally with opposite sign, which results in downward rounding without changing the rounding mode.
+TIGHT's interval class wraps the NFG interval library \cite{nfg}, which guarantees that the result of every operation contains the true result, thanks to conservative outward rounding. Specifically, the library is initialized by setting the rounding mode towards positive infinity, and the lower end of the interval is represented internally with opposite sign, which results in downward rounding without changing the rounding mode.
 
-An issue that must be considered is how to deal with input intervals containing points outside the domain of $f$. We discuss this in Section \ref{}, and until them, we limit our discussion to identifying such ill-posed inputs.
+An issue that must be considered is how to deal with input intervals containing points outside the domain of $f$. We discuss this in Section \ref{sec:points_outside} and, until then, we limit our discussion to \emph{identifying} such ill-posed inputs.
 
 The challenge of extending a function to intervals with correct rounding is twofold.
 First, we need an expression for the range of the function; this is obtained by enumerating the possible cases for a given function.
@@ -35,14 +34,14 @@ When $f$ is monotonically increasing on $[\intlo{x}, \inthi{x}]$, the range of t
 If $f$ is not monotonic on $[\intlo{x}, \inthi{x}]$, we need to know where $f$ attains its extrema on the interval. As we will see for some functions, even deciding that $[\intlo{x}, \inthi{x}]$ lies in a part of the domain where $f$ is monotonic is tricky in floating point arithmetic.
 
 Once we know how to compute the range of the function in exact arithmetic, correct rounding amounts to rounding the left endpoint down, and the right endpoint up. Given that we are operating in round-upward mode, the latter is free.
-To round down we can always change the rounding mode and reset it after the operation. However, changing roundind modes flushes the CPU pipeline, thus it is a relatively expensive operation.
-Fortunately, it can be avoided in some cases:
+To round down we can always change the rounding mode and reset it after the operation. However, changing rounding modes flushes the CPU pipeline, thus it is a relatively expensive operation.
+Fortunately, it can be avoided in most cases:
 \begin{enumerate}
 	\item If $f$ is odd, the result of $f(x)$ rounded down can be computed in upward rounding mode as $-f(-x)$, since negation is always exact (it only changes the sign bit). This is the same technique used by NFG for arithmetic operations.
 	\item For non-odd functions, if we know the values of $x$ for which $f(x)$ is representable, we can check \emph{a priori} if (upward) rounding happens, and if it does, we take the next smallest floating point value.
 	\item Only for the remaining functions we change the rounding mode to downwards rounding, and reset it to upwards after computing the lower bound.
 \end{enumerate}
-Fortunately, most functions can be handled with the first two techniques.
+%Fortunately, most functions can be handled with the first two techniques.
 
 \subsubsection{Computing $\arcsin(x)$, $\arctan(x)$, $\arcsin(x)/\pi$, $\arctan(x)/\pi$, $\sinh(x)$, $\tanh(x)$, $\arcsinh(x)$, $\arctanh(x)$, $\sqrt[3]{x}$, and $\erf(x)$}
 %trivial
@@ -132,3 +131,5 @@ To give meaningful results, we opt for a different solution: TIGHT's $\arctantwo
 \FS{Maybe we should provide this under a different function name and return the whole range in the basic case, for rigor}
 
 \subsection{Points outside the domain}
+\label{sec:points_outside}
+\MA{Da completare. Se non c'è tempo bisogna rimuovere anche il riferimento poco sopra.}
