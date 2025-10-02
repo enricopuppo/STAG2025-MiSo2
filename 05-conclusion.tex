@@ -1,7 +1,7 @@
+% !TEX root = STAG25-MiSo2.tex
+
 \section{Conclusions and future work}
 We have introduced TIGHT, an efficient C++ library for correctly rounded interval arithmetic built on top of the state-of-the art in both correctly rounded computations and interval arithmetic.
-
-The authors are committed to making TIGHT a usable piece of software: unlike a large share of other related libraries, TIGHT can be easily integrated into CMake projects. Its source code is available at \url{url://omitted.for.anonimity}.
 
 TIGHT is designed to be future-proof: if correctly rounded mathematical routines become the standard in the coming years, or more performant CR methodologies are developed, switching the underlying library requires minimal changes.
 Crucially, since the result of a CR operation is well defined, TIGHT will continue to return the same results \emph{forever} on all machines, even in the event of a library change
@@ -11,8 +11,8 @@ Crucially, since the result of a CR operation is well defined, TIGHT will contin
 The library can still be improved in several ways:
 \begin{enumerate}
 	\item NFG's arithmetic operations owe their speed to vectorization. Vectorized mathematical libraries exist \cite{sleef} but we are not aware of a correctly-rounded solution. In any case, having non-CR, faster interval routines could still be useful for applications that can cope with error and inconsistencies across machines.
-	\item TIGHT currently does not conform with the IEEE 1788-2015 standard for interval arithmetic \cite{ieee1788}. Adding compliance and testing with a framework such as \ref{Benet23} would make the library more easily integrated. This includes adding conformant support for infinity and NaN values.
-	\item As mentioned in section \ref{}, integrating CR functions for multiplication with an irrational constant value as in \cite{crpi} would bring a more consistent speed for $\sin$ and $\cos$ on arbitrary arguments.
+	\item TIGHT currently does not conform with the IEEE 1788-2015 standard for interval arithmetic \cite{ieee1788}. Adding compliance and testing with a framework such as \cite{Benet23} would make the library more easily integrated. This includes adding conformant support for infinity and NaN values.
+	\item As mentioned in Section \ref{sub:sincos}, integrating CR functions for multiplication with an irrational constant value as in \cite{Brisebarre:2005} would bring a more consistent speed for $\sin$ and $\cos$ on arbitrary arguments.
 	\item CORE-MATH also contains a CR implementation of the gamma function (included in the C++ standard library), that could be used to build an interval implementation, though it is not clear whether this would be useful in practice.
 \end{enumerate}
 
