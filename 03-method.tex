@@ -23,7 +23,9 @@ Assuming the availability of a correctly rounded function $f$, we want to obtain
 
 TIGHT's interval class wraps the NFG interval library \cite{nfg}, which guarantees that the result of every operation contains the true result, thanks to conservative outward rounding. Specifically, the library is initialized by setting the rounding mode towards positive infinity, and the lower end of the interval is represented internally with opposite sign, which results in downward rounding without changing the rounding mode.
 
-An issue that must be considered is how to deal with input intervals containing points outside the domain of $f$. We discuss this in Section \ref{sec:points_outside} and, until then, we limit our discussion to \emph{identifying} such ill-posed inputs.
+If an input contains NaNs, infinity, or points that are outside the domain of $f$, we return a NaN interval.
+Other libraries opt to provide some extended definition of operators to handle such inputs; we postpone this to future work.
+In the following, we limit our discussion to valid inputs.
 
 The challenge of extending a function to intervals with correct rounding is twofold.
 First, we need an expression for the range of the function; this is obtained by enumerating the possible cases for a given function.
@@ -129,7 +131,3 @@ Again, we do this to limit the number of calls to the mathematical library, and 
 However, one of the 8 non-degenerate case that is very problematic, namely when $x$ is in the negative half-space and $y$ contains 0. In this case, the range of angles contains the points of angle $\pi$, and the function is discontinuous. Mathematically, one should return the whole range $[-\pi,\pi]$, but the meaningful result would be the disjoint union $[-\pi, a]\cup[b, \pi]$ for some values $a,b$.
 To give meaningful results, we opt for a different solution: TIGHT's $\arctantwo$ function returns both an interval and a boolean flag that signals the pathological case, and when the flag is on, we instead return the \emph{complement} of the range of angles of $(x,y)$, i.e. the ones that are not spanned by points in the box, with consequently inverted rounding. In the previous notation, we return $[a,b]$ with $a$ rounded up and $b$ rounded down. A caller that expects points in this range should then check the flag and decide how to use this result.
 \FS{Maybe we should provide this under a different function name and return the whole range in the basic case, for rigor}
-
-\subsection{Points outside the domain}
-\label{sec:points_outside}
-\MA{Da completare. Se non c'è tempo bisogna rimuovere anche il riferimento poco sopra.}

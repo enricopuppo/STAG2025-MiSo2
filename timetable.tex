@@ -4,51 +4,52 @@
 \caption{\FS{add a caption}}
 \begin{tabular}{r|rr|rr}
 \multirow{2}{*}{Operation} & \multicolumn{2}{c|}{Avg. ns} & \multicolumn{2}{c}{width in ULPs} \\
-& Filib++ & TIGHT & Filib++ & TIGHT \\
+& TIGHT & Filib++ & TIGHT & Filib++ \\
 \hline
-\texttt{+} &  &  &  &  \\
-\texttt{-} &  &  &  &  \\
-\texttt{*} &  &  &  &  \\
-\texttt{/} &  &  &  &  \\
-\texttt{abs} &  &  &  &  \\
-\texttt{sqr} &  &  &  &  \\
-\texttt{sqrt} &  &  &  &  \\
-\texttt{rsqrt} &  &  &  &  \\
-\texttt{cbrt} &  &  &  &  \\
-\texttt{sin} &  &  &  &  \\
-\texttt{cos} &  &  &  &  \\
-\texttt{tan} &  &  &  &  \\
-\texttt{asin} &  &  &  &  \\
-\texttt{acos} &  &  &  &  \\
-\texttt{atan} &  &  &  &  \\
-\texttt{sinpi} &  &  &  &  \\
-\texttt{cospi} &  &  &  &  \\
-\texttt{tanpi} &  &  &  &  \\
-\texttt{asinpi} &  &  &  &  \\
-\texttt{acospi} &  &  &  &  \\
-\texttt{atanpi} &  &  &  &  \\
-\texttt{sinh} &  &  &  &  \\
-\texttt{cosh} &  &  &  &  \\
-\texttt{tanh} &  &  &  &  \\
-\texttt{asinh} &  &  &  &  \\
-\texttt{acosh} &  &  &  &  \\
-\texttt{atanh} &  &  &  &  \\
-\texttt{exp} &  &  &  &  \\
-\texttt{exp2} &  &  &  &  \\
-\texttt{exp10} &  &  &  &  \\
-\texttt{expm1} &  &  &  &  \\
-\texttt{exp2m1} &  &  &  &  \\
-\texttt{exp10m1} &  &  &  &  \\
-\texttt{log} &  &  &  &  \\
-\texttt{log2} &  &  &  &  \\
-\texttt{log10} &  &  &  &  \\
-\texttt{log1p} &  &  &  &  \\
-\texttt{log2p1} &  &  &  &  \\
-\texttt{log10p1} &  &  &  &  \\
-\texttt{erf} &  &  &  &  \\
-\texttt{erfc} &  &  &  &  \\
-\texttt{pow} &  &  &  &  \\
-\texttt{hypot} &  &  &  &  \\
-\texttt{atan2} &  &  &  &  \\
+\texttt{+} & 1.22 & 1.39 & 1 & 1 \\
+\texttt{-} & 0.34 & 1.30 & 0 & 0 \\
+\texttt{*} & 0.73 & 1.28 & 1 & 1 \\
+\texttt{/} & 0.99 & 1.62 & 1 & 1 \\
+\texttt{min} & 0.62 & 0.28 & 0 & 0 \\
+\texttt{max} & 0.52 & 1.67 & 0 & 0 \\
+\texttt{abs} & 1.56 & 2.11 & 0 & 0 \\
+\texttt{sin} & 98.20 & 17.34 & 1 & 23 \\
+\texttt{cos} & 98.48 & 17.50 & 1 & 28 \\
+\texttt{tan} & 128.41 & 18.59 & 1 & 52 \\
+\texttt{asin} & 36.49 & 13.99 & 1 & 39 \\
+\texttt{acos} & 20.15 & 13.44 & 1 & 36 \\
+\texttt{atan} & 38.41 & 10.33 & 1 & 28 \\
+\texttt{sinpi} & 30.12 & - & 1 & - \\
+\texttt{cospi} & 31.37 & - & 1 & - \\
+\texttt{tanpi} & 29.37 & - & 1 & - \\
+\texttt{asinpi} & 40.24 & - & 1 & - \\
+\texttt{acospi} & 44.97 & - & 1 & - \\
+\texttt{atanpi} & 41.97 & - & 1 & - \\
+\texttt{sinh} & 10.84 & 11.19 & 1 & 20 \\
+\texttt{cosh} & 12.94 & 34.28 & 1 & 11 \\
+\texttt{tanh} & 20.08 & 10.90 & 1 & 23 \\
+\texttt{asinh} & 8.33 & 32.40 & 1 & 19 \\
+\texttt{acosh} & 31.79 & 15.58 & 1 & 35 \\
+\texttt{atanh} & 22.39 & 25.84 & 1 & 27 \\
+\texttt{exp} & 14.84 & 17.68 & 1 & 9 \\
+\texttt{exp2} & 17.90 & 18.59 & 1 & 9 \\
+\texttt{exp10} & 19.61 & 18.28 & 1 & 10 \\
+\texttt{expm1} & 15.06 & 10.51 & 1 & 14 \\
+\texttt{exp2m1} & 66.32 & - & 1 & - \\
+\texttt{exp10m1} & 78.21 & - & 1 & - \\
+\texttt{log} & 39.91 & 10.89 & 1 & 9 \\
+\texttt{log2} & 15.81 & 11.14 & 1 & 50 \\
+\texttt{log10} & 58.41 & 13.76 & 1 & 44 \\
+\texttt{log1p} & 15.36 & 14.59 & 1 & 12 \\
+\texttt{log2p1} & 61.70 & - & 1 & - \\
+\texttt{log10p1} & 69.79 & - & 1 & - \\
+\texttt{sqrt} & 2.18 & 3.78 & 1 & 2 \\
+\texttt{cbrt} & 18.78 & - & 1 & - \\
+\texttt{rsqrt} & 21.32 & - & 1 & - \\
+\texttt{erf} & 60.70 & - & 1 & - \\
+\texttt{erfc} & 62.67 & - & 1 & - \\
+\texttt{pow} & 136.80 & 36.31 & 1 & 15 \\
+\texttt{hypot} & 39.20 & - & 1 & - \\
+\texttt{atan2} & 28.07 & - & 1 & \\
 \end{tabular}
 \end{table}

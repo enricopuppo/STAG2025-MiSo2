@@ -17,7 +17,7 @@ To assess the practical effectiveness of our library, we integrate it in the sof
 MiSo is a Python tool to generate interval-based C++ solvers with correctness guarantees, and already uses NFG for its fast interval arithmetic, albeit with no support for non-algebraic operations.
 Since MiSo's architecture allows for easily switching the numeric backend, we were able to perform a side-by-side comparison of our library and Filib++ for several problems, while extending the software's support to transcendental operators.
 
-These problems involve heavy use of trigonometric functions which, as outlined in Section \ref{}, are more expensive to compute in TIGHT \MA{Questo non era a causa di un errore di implementazione? Non siamo più veloci adesso? O e solo sull'insieme come detto qui di seguito?} than in Filib++.
+These problems involve heavy use of trigonometric functions which, as outlined in Section \ref{}, are more expensive to compute in TIGHT than in Filib++.
 However, as we shall see, TIGHT's faster handling of basic arithmetic and its smaller intervals result in faster solution times overall.
 
 \subsubsection{CCD along non-algebraic trajectories}
