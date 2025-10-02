@@ -7,21 +7,31 @@ Interval arithmetic \cite{hickey2001} provides a set of operations on real inter
 then $x \star y  \in a \star b$, where $\star$ in the right-hand side is the interval version of operation $\star$ on reals.
 We are interested in intervals whose lower and upper bounds can be represented by FP numbers.
 
-From now on, the set of representable FP numbers is denoted by $\mathbb{F}$. When $a$ and $b$ are in $\mathbb{F}$, the result $r = a \star b$ may be not in $\mathbb{F}$, and hence not representable. In that case $i=[fp^{-}(r),fp^{+}(r)]$, where $fp^{-}(r) = max(f : f \in \mathbb{F}, f \leq r)$ and $fp^{+}(r) = min(f : f \in \mathbb{F}, f \geq r)$, is the tightest representable interval containing $r$.
+From now on, the set of representable FP numbers is denoted by $\mathbb{F}$. When $a$ and $b$ are in $\mathbb{F}$, the result $r = a \star b$ may not be in $\mathbb{F}$, hence not representable. 
+In that case, $i=[fp^{-}(r),fp^{+}(r)]$, where $fp^{-}(r) = max(f : f \in \mathbb{F}, f \leq r)$ and $fp^{+}(r) = min(f : f \in \mathbb{F}, f \geq r)$, is the tightest representable interval containing $r$.
 As mentioned, IEEE 754 requires that when $\star$ is an algebraic operation (or the square root) an implementation of $\star$ must round the theoretically exact result $r$ to either $fp^{-}(r)$ or $fp^{+}(r)$, depending on the current \emph{rounding mode}.
-In most modern architectures the rounding mode is controlled by a particular register within the CPU, and specific system functions exist to set it. Therefore, a trivial approach to create a tight interval for the operation $a \star b$ is to (1) set the rounding mode to $towards -\infty$, (2) execute $a \star b$ to determine the interval's lower bound, (3) set the rounding mode to $towards +\infty$, (4) execute $a \star b$ to determine the interval's upper bound.
+In most modern architectures, a particular register within the CPU controls the rounding mode, and specific system functions exist to set it. Therefore, a trivial approach to create a tight interval for the operation $a \star b$ is to (1) set the rounding mode to $towards -\infty$, (2) execute $a \star b$ to determine the interval's lower bound, (3) set the rounding mode to $towards +\infty$, (4) execute $a \star b$ to determine the interval's upper bound.
 Since setting the rounding mode is typically slower than executing arithmetic operations, a more efficient approach is (1) set the rounding mode to $towards +\infty$, (2) execute $(-a) \star b$ and switch the sign of the result to determine the interval's lower bound, (3) execute $a \star b$ to determine the interval's upper bound. Furthermore, if no other parts of the program require a different rounding, step (1) can be executed only once at the beginning.
 This approach is used by existing interval arithmetic libraries such as Boost \cite{bronnimann2006} and CGAL \cite{cgal}.
+However, note that this approach works for the arithmetic operations, because they are all odd functions (in the operand that changes its sign), but cannot be extended immediately to cope with functions that are not odd. 
 
-Another possibility is to deconstruct the binary representation of the result $r$ to directly modify the mantissa, exponent and sign, and produce a reasonably small interval around $r$. This approach is used by Filib and some modes of Filib++ \cite{filib, filibpp}.
+Another possibility is to deconstruct the binary representation of the result $r$ to directly modify the mantissa, exponent, and sign, and produce a reasonably small interval around $r$. This approach is used by Filib \cite{filib, filibpp}.
 Alternatively, the error propagation can be analyzed to derive a bound $\epsilon$ on the rounding so that the interval $i=[r-\epsilon,r+\epsilon]$ is guaranteed to contain $r$. This is how libraries such as BIAS \cite{bias} or GAOL \cite{gaol} work.
+Library Filib++ \cite{filib, filibpp} offers several modes that implement the various strategies; according to the authors, the fastest is the \emph{native\_onesided\_global} mode, which adopts the strategy based on a fixed rounding mode and change of sign described above.  
 
-The aforementioned existing libraries were comprehensively compared by Tang and colleagues \cite{tang2022} who evaluated diverse aspects, including their correctness, efficiency and precision (in terms of interval tightness). Their conclusion is that only filib and filib++ are always correct when transcendental functions are involved, although the intervals they produce might be larger than necessary. In contrast, Boost and BIAS may produce intervals that do not contain the exact result. Also, Tang's evaluation could verify that libraries that use the rounding mode produce tighter intervals.
+The aforementioned existing libraries were comprehensively compared by Tang and colleagues \cite{tang2022} who evaluated diverse aspects, including their correctness, efficiency and precision (in terms of interval tightness). They conclude that only Filib and Filib++ are always correct when transcendental functions are involved, although the intervals they produce might be larger than necessary. 
+In contrast, Boost and BIAS may produce intervals that do not contain the exact result. 
+Also, Tang's evaluation could verify that libraries that use the rounding mode produce tighter intervals.
+In our experiments, we compare against Filib++ with the fastest mode. 
 
-With the exception of rather old architectures, most existing CPUs provide SIMD registers and instructions that proved useful to accelerate interval arithmetic libraries \cite{lambov2008}. Here the basic idea is to store both the bounds in a single 128bit-wide register and perform operations on both bounds in parallel. This and other optimizations exploiting more recent AVX architectures were  included in the NFG library \cite{nfg} that, to the best of our knowledge, represents the fastest existing library at the time of writing. Since NFG exploits the rounding mode, it is also guaranteed to produce as-tight-as-possible intervals for all the algebraic operations and the square root. Our TIGHT library wraps around NFG while adding many other elementary and transcendental functions while keeping the guarantee to produce tight intervals.
+Except for rather old architectures, most existing CPUs provide SIMD registers and instructions that proved useful to accelerate interval arithmetic libraries \cite{lambov2008}. 
+The basic idea is to store both bounds in a single 128bit-wide register and perform operations on them in parallel. 
+This and other optimizations exploiting more recent AVX architectures were included in the NFG library \cite{nfg} that, to the best of our knowledge, represents the fastest existing library at the time of writing. 
+Since NFG exploits the rounding mode, it is also guaranteed to produce as-tight-as-possible intervals for all the algebraic operations and the square root. 
+Our TIGHT library wraps around NFG while adding many other elementary and transcendental functions, while keeping the guarantee to produce tight intervals.
 
 \subsection{Correct rounding}
-\emph{Correct rounding} refers to the property that an implementation
+\emph{Correct rounding (CR)} refers to the property that an implementation
 of a mathematical function $f$ has if, for any $x$ that is representable and contained in the domain of $f$, it returns the same results one would get by rounding the exact result $f(x)$ to the target representation.
 %MOVED TO INTRO
 %The 2019 revision of the IEEE 754 standard for floating point arithmetic requires a compliant implementation of a function to round correctly for all inputs \cite{ieee}. Indeed, required operations such as summation, subtraction, multiplication, division, and square roots produce the same, correctly rounded results on any IEEE 754-compliant machine. \cite{ieee754}
@@ -30,7 +40,7 @@ of a mathematical function $f$ has if, for any $x$ that is representable and con
 Producing efficient CR implementations of functions is a difficult task that has been actively researched for many years.
 The classical method involves performing a fast approximation of the function with a known error bound, followed by a correctness check, and a slower but higher-accuracy approximation if the check fails.
 Interestingly, implementing CR double-precision functions is more difficult than single-precision, because one can check correct rounding exhaustively on 32-bit floats, which is infeasible in the 64-bit case.
-For double precision, correctness must either be proved formally or tested on known hard to round cases.
+For double precision, correctness must either be proved formally or tested on known hard-to-round cases.
 
 The most notable libraries for CR mathematical functions are CRlibm \cite{crlibm} and RLibm \cite{rlibm}.
 CRlibm implements several transcendental functions of one double-precision argument, correctly rounded in the four rounding modes $towards +\infty$, $towards -\infty$, \emph{towards zero}, \emph{to nearest}. However, instead of rounding according to the CPU setting, it provides separate functions for each rounding mode and  assumes that the CPU is set to the default \emph{to nearest} mode with ties-to-even (whereas interval arithmetic uses directed rounding).
@@ -38,7 +48,9 @@ CRlibm implements several transcendental functions of one double-precision argum
 To the best of our knowledge, the project is no longer actively maintained.
 RLibm is a more recent project that proposes a new approach to correct rounding by polynomial approximants, but it is currently limited to single-precision inputs.
 
-The CORE-MATH Project \cite{Sibidanov2022} is an ongoing effort to build a complete collection of correctly rounded C implementations of mathematical functions to foster integration into existing mathematical libraries. CORE-MATH is actively developed and provides efficient CR routines for univariate and bivariate functions with double-precision arguments.
+The CORE-MATH Project \cite{Sibidanov2022} is an ongoing effort to build a complete collection of correctly rounded C implementations of mathematical functions to foster integration into existing mathematical libraries. 
+CORE-MATH is actively developed and provides efficient CR routines for univariate and bivariate functions with double-precision arguments.
+For a thorough account of correct rounding we refer the interest reader to a recent survey \cite{CRsurvey}.
 
 TIGHT uses CORE-MATH functions in its interval extensions for all those functions that are not CR in the C++ standard library.
 Furthermore, because CORE-MATH is not packaged as a library, we also provide a publicly available C++ wrapper to facilitate its use in projects such as TIGHT: \url{url://omitted.for.anonimity}.
