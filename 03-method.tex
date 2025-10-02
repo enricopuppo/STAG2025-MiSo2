@@ -91,13 +91,12 @@ The list of all representable values for each of the functions listed above is d
 \subsubsection{Computing $\cosh(x)$ and $\sqrt{x^2+y^2}$}
 The hyperbolic cosine is the only single-argument U-shaped function in our set (except $x^2$, which is supported by NFG already). 
 To compute it, we take the absolute value of $x$ (defined as the interval of all possible values of $|y|$ for all $y\in x$) and see if it contains 0. 
-If it does, the lower bound is 1; otherwise it is $\cosh(\intlo(|x|))$ rounded down as in the previous section (unconditionally, since 0 is the only number in $R$). The upper bound is simply $\cosh(\inthi(|x|))$.
+If it does, the lower bound is 1; otherwise it is $\cosh(\intlo{|x|})$ rounded down as in the previous section (unconditionally, since 0 is the only number in $R$). The upper bound is simply $\cosh(\inthi{|x|})$.
 
 The Pythagorean sum (also known as \texttt{hypot}) is similar to $\cosh(x)$, but in two variables. It returns the distance of the closest and farthest point in the 2D box from the origin, rounded down and up respectively.
-We compute $|x|$ and $|y|$ and test if any of them contains zero; in such case, the minimum distance is simply $\max(\intlo(|x|), \intlo(|y|))$, where at least one of these numbers is zero.
+We compute $|x|$ and $|y|$ and test if any of them contains zero; in such case, the minimum distance is simply $\max(\intlo{|x|}, \intlo{|y|})$, where at least one of these numbers is zero.
 Otherwise, since we have no fast and reliable way of knowing whether the distance is a representable number, we resort to changing the rounding mode to compute the lower bound.
 The upper bound is easily computed in any case with a call to the CORE-MATH function.
-\EP{Aggiustare i simboli sbagliati (macro).}
 
 \subsubsection{Computing $\sin(x)$, $\cos(x)$, $\sin(\pi x)$ and $\cos(\pi x)$}
 \label{sub:sincos}
@@ -113,12 +112,11 @@ If the signs are equal, then $x$ contains either 0 or 2 critical points; specifi
 If the signs are different, then $x$ contains a single critical point (it cannot contain 3 or more since we know its width to be less than a full period).
 This leaves us with four cases to consider:
 \begin{itemize}
-	\item $x$ lies entirely within part of the domain where $f$ is monotonically increasing, so we return $[f(\intlo(x))_-, f(\inthi(x))]$;
-	\item $x$ lies entirely within part of the domain where $f$ is monotonically decreasing, so we return $[f(\inthi(x))_-, f(\intlo(x))]$;
-	\item $x$ contains a minimum, so we return $[-1, \max(f(\intlo(x)), f(\inthi(x)))]$;
-	\item $x$ contains a maximum, so we return $[\max(f(\intlo(x))_-, f(\inthi(x))_-), 1]$.
+	\item $x$ lies entirely within part of the domain where $f$ is monotonically increasing, so we return $[f(\intlo{x})_-, f(\inthi{x})]$;
+	\item $x$ lies entirely within part of the domain where $f$ is monotonically decreasing, so we return $[f(\inthi{x})_-, f(\intlo{x})]$;
+	\item $x$ contains a minimum, so we return $[-1, \max(f(\intlo{x}), f(\inthi{x}))]$;
+	\item $x$ contains a maximum, so we return $[\max(f(\intlo{x})_-, f(\inthi{x})_-), 1]$.
 \end{itemize}
-\EP{Aggiustare i simboli sbagliati (macro).}
 The cases where $x$ has an endpoint at an extremum do not require special handling.
 This leaves us with the issue of how to efficiently compute the sign of $f'$ at the endpoints of $x$.
 
