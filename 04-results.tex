@@ -1,5 +1,5 @@
 \section{Results and comparison}
-We evaluate our library in several scenarios and compare it with the Filib++ library.
+We evaluate our library in several scenarios. Furthermore, because Filib/Filib++ is the only library which is always correct when transcendental functions are involved \cite{tang2022}, we compare TIGHT with this representative of the state of the art.
 
 All experiments were timed single-threaded on a cluster equipped with Intel Xeon Gold 6430 CPUs and 64GB of RAM.
 The compiler used is GCC version 13.3.0 on Ubuntu.
@@ -17,7 +17,7 @@ To assess the practical effectiveness of our library, we integrate it in the sof
 MiSo is a Python tool to generate interval-based C++ solvers with correctness guarantees, and already uses NFG for its fast interval arithmetic, albeit with no support for non-algebraic operations.
 Since MiSo's architecture allows for easily switching the numeric backend, we were able to perform a side-by-side comparison of our library and Filib++ for several problems, while extending the software's support to transcendental operators.
 
-These problems involve heavy use of trigonometric functions which, as outlined in Section \ref{}, are more expensive to compute in TIGHT than in Filib++.
+These problems involve heavy use of trigonometric functions which, as outlined in Section \ref{}, are more expensive to compute in TIGHT \MA{Questo non era a causa di un errore di implementazione? Non siamo più veloci adesso? O e solo sull'insieme come detto qui di seguito?} than in Filib++.
 However, as we shall see, TIGHT's faster handling of basic arithmetic and its smaller intervals result in faster solution times overall.
 
 \subsubsection{CCD along non-algebraic trajectories}
@@ -55,6 +55,8 @@ This formulation gives solutions in \emph{parameter} space rather than physical 
 
 In both cases, the solver performs 11105 iterations and found a solution composed of 6976 4D boxes. However, the result took $136$ms to compute with TIGHT and $2186$ms with Filib++, a speedup of about $16\times$.
 
+\MA{Forse val la pena chiarire/ribadire che sia in questo che nell'esempio precedente il problema richiede il calcolo di funzioni trascendenti.}
+
 \subsection{Pathological cases}
 Not producing tight enough intervals can have unpredictable results for seemingly easy problems. We provide two very simple examples where returning a slightly larger interval results in the program being unable to compute the result.
 
@@ -71,7 +73,7 @@ We want to evaluate $f$ with interval arithmetic at point $P(3+10^{-15},4+10^{-1
 We compute this function in three ways:
 \begin{itemize}
 	\item with TIGHT intervals, and using the function \texttt{hypot} to compute the Euclidean distance of $P$ from the origin (which is absent in Filib++);
-	\item with TIGHT intervals, using only operators supported by Filib++ (all algebraic in this case);
+	\item with TIGHT intervals, using only operators which are also supported by Filib++ (all algebraic in this case);
 	\item with Filib++ intervals, using the same mode as the rest of the paper.
 \end{itemize}
 In the first two cases, the denominator is correctly computed as positive with TIGHT and the operation returns a real interval (albeit larger in the second case, due to multiple operations being involved).
