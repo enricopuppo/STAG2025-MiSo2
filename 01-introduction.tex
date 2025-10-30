@@ -9,7 +9,7 @@ Moreover, such methods are exact only for algebraic operations.
 %aggiunto "in graphics", tolto "especially in simulations"
 
 Interval arithmetic bridges this gap by providing a viable alternative.
-It offers a balance between performance and accuracy, giving conservative estimates of exact computations at a moderate speed penalty compared to standard floating-point arithmetic. In this model, all real values are represented as intervals bounded by floating-point numbers. Expressions on these intervals are computed in a way that guarantees the resulting interval will contain the true mathematical result.
+It offers a balance between performance and accuracy, giving conservative estimates of exact computations at a moderate speed penalty compared to standard floating-point arithmetic. In this model, all real values are represented as intervals bounded by floating-point numbers. Expressions on these intervals are computed in a way that guarantees the resulting interval will contain the true mathematical result (Figure \ref{fig:teaser}).
 
 As the width of an interval grows during computation, it is crucial to minimize this propagation of uncertainty to maintain precision. This is achieved through \emph{correctly rounded} (CR) operations, where each elementary operation returns the tightest possible floating-point interval that contains the exact result.
 Apart from CR operations yielding improved precision, correct rounding can ensure \emph{bit-by-bit reproducibility}: because the result to be returned is well-defined, an expression evaluated with correct rounding will return the same result on any machine, and with any correctly-rounded implementations.
