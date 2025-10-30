@@ -39,7 +39,7 @@ However, as we shall see, TIGHT's result in faster solution times overall, thank
 	\centering
 	\includegraphics[width=0.8\linewidth]{fig/spiral.png}
 	\caption{Test problem: CCD of a triangle moving rigidly along a screw trajectory, and another deforming triangle. The triangle on top rotates and moves along an axis until the two primitives come into contact.}
-	\label{fig:tori}
+	\label{fig:ccd}
 \end{figure}
 We consider the classical problem of continuous collision detection (CCD): given two primitives in space with some prescribed trajectory, we seek the first time in $[0,1]$ for which the primitives first come into contact, and call it $t^*$.
 This type of test is essential in the simulation field to guarantee that physical objects do not interpenetrate.
@@ -52,7 +52,7 @@ In this case the optimization variables are $\{\mathbf{u}, \mathbf{v}, t\}$, whe
 the constraints are the domain constraints $(u_0,u_1,v_0,v_1,t)\in[0,1]^5, u_0+u_1\leq1, v_0+v_1\leq1$ (which are all implicit in MiSo), and the collision constraint $d(x,y)<\epsilon$ with a small but positive $\epsilon$ -- i.e., we only consider pairs of points for which collision happens.
 The objective function is $t$ -- i.e., we want to find the collision that happens earliest.
 
-In our test, we consider two moving linear (i.e., flat) triangles, where one is linearly deforming (i.e., each vertex follows a linear trajectory independent of the others), while the other vertex is undergoing a rigid roto-translation, following a spiral motion.
+In our test, we consider two moving linear (i.e., flat) triangles, where one is linearly deforming (i.e., each vertex follows a linear trajectory independent of the others), while the other vertex is undergoing a rigid roto-translation, following a spiral motion (Figure \ref{fig:ccd}).
 More precisely, the center of the second triangle follows the spiral, and its normal remains aligned with the spiral's tangent. 
 Of course, computing the roto-translation requires trigonometric functions, while all other computations involved are algebraic.
 
@@ -66,7 +66,7 @@ We test the same problem with different sets of parameters, changing the speed o
 	\label{fig:tori}
 \end{figure}
 Computing the intersection of parametric surfaces, also known as surface-surface intersection (SSI), is an important operation in CAD.
-In our example, we want to describe the intersection locus of two tori expressed parametrically.
+In our example, we want to describe the intersection locus of two tori expressed parametrically (Figure \ref{fig:tori}).
 Again, the parametric representation of each torus requires computing trigonometric functions.
 
 SSI can be formulated in MiSo as a \textsc{Solve} problem, that is, the problem of covering the set of all solutions of a constraint system within a certain tolerance.
@@ -85,9 +85,9 @@ Not producing tight enough intervals can have unpredictable results for seemingl
 	\includegraphics[width=0.8\linewidth]{fig/example.png}
 	\centering
 	\caption{An example where tighter intervals of CR functions prevent errors: when the inputs to the problem are a few ULPs away from producing pathological situations, CR minimizes error and is often able to avoid failure. Moreover, its results are machine-independent; a non-CR implementation may complete successfully on one machine but fail on another.}
-	\label{fig:tori}
+	\label{fig:circle}
 \end{figure}
-Suppose we have a function $f(x,y)$ defined on the plane that is inversely proportional to the distance of point $(x,y)$ to a circle centered in the origin with radius 5.
+Suppose we have a function $f(x,y)$ defined on the plane that is inversely proportional to the distance of point $(x,y)$ to a circle centered in the origin with radius 5 (Figure \ref{fig:circle}).
 Thus, we are evaluating $f(x,y) = 1/(\sqrt{x^2 + y^2}-5)$.
 This type of function resembles contact potentials used in IPC physical simulations \cite{Li2020IPC}.
 We want to evaluate $f$ with interval arithmetic at point $P(3+10^{-15},4+10^{-15})$, so that $P$ lies outside the sphere. Remember that, because we are using interval arithmetic, we need not fear that adding a small value leads to cancellation for very small $\epsilon$: in those cases we simply get an interval that contains the true value.
@@ -101,6 +101,6 @@ In the first two cases, the denominator is correctly computed as positive with T
 When using Filib++, the square root produces an interval with lower bound equal to the radius, resulting in a division by zero.
 
 While this example involves only a few operations, for more complex expressions, the propagation of error can be even more dramatic. 
-While correct rounding does not eliminate the issue, it reduces propagation to a minimum and makes it predictable, since each operation can introduce at most 1 ULP of error on each side.
+Correct rounding does not eliminate the issue, but it reduces propagation to a minimum and makes it predictable, since each operation can introduce at most 1 ULP of error on each side.
 
 %\input{timetable}
